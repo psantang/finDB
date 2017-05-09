@@ -13,3 +13,30 @@
 .statusbar-overlay {
     background: #000000;
 }
+
+
+#skiSelected {
+  border: 1px solid #fff;
+  border-radius: 0em;
+  padding: .2em;
+  background: #FFF;
+}
+
+.head_setting_table {
+  font-size: 1.2em;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  color: #000;
+  padding: .5em 0em;
+}
+
+.data_setting_table {
+  font-size: 1.2em;
+  padding: .5em 0em;
+}
+
+.black1_1_heading {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #000;
+}
