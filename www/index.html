@@ -5,7 +5,7 @@
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * gap: is required only on iOS (when using UIWeb) and is needed for JS->native communication
             * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
@@ -79,17 +79,34 @@
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block">
-                            <p>Select a Ski to view it's stock settings.</p>
+                            <div class='black1_1_heading'>FinDB water ski lookup system.</div>
+                              <ul>
+                                <li>Stock binding locations</li>
+                                <li>Stock fin and wing settings</li>
+                                <li>Save for ease of access</li>
+                              </ul>
 
 
-
-
-
-                            <div class="content-block-title">
+                            <!--<div class="content-block-title">-->
                               <div id='skiSelector_div'>
-                                <a href="#" class="button" id="skiLookup">Ski Lookup</a>
+                                <a href="#" class="button" id="skiLookup">Find Stock Ski Settings</a>
                               </div>
-                            </div>
+
+                            <!--</div>-->
+
+                            <div id="factory_brand" class="list-block"></div>
+
+
+
+
+                            <!--
+                            <div id="factory_brand"></div>
+                            <div id="factory_model"></div>
+                            <div id="factory_year"></div>
+                            <div id="factory_length"></div>
+                          -->
+                            <!-- Below is for select list html -->
+                            <!--
                             <div class="list-block">
                               <ul>
                                 <li>
@@ -130,6 +147,8 @@
                                 </li>
                               </ul>
                             </div>
+                          -->
+
 
                             <div id="skiSelected" style="display:none"></div>
 
@@ -144,16 +163,15 @@
             </div> <!-- END PAGES -->
 
 
-
-
             <!-- Bottom Toolbar-->
-
+            <!--
             <div class="toolbar">
                 <div class="toolbar-inner">
                     <a href="#" class="link">Link 1</a>
                     <a href="#" class="link">Link 2</a>
                 </div>
             </div>
+          -->
 
 
         </div> <!-- END VIEW -->
@@ -162,6 +180,6 @@
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/ski_settings_smart_select.js"></script>
 </body>
-
 </html>
