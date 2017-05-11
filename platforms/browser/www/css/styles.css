@@ -33,10 +33,23 @@
 .data_setting_table {
   font-size: 1.2em;
   padding: .5em 0em;
+  border-bottom: 3px solid #ccc;
 }
 
+.sm {
+  font-size: 1em;
+  padding: .25em 0em;
+}
+
+.padding_top_5em {
+  padding-top:.5em;
+}
 .black1_1_heading {
   font-size: 1.1em;
   font-weight: bold;
   color: #000;
+}
+
+.stockListRow {
+  padding: .25em 0;
 }

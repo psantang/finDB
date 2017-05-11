@@ -10,6 +10,10 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+
+        <!--    <meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready file://* *; style-src 'self' 'unsafe-inline'; script-src http://*.paulsantangelo.com 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: ; connect-src http://*.paulsantangelo.com">
+      -->
+
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: ; media-src *" />
 
     <!-- Required meta tags-->
@@ -21,7 +25,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Your app title -->
-    <title>My App</title>
+    <title>Water Ski Fin DB</title>
 
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
@@ -29,8 +33,11 @@
 
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
-
+    <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
     <link rel="stylesheet" href="css/styles.css">
+
+
+
 </head>
 
 <body>
@@ -98,65 +105,63 @@
 
 
 
-
-                            <!--
-                            <div id="factory_brand"></div>
-                            <div id="factory_model"></div>
-                            <div id="factory_year"></div>
-                            <div id="factory_length"></div>
-                          -->
-                            <!-- Below is for select list html -->
-                            <!--
-                            <div class="list-block">
-                              <ul>
-                                <li>
-                                  <div class="item-content">
-                                    <div class="item-inner">
-                                      <div class="item-input">
-                                        <div id="factory_brand"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="item-content">
-                                    <div class="item-inner">
-                                      <div class="item-input">
-                                        <div id="factory_model"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="item-content">
-                                    <div class="item-inner">
-                                      <div class="item-input">
-                                        <div id="factory_year"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="item-content">
-                                    <div class="item-inner">
-                                      <div class="item-input">
-                                        <div id="factory_length"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          -->
-
-
                             <div id="skiSelected" style="display:none"></div>
 
 
+                            <div class="padding_top_5em">
+                              <a href="#" class="button" id="getLocalSettings">View my List</a>
+                              <div id='stockSkiListing_div'></div>
+                            </div>
+
+
+                            <!--<div><a href="#" class="button" id="deleteStockSkis">Delete Ski List</a></div>-->
 
                             <!--<div><a href="#about">About app</a></div>-->
-                        </div>
-                    </div>
+
+
+
+                            <p>
+
+
+                              <div class="list-block">
+                              <ul>
+                                <li class="swipeout">
+                                  <div class="swipeout-content item-content">
+                                    <div class="item-media">Some data</div>
+                                    <div class="item-inner">asdf</div>
+                                  </div>
+                                  <div class="swipeout-actions-right">
+                                    <a href='#' class='swipeout-delete'>Delete</a>
+                                  </div>
+                                </li>
+                                <li class="swipeout">
+                                  <div class="swipeout-content item-content">
+                                    <div class="item-media">mroe</div>
+                                    <div class="item-inner">sdfsadfasdf</div>
+                                  </div>
+                                  <div class="swipeout-actions-right">
+                                    <a href="#" class="action1 bg-orange">Action 1</a>
+                                    <a href="#" class="action2">Action 2</a>
+                                  </div>
+                                </li>
+
+                              </ul>
+                            </div>
+
+                            </p>
+
+
+                        </div> <!-- END CONTENT BLOCK -->
+                    </div> <!-- END PAGE CONTENT -->
+
+
+
+
+
+
+
+
+
                 </div> <!-- END PAGE -->
 
 
@@ -174,6 +179,9 @@
           -->
 
 
+
+
+
         </div> <!-- END VIEW -->
     </div> <!-- END VIEWS -->
 
@@ -181,5 +189,7 @@
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
     <script type="text/javascript" src="js/ski_settings_smart_select.js"></script>
+    <script type="text/javascript" src="js/save_stock_settings_local.js"></script>
+
 </body>
 </html>
