@@ -1,6 +1,8 @@
 
 $$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
+
+
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
   $$.ajax({url:url,data:{ ski_attr: "brands"},type:'POST',dataType: 'json',success:function(brandsObj) {
@@ -30,6 +32,11 @@ $$('#skiLookup').click(function() {
     }, complete: function(){
         console.log('complete skiLookup for brands');
         $$('#brand_select_id').click();
+
+        // I animate closing these when user saves settings, so need to unanimate them
+        $$('#saveStock').css({'opacity':1});
+        $$('#factory_brand').css({'opacity':1,'display':'show'});
+        $$('#skiSelected').css({'opacity':1});
 
     }, error: function(brandsObj, status, err) {
         if (status == "timeout") {
