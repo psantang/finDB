@@ -14,6 +14,13 @@
     background: #000000;
 }
 
+#factory_brand.list-block {
+  margin:17px 0;
+}
+
+#stockSkiListing_div.content-block-title {
+  margin-top:11px;
+}
 
 #skiSelected {
   border: 1px solid #fff;
@@ -33,17 +40,22 @@
 .data_setting_table {
   font-size: 1.2em;
   padding: .5em 0em;
-  border-bottom: 3px solid #ccc;
 }
 
 .sm {
-  font-size: 1em;
+  font-size: .85em;
   padding: .25em 0em;
+  color: rgba(0, 122, 255, 0.75);
 }
 
 .padding_top_5em {
   padding-top:.5em;
 }
+
+.padding_left_15px {
+  padding-left: 15px;
+}
+
 .black1_1_heading {
   font-size: 1.1em;
   font-weight: bold;
@@ -52,4 +64,16 @@
 
 .stockListRow {
   padding: .25em 0;
+}
+
+#ul_saved_list li {
+  padding-left:12px;
+}
+
+.lightGreenBG {
+  background-color: rgba(229,255,229,.8);
+}
+
+#getLocalSettings_div {
+  display:none; /* don't show unless div has data */
 }

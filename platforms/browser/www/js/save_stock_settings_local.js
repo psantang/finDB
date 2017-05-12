@@ -1,9 +1,72 @@
+function displayStockSkis_listview(ski_Obj) {
+
+  /*
+  <div class="content-block-title">Mail App</div>
+<div class="list-block media-list">
+  <ul>
+    <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-inner">
+          <div class="item-title-row">
+            <div class="item-title">Facebook</div>
+            <div class="item-after">17:14</div>
+          </div>
+          <div class="item-subtitle">New messages from John Doe</div>
+          <div class="item-text">Lorem ipsum dolor sit amet...</div>
+        </div>
+      </a>
+    </li>
+    */
+  var str="<div class='content-block-title'>Saved Stock Ski List</div>";
+      str+="<div class='list-block media-list' id='stock_list_div'>";
+      str+="<ul id='ul_saved_list' class='padding_left_15px'>";
+  console.log('in displayStockSkis');
+  if (ski_Obj.length>0) {
+    for (i=0; i<ski_Obj.length; i++) {
+      //var tmp_ski_year = ski_Obj[i][0].year || null;
+      //if (tmp_ski_year != null) tmp_ski_year = "("+ski_Obj[i][0].year+")";
+      if (ski_Obj[i][0].year != null) { tmp_ski_year = "("+ski_Obj[i][0].year+")" } else {tmp_ski_year=""};
+
+      str+="<li class='swipeout'>";
+      //str+="<a href='#' class='item-link item-content'>"; //  style='touch-action: manipulation;'
+      str+="<div class='item-inner'>";
+        str+="<div class='item-title-row'>";
+          str+="<div class='item-title'>" + ski_Obj[i][0].brand + " " + ski_Obj[i][0].model + " " + ski_Obj[i][0].length + "</div>";
+          str+="<div class='item-after'>" + tmp_ski_year + "</div>";
+        str+="</div>"; // item-title-row
 
 
-function displayStockSkis(ski_Obj) {
+      //str+="<div class='accordion-item-content'>";
+        str+="<div class='item-textA'>";
+//        str+="<div class='item-subtitle'>some text</div>";
+//          str+="<div class='item-text'>some more text</div>";
+          str+="<div class='row head_setting_table sm'><div class='col-20'>Binding</div><div class='col-20'>Length</div><div class='col-20'>Depth</div><div class='col-20'>DFT</div><div class='col-20'>Wing</div></div>";
+          str+="<div class='row data_setting_table sm'><div class='col-20'>"+ski_Obj[i][0].binding+"</div><div class='col-20'>"+ski_Obj[i][0].f_length+"</div><div class='col-20'>"+ski_Obj[i][0].f_depth+"</div><div class='col-20'>"+ski_Obj[i][0].f_dft+"</div><div class='col-20'>"+ski_Obj[i][0].f_wing_angle+"</div></div>";
+      //str+="<p>" + ski_Obj[i][0].f_length + " " + ski_Obj[i][0].f_depth + " " + ski_Obj[i][0].f_dft + " " + ski_Obj[i][0].f_wing_angle + "</p>";
+        str+="</div>";
+      //str+="</div>";
+        str+="<div class='swipeout-actions-right'><a href='#' class='swipeout-delete' id='stockSki_"+i+"_'>Delete</a></div>";
+      str+="</div>"; //item-inner
+  //    str+="</a>";
+      str+="</li>";
+
+      //str+="<div class='stockListRow'><a href='#' class='deleteStockSki' id='stockSki_"+i+"_'><i class='icon f7-icons color-red'>delete_round_fill</i></a> "+ski_Obj[i][0].brand+" "+ski_Obj[i][0].model+" "+ski_Obj[i][0].length+" "+ski_Obj[i][0].year+"</div>";
+      console.log ('SKI: '+  ski_Obj[i][0].brand + ' | ' + ski_Obj[i][0].model + ' | ' +ski_Obj[i][0].length + ' | ' +ski_Obj[i][0].year + ' | ' +ski_Obj[i][0].f_length + ' | ' + ski_Obj[i][0].f_depth + ' | ' + ski_Obj[i][0].f_dft + ' | ' + ski_Obj[i][0].f_wing_angle);
+    }
+  str+="</ul>";
+  str+="</div>";
+  $$('#stockSkiListing_div').html(str);
+
+    //$$('#skiSelected').append(str);
+    //$$("#skiSelected").append('<div><a href="#" class="button" id="saveStock">Save to Stock List</a></div>');
+  }
+}
+
+
+function displayStockSkis_accordian(ski_Obj) {
   var str="<div class='content-block-title'>Stock Ski Setting List</div>";
       str+="<div class='list-block accordion-list' id='stock_list_div'>";
-      str+="<ul id='ul_stock_list'>";
+      str+="<ul id='ul_saved_list'>";
   console.log('in displayStockSkis');
   if (ski_Obj.length>0) {
     for (i=0; i<ski_Obj.length; i++) {
@@ -39,17 +102,21 @@ function displayStockSkis(ski_Obj) {
 
 
 $$('#getLocalSettings').click(function() {
+  getLocalSettings();
+  console.log('in getLocalSettings click event');
+});
+
+function getLocalSettings() {
   console.log('in getLocalSettings function');
   var storedSkis = getLocalStorage('stockSkis');
   if (storedSkis != null) {
     storedSkis_Obj = JSON.parse(storedSkis);
     console.log('stock skis are ' + storedSkis );
-    displayStockSkis(storedSkis_Obj);
+    displayStockSkis_listview(storedSkis_Obj);
   } else {
-    console.log('No stock skis in local storage');
+    console.log('No stock skis saved');
   }
-});
-
+}
 /*
 $$('#deleteStockSkis').click(function() {
   deleteStockSkis();
@@ -146,7 +213,7 @@ function appendItem(key, data) {
           console.log('appendItem as Array');
              tmp = localStorage.getItem(key);
              tmp = (tmp === null) ? [] : JSON.parse(tmp);
-             tmp.push(data);
+             tmp.unshift(data);
 
              localStorage.setItem(key, JSON.stringify(tmp));
              break;

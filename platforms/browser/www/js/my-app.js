@@ -28,7 +28,7 @@ $$(document).on('deviceready', function() {
     // NOTE: THIS is call live/delegated event handling and is used for dynamic content added to dom (IE. doing document.write or jQuery appends, etc.)
 
         //$$(document).on('click', '.deleteStockSki, .swipeout', function (e) {
-        $$(document).on('click', '#ul_stock_list li a.swipeout-delete', function (e) {
+        $$(document).on('click', '#ul_saved_list li a.swipeout-delete', function (e) {
 
           //var theID=e.target.parentNode.id;
           console.log('tagname of click was ' + e.target.tagName);
@@ -60,7 +60,20 @@ $$(document).on('deviceready', function() {
     $$(document).on('click', '#saveStock', function () {
       console.log('clicked saveStock to run');
       storeSettingsLocally();
+      $$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
+      $$('#skiSelected').hide();
+      getLocalSettings(); // this redraws screen for saved settings
+      $$('#ul_saved_list>li:first-child').addClass('lightGreenBG'); //.css('background-color','#cfc');
     });
+
+
+    if ( getLocalStorage('stockSkis').length>2 ) {
+      if ( $$("#getLocalSettings_div").css('display') == 'none') {
+        $$("#getLocalSettings_div").show();
+        getLocalSettings();
+      }
+    }
+
 
 });
 
