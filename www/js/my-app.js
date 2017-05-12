@@ -60,18 +60,23 @@ $$(document).on('deviceready', function() {
     $$(document).on('click', '#saveStock', function () {
       console.log('clicked saveStock to run');
       storeSettingsLocally();
+
+      //$$('#skiSelected').hide();
+      //$$('#factory_brand').hide();
+      $$('#saveStock').css({'opacity':0,'display':'hide'}).transition(500);
+      $$('#factory_brand').css({'opacity':0,'display':'hide'}).transition(500);
+      $$('#skiSelected').css({'opacity':0,'display':'hide'}).transition(500);
       $$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
-      $$('#skiSelected').hide();
+      $$('#skiLookup').show();
       getLocalSettings(); // this redraws screen for saved settings
       $$('#ul_saved_list>li:first-child').addClass('lightGreenBG'); //.css('background-color','#cfc');
     });
 
-
     if ( getLocalStorage('stockSkis').length>2 ) {
-      if ( $$("#getLocalSettings_div").css('display') == 'none') {
-        $$("#getLocalSettings_div").show();
+      //if ( $$("#getLocalSettings_div").css('display') == 'none') {
+      //  $$("#getLocalSettings_div").show();
         getLocalSettings();
-      }
+      //}
     }
 
 
