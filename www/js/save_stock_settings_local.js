@@ -59,6 +59,8 @@ function displayStockSkis_listview(ski_Obj) {
 
     //$$('#skiSelected').append(str);
     //$$("#skiSelected").append('<div><a href="#" class="button" id="saveStock">Save to Stock List</a></div>');
+  } else {
+    $$('#stockSkiListing_div').html('');
   }
 }
 

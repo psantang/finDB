@@ -1,7 +1,7 @@
 
 $$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
-
+  //$$('#factory_brand').show();
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
@@ -34,9 +34,9 @@ $$('#skiLookup').click(function() {
         $$('#brand_select_id').click();
 
         // I animate closing these when user saves settings, so need to unanimate them
-        $$('#saveStock').css({'opacity':1});
-        $$('#factory_brand').css({'opacity':1,'display':'show'});
-        $$('#skiSelected').css({'opacity':1});
+        //$$('#saveStock').css({'opacity':1,'height':'auto'});
+        $$('#factory_brand').css({'opacity':1,'display':'block','height':'auto'});
+        //$$('#skiSelected').css({'opacity':1,'height':'auto'});
 
     }, error: function(brandsObj, status, err) {
         if (status == "timeout") {
@@ -280,6 +280,17 @@ function getStockSettings(nullYear) {
 
         }, complete: function(){
             console.log('in complete for stock_Obj');
+
+            //document.getElementById("factory_brand").setAttribute("style", "height":document.getElementById("factory_brand").getAttribute("height");
+            var fbHeight=$$('#factory_brand').height();
+            $$('#factory_brand').css({'height':fbHeight+'px'});
+            document.getElementById('factory_brand').style.height = fbHeight+'px';
+
+            $$('#saveStock').css({'opacity':1,'height':'auto'});
+            //$$('#factory_brand').css({'opacity':1,'display':'show','height':'auto'});
+            $$('#skiSelected').css({'opacity':1,'height':'auto'});
+
+
     		}, error: function(stock_Obj, status, err) {
             if (status == "timeout") {
               console.log("Timeout Error. " + stock_Obj + status + err);
