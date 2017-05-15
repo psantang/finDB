@@ -39,7 +39,8 @@ $$(document).on('deviceready', function() {
           //var theID=e.target.id;
           var theID=$$(this).attr("id")
           console.log('in deleteStockSki to run deleteStockSki function with target id = ' + theID);
-          deleteStockSki(theID);
+          deleteStockSki(theID); // deletes the indexed ski
+          getLocalSettings(); // redraws screen so index's stay aligned for deletion
         });
 
         $$('.swipeout').on('swipeout:deleted', function (e) {
@@ -59,18 +60,42 @@ $$(document).on('deviceready', function() {
 
     $$(document).on('click', '#saveStock', function () {
       console.log('clicked saveStock to run');
+      document.getElementById("factory_brand").setAttribute("style", "height:220px")
+      //$$('#factory_brand').css('height',$$('#factory_brand.list-block').css('height') );
+      //var fbHeight=$$('#factory_brand').height();
+      //$$('#factory_brand').css({'height':fbHeight+'px'});
+      //document.getElementById('factory_brand').style.height = fbHeight+'px';
+      //document.getElementById('factory_brand').style.height='222px';
+      console.log('factory_brand height is ' + document.getElementById('factory_brand').style.height );
+      //$$('#factory_brand.list-block').css({'height':'0px'}).transition(2000);
+      $$('#factory_brand, #skiSelected, #saveStock').attr('style','opacity:0;height:0px').transition(300);
+      //document.getElementById("factory_brand").setAttribute("style", "height:0px; opacity: 0;").transition(2000);
+      //document.getElementById('factory_brand').css({'height':'0px'}).transition(2000);
+
       storeSettingsLocally();
 
       //$$('#skiSelected').hide();
       //$$('#factory_brand').hide();
-      $$('#saveStock').css({'opacity':0,'display':'hide'}).transition(500);
-      $$('#factory_brand').css({'opacity':0,'display':'hide'}).transition(500);
-      $$('#skiSelected').css({'opacity':0,'display':'hide'}).transition(500);
-      $$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
+      //$$('#saveStock').css({'height':'0px','opacity':0}).transition(4000);
+      //$$('#factory_brand').css({'height':'0px','opacity':0}).transition(2000);
+      //$$('#skiSelected').css({'height':'0px','opacity':0}).transition(2000);
+
+      //setTimeout($$('#factory_brand').hide(),6500);
+      //setTimeout($$('#saveStock').parent().remove(),1100);
+      $$('#saveStock').transitionEnd(function(){
+        console.log('TRANSITION ENDED.......');
+        $$('#factory_brand, #skiSelected').hide();
+      });
+
+      //$$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
       $$('#skiLookup').show();
       getLocalSettings(); // this redraws screen for saved settings
       $$('#ul_saved_list>li:first-child').addClass('lightGreenBG'); //.css('background-color','#cfc');
     });
+
+
+
+    //$$('#skiSelected').transitionEnd(function(){ $$('#skiSelected').css({'height':'100px','opacity':1}).transition(2000); });
 
     if ( getLocalStorage('stockSkis').length>2 ) {
       //if ( $$("#getLocalSettings_div").css('display') == 'none') {
@@ -79,8 +104,13 @@ $$(document).on('deviceready', function() {
       //}
     }
 
+    //$$('#factory_brand').transitionEnd(function(){ console.log('!!! TRANSITION ENDED !!!!'); });
+
+
 
 });
+
+
 
 // Now we need to run the code that will be executed only for About page.
 

@@ -14,9 +14,14 @@
     background: #000000;
 }
 
+#factory_brand {
+  height:auto;
+}
+
 #factory_brand.list-block {
   margin:17px 0;
 }
+
 
 #stockSkiListing_div.content-block-title {
   margin-top:11px;
