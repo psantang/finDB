@@ -68,7 +68,7 @@ $$(document).on('deviceready', function() {
       //document.getElementById('factory_brand').style.height='222px';
       console.log('factory_brand height is ' + document.getElementById('factory_brand').style.height );
       //$$('#factory_brand.list-block').css({'height':'0px'}).transition(2000);
-      $$('#factory_brand, #skiSelected, #saveStock').attr('style','opacity:0;height:0px').transition(300);
+      $$('#factory_brand, #skiSelected, #saveStock').attr('style','opacity:0;height:0px;margin-top:0px').transition(750);
       //document.getElementById("factory_brand").setAttribute("style", "height:0px; opacity: 0;").transition(2000);
       //document.getElementById('factory_brand').css({'height':'0px'}).transition(2000);
 
