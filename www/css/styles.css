@@ -51,7 +51,7 @@
 .sm {
   font-size: .85em;
   padding: .25em 0em;
-  color: rgba(0, 122, 255, 0.75);
+  color: rgba(0, 122, 255, 0.85);
 }
 
 .padding_top_5em {
@@ -88,6 +88,11 @@
   margin:0 0 1em 0;
 }
 
+
 .center {
   text-align: center;
+}
+
+.lightBlueBG {
+background-color: rgba(33, 150, 243,.1);
 }

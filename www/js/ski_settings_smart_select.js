@@ -2,6 +2,7 @@
 $$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
   //$$('#factory_brand').show();
+  myApp.showIndicator();
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
@@ -37,6 +38,7 @@ $$('#skiLookup').click(function() {
         //$$('#saveStock').css({'opacity':1,'height':'auto'});
         $$('#factory_brand').css({'opacity':1,'display':'block','height':'auto'});
         //$$('#skiSelected').css({'opacity':1,'height':'auto'});
+        myApp.hideIndicator();
 
     }, error: function(brandsObj, status, err) {
         if (status == "timeout") {
@@ -59,6 +61,7 @@ $$('#skiLookup').click(function() {
 		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
 		//theBrand = ( $$('#brand').val() );
     //theBrand = $$('#list_brand .item-content .item-inner .item-after').text();
+    myApp.showIndicator();
     if ($$('#list_model')) $$('#list_model').remove();
     if ($$('#list_year')) $$('#list_year').remove();
     if ($$('#list_length')) $$('#list_length').remove();
@@ -92,6 +95,7 @@ $$('#skiLookup').click(function() {
           console.log('complete skiLookup for models');
           //$$('#model_select_id').click(); // this would autoclick the next selector, but not the correct place to put it.
           console.log('after click triggered');
+          myApp.hideIndicator();
 
       }, error: function(brandsObj, status, err) {
           if (status == "timeout") {
@@ -112,6 +116,7 @@ $$('#skiLookup').click(function() {
   		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
   		//theModel = ( $$('#model').val() );
       //theModel = $$('#list_model .item-content .item-inner .item-after').text();
+      myApp.showIndicator();
       if ($$('#list_year')) $$('#list_year').remove();
       //if ($$('#list_length')) $$('#list_length').remove();
       $$("#skiSelected").html('').hide();
@@ -156,6 +161,7 @@ $$('#skiLookup').click(function() {
         }, complete: function(){
           if (yearVal) {
             console.log('in complete with yearVal = true');
+            myApp.hideIndicator();
             //$$('#year_select_id').click(); // this would autoclick the next selector, but not the correct place to put it.
     				//$("#year").selectmenu('refresh');
     				//window.scrollTo(0, $("#factory_year").offset().top);
@@ -186,6 +192,7 @@ function getLengths() {
   		//$$('#factory_current,#factory_my_name,#factory_submit').hide(); // HIDE THESE
       //if (yearVal) {
   		    //theYear = ( $$("#year").val() );
+          myApp.showIndicator();
         if ($$('#list_length')) $$('#list_length').remove();
         if ($$('#list_year')) $$('#list_year').remove();
         $$("#skiSelected").html('').hide();
@@ -224,6 +231,7 @@ function getLengths() {
 
         }, complete: function(){
             console.log('in complete for lengthsObj');
+            myApp.hideIndicator();
             //$$('#length_select_id').click(); // this would autoclick the next selector, but not the correct place to put it.
     		}, error: function(lengthsObj, status, err) {
             if (status == "timeout") {
@@ -240,6 +248,7 @@ function getLengths() {
 //    $$('#factory_length').change(function() {
 function getStockSettings(nullYear) {
   console.log('nullYear = ' + nullYear);
+  myApp.showIndicator();
       /*if ( (typeof theYear == 'undefined') || theYear == null  ) {
         theYear = null;
       } else {
@@ -289,7 +298,7 @@ function getStockSettings(nullYear) {
             $$('#saveStock').css({'opacity':1,'height':'auto'});
             //$$('#factory_brand').css({'opacity':1,'display':'show','height':'auto'});
             $$('#skiSelected').css({'opacity':1,'height':'auto'});
-
+            myApp.hideIndicator();
 
     		}, error: function(stock_Obj, status, err) {
             if (status == "timeout") {
