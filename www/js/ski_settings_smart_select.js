@@ -274,7 +274,7 @@ function getStockSettings(nullYear) {
             $$("#skiSelected").append('<div class="row data_setting_table"><div class="col-20" id="stock_binding">'+stock_Obj[0].stock_binding_location+'</div><div class="col-20" id="stock_length">'+stock_Obj[0].stock_fin_length+'</div><div class="col-20" id="stock_depth">'+stock_Obj[0].stock_fin_depth+'</div><div class="col-20" id="stock_dft">'+stock_Obj[0].stock_fin_dft+'</div><div class="col-20"  id="stock_wing_angle">'+stock_Obj[0].stock_wing_angle+'</div></div>');
 
             if ($$("#saveStock").length<1) {
-              $$('<div class="padding_top_5em"><a href="#" class="button button-fill" id="saveStock">Save to Stock List</a></div>').insertAfter('#skiSelected');
+              $$('<div class="padding_top_5em"><a href="#" class="button button-fill" id="saveStock">Save to Stock List</a></div>').appendTo('#skiSelected');
             }
 
         		$$("#skiSelected").show();

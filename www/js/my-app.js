@@ -47,7 +47,7 @@ var mainView = myApp.addView('.view-main', {
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
-    console.log("Device is ready!");
+    console.log("Device is ready!  Device name is " + device.name);
 
 
 
@@ -134,9 +134,14 @@ $$(document).on('deviceready', function() {
 
     //$$('#factory_brand').transitionEnd(function(){ console.log('!!! TRANSITION ENDED !!!!'); });
 
+    console.log('navigator object is ' + navigator.connection);
+/*
+    if (navigator.connection.type.toLowerCase() == 'none') {
+      alert('No network connection available.');
+    }
+*/
 
-
-});
+}); // end DeviceReady
 
 
 
