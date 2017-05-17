@@ -30,10 +30,11 @@
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
      -->
-
+<!--
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
+  -->
     <link rel="stylesheet" href="css/styles.css">
 
 
@@ -60,7 +61,7 @@
             More skis will be added to the database.
           </p>
           <p>
-            Future release will offer the ability to save custom ski settings and save/view history.
+            Future release will offer the ability to save custom ski settings and save/view setup history.
           </p>
         </div>
     </div>
@@ -70,10 +71,14 @@
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
             <!-- Top Navbar-->
+
+            <!-- Dynamic navbar for iOS theme -->
+
             <div class="navbar">
                 <div class="navbar-inner">
+                  <div class="left"></div>
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">FinDB</div>
+                    <div class="center sliding">finDB</div>
                     <div class="right">
                         <!--
                           Right link contains only icon - additional "icon-only" class
@@ -89,16 +94,21 @@
 
 
 
+
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
             <div class="pages navbar-through toolbar-through">
 
 
                 <!-- Page, "data-page" contains page name -->
                 <div data-page="index" class="page">
+
+
+
+
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block">
-                            <div class='black1_1_heading margin_1em_bottom center'>Water Ski Stock Settings Lookup System</div>
+                            <div class='black1_1_heading margin_1em_bottom center' id='indexTitle'>Water Ski Stock Settings Lookup System</div>
 
 
                             <!--<div class="content-block-title">-->
@@ -165,7 +175,32 @@
     </div> <!-- END VIEWS -->
 
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.js"></script>
+
+
+    <!--
+       We need the following script to include styles depending on device's OS
+       It is important to keep it as inline script or in separate JS file with this code only!
+       -->
+       <script>
+         (function () {
+           if (Framework7.prototype.device.android) {
+                 Dom7('head').append(
+                     '<link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">' +
+                     '<link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">' +
+                     '<link rel="stylesheet" href="lib/framework7/css/my-app.material.css">' // use this as custom over ride for material design classes above
+                 );
+             }
+             else {
+                 Dom7('head').append(
+                     '<link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">' +
+                     '<link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">' //+
+                     //'<link rel="stylesheet" href="lib/framework7/css/my-app.ios.css">'
+                 );
+             }
+         })();
+       </script>
+
     <script type="text/javascript" src="js/my-app.js"></script>
     <script type="text/javascript" src="js/ski_settings_smart_select.js"></script>
     <script type="text/javascript" src="js/save_stock_settings_local.js"></script>

@@ -1,12 +1,38 @@
-// Initialize app
-var myApp = new Framework7();
+// only needed for ios/android interface differences
+var isAndroid = Framework7.prototype.device.android === true;
+var isIos = Framework7.prototype.device.ios === true;
+
+// only needed for ios/android interface differences if using Template7
+/*
+Template7.global = {
+    android: isAndroid,
+    ios: isIos
+};
+*/
+
+
+
+
+// Init App
+var myApp = new Framework7({
+    // Enable Material theme for Android device only
+    material: isAndroid ? true : false //,
+    // Enable Template7 pages
+    //template7Pages: true
+});
 
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
 
-
+// only needed for ios/android interface differences to apply material design
+if (isAndroid) {
+    // Change class
+    $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
+    // And move Navbar into Page
+    $$('.view .navbar').prependTo('.view .page');
+}
 
 
 
@@ -90,7 +116,7 @@ $$(document).on('deviceready', function() {
       //$$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
       $$('#skiLookup').show();
       getLocalSettings(); // this redraws screen for saved settings
-      $$('#ul_saved_list>li:first-child').addClass('lightGreenBG'); //.css('background-color','#cfc');
+      $$('#ul_saved_list>li:first-child').addClass('lightBlueBG'); //.css('background-color','#cfc');
     });
 
 
@@ -102,6 +128,8 @@ $$(document).on('deviceready', function() {
       //  $$("#getLocalSettings_div").show();
         getLocalSettings();
       //}
+    } else { // show message on front page so user knows how to get started
+      $$('<div class="center">Start by selecting the link below, then choose a ski brand, model, length and year (optional).<p>Save for quick access in the future.</div>').insertAfter('#indexTitle');
     }
 
     //$$('#factory_brand').transitionEnd(function(){ console.log('!!! TRANSITION ENDED !!!!'); });
