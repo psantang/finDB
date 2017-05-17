@@ -2,6 +2,10 @@
 $$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
   //$$('#factory_brand').show();
+  console.log('offline is '+ offline);
+  if (offline) return onOffline();
+
+
   myApp.showIndicator();
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
@@ -61,6 +65,7 @@ $$('#skiLookup').click(function() {
 		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
 		//theBrand = ( $$('#brand').val() );
     //theBrand = $$('#list_brand .item-content .item-inner .item-after').text();
+    if (offline) return onOffline();
     myApp.showIndicator();
     if ($$('#list_model')) $$('#list_model').remove();
     if ($$('#list_year')) $$('#list_year').remove();
@@ -116,6 +121,7 @@ $$('#skiLookup').click(function() {
   		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
   		//theModel = ( $$('#model').val() );
       //theModel = $$('#list_model .item-content .item-inner .item-after').text();
+      if (offline) return onOffline();
       myApp.showIndicator();
       if ($$('#list_year')) $$('#list_year').remove();
       //if ($$('#list_length')) $$('#list_length').remove();
@@ -192,6 +198,7 @@ function getLengths() {
   		//$$('#factory_current,#factory_my_name,#factory_submit').hide(); // HIDE THESE
       //if (yearVal) {
   		    //theYear = ( $$("#year").val() );
+          if (offline) return onOffline();
           myApp.showIndicator();
         if ($$('#list_length')) $$('#list_length').remove();
         if ($$('#list_year')) $$('#list_year').remove();
@@ -248,6 +255,7 @@ function getLengths() {
 //    $$('#factory_length').change(function() {
 function getStockSettings(nullYear) {
   console.log('nullYear = ' + nullYear);
+  if (offline) return onOffline();
   myApp.showIndicator();
       /*if ( (typeof theYear == 'undefined') || theYear == null  ) {
         theYear = null;

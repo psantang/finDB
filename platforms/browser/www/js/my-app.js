@@ -1,7 +1,7 @@
 // only needed for ios/android interface differences
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
-
+var offline = true;
 // only needed for ios/android interface differences if using Template7
 /*
 Template7.global = {
@@ -48,6 +48,16 @@ var mainView = myApp.addView('.view-main', {
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!  Device name is " + device.name);
+
+    if (navigator.connection && navigator.connection.type == Connection.NONE) {
+          console.log('NO NETWORK CONNECTION');
+      } else {
+          console.log('NETWORK CONNECTION ESTABLISHED.');
+          offline=false;
+      }
+
+  document.addEventListener("offline", onOffline, false);
+  document.addEventListener("online", onOnline, false);
 
 
 
@@ -142,6 +152,34 @@ $$(document).on('deviceready', function() {
 */
 
 }); // end DeviceReady
+
+
+function onOffline() {
+      offline = true;
+      myApp.addNotification({
+         title: 'Connection Status',
+         message: 'No network connection established.  Ski lookup requires network access.'
+      });
+        //if (isIos) $$('.fa-wifi').removeClass('color-green').addClass('color-gray');
+         //else $$('.fa-wifi').removeClass('color-white').addClass('color-gray');
+         //$$('.left').html('Offline');
+         return false;
+  }
+
+  function onOnline() {
+      offline = false;
+          // Show a toast notification to indicate the change
+          myApp.addNotification({
+              title: 'Connection Status',
+              message: 'A previously connected device has come back online'
+          });
+          // Set the wifi icon colors to reflect the change
+          //if (isIos) $$('.fa-wifi').removeClass('color-gray').addClass('color-green');
+          //else $$('.fa-wifi').removeClass('color-gray').addClass('color-white');
+          //$$('.left').html('Online');
+
+      }
+
 
 
 

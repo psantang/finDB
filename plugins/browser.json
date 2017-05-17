@@ -15,6 +15,18 @@
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
         }
     },
     "dependent_plugins": {}
