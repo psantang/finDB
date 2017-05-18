@@ -1,4 +1,4 @@
-
+//var t; //timeout variable
 $$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
   //$$('#factory_brand').show();
@@ -6,7 +6,7 @@ $$('#skiLookup').click(function() {
   if (offline) return onOffline();
 
 
-  myApp.showIndicator();
+
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
@@ -33,9 +33,14 @@ $$('#skiLookup').click(function() {
 
     , beforeSend: function(){
       console.log('beforeSend skiLookup for brands');
+      //setTimeout( myApp.showIndicator(),4200);
+      //t = setTimeout( myApp.showIndicator , 200);
+      myApp.showIndicator();
+      //console.log('brandTimout is ' + t);
 
     }, complete: function(){
         console.log('complete skiLookup for brands');
+        //clearTimeout(t); //myApp.hideIndicator();
         $$('#brand_select_id').click();
 
         // I animate closing these when user saves settings, so need to unanimate them
@@ -66,7 +71,7 @@ $$('#skiLookup').click(function() {
 		//theBrand = ( $$('#brand').val() );
     //theBrand = $$('#list_brand .item-content .item-inner .item-after').text();
     if (offline) return onOffline();
-    myApp.showIndicator();
+
     if ($$('#list_model')) $$('#list_model').remove();
     if ($$('#list_year')) $$('#list_year').remove();
     if ($$('#list_length')) $$('#list_length').remove();
@@ -95,6 +100,7 @@ $$('#skiLookup').click(function() {
       }, timout: 5000
       , beforeSend: function(){
         console.log('beforeSend skiLookup for models');
+        myApp.showIndicator();
 
       }, complete: function(){
           console.log('complete skiLookup for models');
@@ -122,7 +128,7 @@ $$('#skiLookup').click(function() {
   		//theModel = ( $$('#model').val() );
       //theModel = $$('#list_model .item-content .item-inner .item-after').text();
       if (offline) return onOffline();
-      myApp.showIndicator();
+
       if ($$('#list_year')) $$('#list_year').remove();
       //if ($$('#list_length')) $$('#list_length').remove();
       $$("#skiSelected").html('').hide();
@@ -163,6 +169,7 @@ $$('#skiLookup').click(function() {
   		}, timout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for years');
+          myApp.showIndicator();
 
         }, complete: function(){
           if (yearVal) {
@@ -199,7 +206,7 @@ function getLengths() {
       //if (yearVal) {
   		    //theYear = ( $$("#year").val() );
           if (offline) return onOffline();
-          myApp.showIndicator();
+
         if ($$('#list_length')) $$('#list_length').remove();
         if ($$('#list_year')) $$('#list_year').remove();
         $$("#skiSelected").html('').hide();
@@ -235,7 +242,7 @@ function getLengths() {
       }, timout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
-
+          myApp.showIndicator();
         }, complete: function(){
             console.log('in complete for lengthsObj');
             myApp.hideIndicator();
@@ -256,7 +263,7 @@ function getLengths() {
 function getStockSettings(nullYear) {
   console.log('nullYear = ' + nullYear);
   if (offline) return onOffline();
-  myApp.showIndicator();
+
       /*if ( (typeof theYear == 'undefined') || theYear == null  ) {
         theYear = null;
       } else {
@@ -294,7 +301,7 @@ function getStockSettings(nullYear) {
       }, timout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
-
+          myApp.showIndicator();
         }, complete: function(){
             console.log('in complete for stock_Obj');
 
