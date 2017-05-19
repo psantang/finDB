@@ -131,25 +131,17 @@ $$(document).on('deviceready', function() {
 
 
 
-    //$$('#skiSelected').transitionEnd(function(){ $$('#skiSelected').css({'height':'100px','opacity':1}).transition(2000); });
 
-    if ( getLocalStorage('stockSkis').length>2 ) {
-      //if ( $$("#getLocalSettings_div").css('display') == 'none') {
-      //  $$("#getLocalSettings_div").show();
+    if ( getLocalStorage('stockSkis') ) {
         getLocalSettings();
-      //}
     } else { // show message on front page so user knows how to get started
       $$('<div class="center">Start by selecting the link below, then choose a ski brand, model, length and year (optional).<p>Save for quick access in the future.</div>').insertAfter('#indexTitle');
     }
 
     //$$('#factory_brand').transitionEnd(function(){ console.log('!!! TRANSITION ENDED !!!!'); });
 
-    console.log('navigator object is ' + navigator.connection);
-/*
-    if (navigator.connection.type.toLowerCase() == 'none') {
-      alert('No network connection available.');
-    }
-*/
+    //console.log('navigator object is ' + navigator.connection);
+
 
 }); // end DeviceReady
 
@@ -168,11 +160,16 @@ function onOffline() {
 
   function onOnline() {
       offline = false;
+      if ($$('.close-notification')) {
+        $$('.close-notification').click();
+      }
           // Show a toast notification to indicate the change
+      /*
           myApp.addNotification({
               title: 'Connection Status',
               message: 'A previously connected device has come back online'
           });
+      */
           // Set the wifi icon colors to reflect the change
           //if (isIos) $$('.fa-wifi').removeClass('color-gray').addClass('color-green');
           //else $$('.fa-wifi').removeClass('color-gray').addClass('color-white');

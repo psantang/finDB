@@ -245,9 +245,11 @@ function deleteStockSki (theID) {
     var stockSkis_Obj = JSON.parse( getLocalStorage('stockSkis') );
     console.log('before stocksSkis_Obj is ' + stockSkis_Obj);
     stockSkis_Obj.splice(deleteIndex,1);
-    console.log('AFTER stocksSkis_Obj is ' + stockSkis_Obj);
+    console.log('AFTER stocksSkis_Obj is ' + stockSkis_Obj + ' and length of object is ' + stockSkis_Obj.length);
     deleteAllStockSkis ();
-    localStorage.setItem('stockSkis', JSON.stringify(stockSkis_Obj));
+    if (stockSkis_Obj.length>0) {
+      localStorage.setItem('stockSkis', JSON.stringify(stockSkis_Obj));
+    }
   //localStorage.removeItem('stockSkis');
   //console.log('stockSkis removed from local storage');
 }
