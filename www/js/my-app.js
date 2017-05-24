@@ -158,11 +158,11 @@ $$(document).on('deviceready', function() {
       }
       console.log('theBrand is ' + theBrand);
       myApp.pickerModal(
-        '<div class="picker-modal">' +
+        '<div class="picker-modal" id="measure_picker">' +
           '<div class="toolbar">' +
             '<div class="toolbar-inner">' +
               '<div class="left bold">Measuring for ' +theBrand+'</div>' +
-              '<div class="right"><a href="#" class="close-picker">Close</a></div>' +
+              '<div class="right"><a href="#" class="close-picker"><i class="f7-icons">close_round_fill</i></a></div>' +
             '</div>' +
           '</div>' +
           '<div class="picker-modal-inner">' +

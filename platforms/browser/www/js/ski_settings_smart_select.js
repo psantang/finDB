@@ -287,7 +287,7 @@ function getStockSettings(nullYear) {
           if (stock_Obj[0].RETURN_CODE==1) {
             $$("#skiSelected").html('<div class="row head_setting_table"><div class="col-20">Binding</div><div class="col-20">Length</div><div class="col-20">Depth</div><div class="col-20">DFT</div><div class="col-20">Wing</div></div>');
             $$("#skiSelected").append('<div class="row data_setting_table"><div class="col-20" id="stock_binding">'+stock_Obj[0].stock_binding_location+'</div><div class="col-20" id="stock_length">'+stock_Obj[0].stock_fin_length+'</div><div class="col-20" id="stock_depth">'+stock_Obj[0].stock_fin_depth+'</div><div class="col-20" id="stock_dft">'+stock_Obj[0].stock_fin_dft+'</div><div class="col-20"  id="stock_wing_angle">'+stock_Obj[0].stock_wing_angle+'</div></div>');
-            $$("#skiSelected").append('<div class="center"><a href="#" class="create-picker brand_'+theBrand+'">How is this measured?</a></div>');
+            $$("#skiSelected").append('<div class="center top_padding_5"><a href="#" class="create-picker brand_'+theBrand+'">How is this measured?</a></div>');
 
             if ($$("#saveStock").length<1) {
               $$('<div class="padding_top_5em"><a href="#" class="button button-fill" id="saveStock">Save to Stock List</a></div>').appendTo('#skiSelected');
