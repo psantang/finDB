@@ -96,3 +96,17 @@
 .lightBlueBG {
 background-color: rgba(33, 150, 243,.1);
 }
+
+.measure_table {
+  font-size: 1.1em;
+  padding: .2em 0em;
+  border-bottom:1px solid #333;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.size-20 { font-size: 20px !important}
+
+.orange {color: rgba(255, 132, 0, .6);}

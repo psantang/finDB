@@ -143,6 +143,59 @@ $$(document).on('deviceready', function() {
     //console.log('navigator object is ' + navigator.connection);
 
 
+
+    //$$('.create-picker').on('click', function () { // THIS BINDS IT IF ALREADY IN DOB
+    $$(document).on('click', '.create-picker', function () { // THIS BINDS IT IF DYNAMICALLY CREATED AFTER DOM INTIALLY LOADS
+      // Check first, if we already have opened picker
+      console.log($$(this).attr('class'));
+      //var theBrand=getBrandByClass($$(this).attr('class'));
+      var theBrand=getBrandByClass(this);
+      console.log('theBrand=' + theBrand);
+
+      if (theBrand) {
+      if ($$('.picker-modal.modal-in').length > 0) {
+        myApp.closeModal('.picker-modal.modal-in');
+      }
+      console.log('theBrand is ' + theBrand);
+      myApp.pickerModal(
+        '<div class="picker-modal">' +
+          '<div class="toolbar">' +
+            '<div class="toolbar-inner">' +
+              '<div class="left bold">Measuring for ' +theBrand+'</div>' +
+              '<div class="right"><a href="#" class="close-picker">Close</a></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="picker-modal-inner">' +
+            '<div class="content-block">' +
+              //'<div class="row measure_table"><div class="col-25 bold">Binding</div><div class="col-75">'+measureObj[theBrand].binding+'</div></div>' +
+              '<div class="row measure_table"><div class="col-25 bold">Binding</div><div class="col-75">'+measureObj[0][theBrand].binding+'</div></div>' +
+              '<div class="row measure_table"><div class="col-25 bold">Length</div><div class="col-75">'+measureObj[0][theBrand].length+'</div></div>' +
+              '<div class="row measure_table"><div class="col-25 bold">Depth</div><div class="col-75">'+measureObj[0][theBrand].depth+'</div></div>' +
+              '<div class="row measure_table"><div class="col-25 bold">DFT</div><div class="col-75">'+measureObj[0][theBrand].dft+'</div></div>' +
+              '<div class="row measure_table"><div class="col-25 bold">Wing</div><div class="col-75">'+measureObj[0][theBrand].wing+'</div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      )
+    } else {
+      var popoverHTML = '<div class="popover">'+
+                    '<div class="popover-inner">'+
+                      '<div class="content-block">'+
+                        '<p>No measurement data for this ski is documented.  However, standard practice is:</p>'+
+                        '<ul><li>Binding: From front heel</li>'+
+                        '<li>Length: Tips</li>'+
+                        '<li>Depth: Flat</li>'+
+                        '<li>DFT: Flat</li>'+
+                        '<li>Wing: Screws above</li>'+
+                        '</ul>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>';
+      myApp.popover(popoverHTML, this,  true);
+    }
+    });
+
+
 }); // end DeviceReady
 
 
@@ -163,6 +216,7 @@ function onOffline() {
       if ($$('.close-notification')) {
         $$('.close-notification').click();
       }
+
           // Show a toast notification to indicate the change
       /*
           myApp.addNotification({
@@ -263,3 +317,50 @@ $$(document).on('pageInit', '.page[data-select-name="length"]', function (e) {
 
 
 })
+
+
+function getBrandByClass (clickedObj) {
+  for (i=0; i<Object.keys(measureObj[0]).length; i++) {
+    var brandVar='brand_'+Object.keys(measureObj[0])[i];
+    if ( $$(clickedObj).hasClass(brandVar) ) return Object.keys(measureObj[0])[i];
+  }
+
+/*
+  if ( $$(clickedObj).hasClass('brand_Connelly') ) return 'Connelly';
+  if ( $$(clickedObj).hasClass('brand_D3') ) return 'D3';
+  if ( $$(clickedObj).hasClass('brand_Goode') ) return 'Goode';
+  if ( $$(clickedObj).hasClass('brand_Reflex') ) return 'Reflex';
+  else return false;
+  */
+}
+
+
+
+
+
+
+ console.log('triggering getHowToMeasure function');
+ var measureObj={}; // make object global
+ getHowToMeasure();
+
+function getHowToMeasure() {
+console.log('inside getHowToMeasure');
+ var url='http://finappv2.paulsantangelo.com/ws/ws_get_how_to_measure_ret_json.php';
+ $$.ajax({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
+   measureObj=measure_Obj;
+   console.log(Object.keys(measureObj[0]).length);
+   if (measureObj.length>0) { // RETURNED RESULTS
+     if (Object.keys(measureObj[0]).length>0) { // results have values
+       console.log('success in getting measured object');
+       console.log(measureObj);
+     } else {
+       console.log('No data found');
+     }
+   } else {
+     console.log('No object found');
+   }
+   console.log('measure_Obj.length is ' + measure_Obj.length);
+   console.log('measure_Obj[1].length is ' + measure_Obj[0].binding);
+ }
+});
+}

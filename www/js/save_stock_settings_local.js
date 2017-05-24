@@ -31,7 +31,7 @@ function displayStockSkis_listview(ski_Obj) {
       //str+="<a href='#' class='item-link item-content'>"; //  style='touch-action: manipulation;'
       str+="<div class='item-inner'>";
         str+="<div class='item-title-row'>";
-          str+="<div class='item-title'>" + ski_Obj[i][0].brand + " " + ski_Obj[i][0].model + " " + ski_Obj[i][0].length + "</div>";
+          str+="<div class='item-title'><a href='#' class='create-picker brand_"+ski_Obj[i][0].brand+"'><i class='size-20 orange f7-icons'>info_fill</i></a> " + ski_Obj[i][0].brand + " " + ski_Obj[i][0].model + " " + ski_Obj[i][0].length + "</div>";
           str+="<div class='item-after'>" + tmp_ski_year + "</div>";
         str+="</div>"; // item-title-row
 
@@ -43,6 +43,7 @@ function displayStockSkis_listview(ski_Obj) {
           str+="<div class='row head_setting_table sm'><div class='col-20'>Binding</div><div class='col-20'>Length</div><div class='col-20'>Depth</div><div class='col-20'>DFT</div><div class='col-20'>Wing</div></div>";
           str+="<div class='row data_setting_table sm'><div class='col-20'>"+ski_Obj[i][0].binding+"</div><div class='col-20'>"+ski_Obj[i][0].f_length+"</div><div class='col-20'>"+ski_Obj[i][0].f_depth+"</div><div class='col-20'>"+ski_Obj[i][0].f_dft+"</div><div class='col-20'>"+ski_Obj[i][0].f_wing_angle+"</div></div>";
       //str+="<p>" + ski_Obj[i][0].f_length + " " + ski_Obj[i][0].f_depth + " " + ski_Obj[i][0].f_dft + " " + ski_Obj[i][0].f_wing_angle + "</p>";
+          //str+="<div class='center'><a href='#' class='create-picker brand_"+ski_Obj[i][0].brand+"'><i class='f7-icons'>info</i></a></div>";
         str+="</div>";
       //str+="</div>";
         str+="<div class='swipeout-actions-right'><a href='#' class='swipeout-delete' id='stockSki_"+i+"_'>Delete</a></div>";
