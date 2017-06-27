@@ -134,8 +134,8 @@ background-color: rgba(33, 150, 243,.1);
   color:#333;
 }
 
-#loginForm .list-block {
-    margin-bottom:15px;
+.override_lb .list-block, .override_lb .content-block {
+    margin:50px 0 15px 0 !important;
 }
 
 #loginForm .list-block ul {
@@ -186,8 +186,12 @@ background-color: rgba(33, 150, 243,.1);
 #profilePage_div .item-media i {
  /*size-20 color-blue*/
   font-size: 20px;
-  color:blue;
+  color:#007aff;
  }
+
+#homeDetails .content-block {
+  margin:30px 0;
+}
 
  .page .content-block-title {
    font-weight: bold;

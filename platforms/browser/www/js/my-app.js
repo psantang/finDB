@@ -435,7 +435,7 @@ myApp.onPageInit('profile', function (page) {
                         '<div class="popover-inner">'+
                           '<div class="content-block">'+
                             '<p class="bold">Why offer this data?</p>' +
-                            '<p>As the systems gathers more data, you will be able to view the averages of other settings for your demographic.</p>'+
+                            '<p>As the systems gathers more data, you will be able to view the averages of other users settings for your demographic.</p>'+
                           '</div>'+
                         '</div>'+
                       '</div>';
