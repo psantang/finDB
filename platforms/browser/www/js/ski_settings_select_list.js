@@ -1,5 +1,6 @@
 
-$$('#skiLookup').click(function() {
+function skiLookup() {
+//$$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
@@ -15,7 +16,7 @@ $$('#skiLookup').click(function() {
     $$("#factory_brand").html(brandList).trigger('create');
 
 
-    }, timout: 5000
+    }, timeout: 5000
 
     , beforeSend: function(){
       console.log('beforeSend skiLookup for brands');
@@ -31,8 +32,8 @@ $$('#skiLookup').click(function() {
         }
     }
   }) // END ajax function for ski brands
-});
-
+//});
+}
 
 
 
@@ -52,7 +53,7 @@ $$('#factory_brand').change(function() {
 			});
 			modelList += '</select></div>';
 			$$("#factory_model").html(modelList).trigger('create');
-      }, timout: 5000
+      }, timeout: 5000
 
       , beforeSend: function(){
         console.log('beforeSend skiLookup for models');
@@ -94,7 +95,7 @@ $$('#factory_brand').change(function() {
         } else {
           yearVal=false;
         }
-  		}, timout: 5000
+  		}, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for years');
 
@@ -143,7 +144,7 @@ $$('#factory_brand').change(function() {
   			lengthList += '</select></div>';
   			$$("#factory_length").html(lengthList).trigger('create');
 
-      }, timout: 5000
+      }, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
 
@@ -176,7 +177,7 @@ $$('#factory_brand').change(function() {
           }
         }
 
-      }, timout: 5000
+      }, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
 

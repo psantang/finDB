@@ -1,18 +1,27 @@
-//var t; //timeout variable
-$$('#skiLookup').click(function() {
+function skiLookup() {
+//$$('#skiLookup').click(function() {
   console.log('skiLookkup clicked');
   //$$('#factory_brand').show();
   console.log('offline is '+ offline);
   if (offline) return onOffline();
 
+  if ($$('.page #list_brand')) $$('.page #list_brand').remove();
+  if ($$('.page .smart-select #brand_select_id')) $$('.page .smart-select #brand_select_id').remove();
 
+  if ($$('.page #list_model')) $$('.page #list_model').remove();
+  if ($$('.page .smart-select #model_select_id')) $$('.page .smart-select #model_select_id').remove();
 
+  if ($$('.page #list_length')) $$('.page #list_length').remove();
+  if ($$('.page .smart-select #length_select_id')) $$('.page .smart-select #length_select_id').remove();
+
+  if ($$('.page #list_year')) $$('.page #list_year').remove();
+  if ($$('.page .smart-select #year_select_id')) $$('.page .smart-select #year_select_id').remove();
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
   $$.ajax({url:url,data:{ ski_attr: "brands"},type:'POST',dataType: 'json',success:function(brandsObj) {
     console.log('in success for skiLookup for brands');
-    $$("#skiSelected").html('').hide();
+    $$(".page #skiSelected").html('').hide();
   //var brandList = '<div class="item-input"><select name="brand" id="brand">';
 
     var brandList = '<ul id="ul_stock_list"><li id="list_brand"><a href="#" class="item-link smart-select" data-back-on-select="true" data-page-title="Ski Brand"><select name="brand" id="brand_select_id" class="brand_class">';
@@ -25,28 +34,25 @@ $$('#skiLookup').click(function() {
 
 
 
-    $$("#factory_brand").html(brandList).trigger('create');
-    $$("#skiLookup").hide();
+    $$(".page #factory_brand").html(brandList).trigger('create');
+    $$(".page #skiLookup").hide();
 
 
-    }, timout: 5000
+    }, timeout: 5000
 
     , beforeSend: function(){
       console.log('beforeSend skiLookup for brands');
       //setTimeout( myApp.showIndicator(),4200);
       //t = setTimeout( myApp.showIndicator , 200);
       myApp.showIndicator();
-      //console.log('brandTimout is ' + t);
+      //console.log('brandtimeout is ' + t);
 
     }, complete: function(){
         console.log('complete skiLookup for brands');
-        //clearTimeout(t); //myApp.hideIndicator();
-        $$('#brand_select_id').click();
+        $$('.page #brand_select_id').click();
 
         // I animate closing these when user saves settings, so need to unanimate them
-        //$$('#saveStock').css({'opacity':1,'height':'auto'});
-        $$('#factory_brand').css({'opacity':1,'display':'block','height':'auto'});
-        //$$('#skiSelected').css({'opacity':1,'height':'auto'});
+        $$('.page #factory_brand').css({'opacity':1,'display':'block','height':'auto'});
         myApp.hideIndicator();
 
     }, error: function(brandsObj, status, err) {
@@ -57,8 +63,8 @@ $$('#skiLookup').click(function() {
         }
     }
   }) // END ajax function for ski brands
-});
-
+//});
+}
 
 
 
@@ -72,13 +78,25 @@ $$('#skiLookup').click(function() {
     //theBrand = $$('#list_brand .item-content .item-inner .item-after').text();
     if (offline) return onOffline();
 
-    if ($$('#list_model')) $$('#list_model').remove();
-    if ($$('#list_year')) $$('#list_year').remove();
-    if ($$('#list_length')) $$('#list_length').remove();
-    $$("#skiSelected").html('').hide();
+    if ($$('.page #list_model')) $$('.page #list_model').remove();
+    if ($$('.page .smart-select #model_select_id')) $$('.page .smart-select #model_select_id').remove();
+
+    if ($$('.page #list_length')) $$('.page #list_length').remove();
+    if ($$('.page .smart-select #length_select_id')) $$('.page .smart-select #length_select_id').remove();
+
+    if ($$('.page #list_year')) $$('.page #list_year').remove();
+    if ($$('.page .smart-select #year_select_id')) $$('.page .smart-select #year_select_id').remove();
+
+
+    $$(".page #skiSelected").html('').hide();
 
     //theBrand = $$('.smart-select select')["0"].value;
-    theBrand = $$('.smart-select #brand_select_id')["0"].value;
+    //if ( $$('.page .smart-select #brand_select_id')["1"] ) $$('.page .smart-select #brand_select_id')["1"].remove();
+
+    //console.log('HOLY COW!!!!! brand is  ' +  $$(".page .smart-select .item-after").text() );
+    //$$(".page .smart-select .item-after").html($$('.page .smart-select #brand_select_id')["0"].value);
+
+    theBrand = $$('.page .smart-select #brand_select_id')["0"].value;
 
     console.log('factory_Brand fired change...theBrand = ' + theBrand)
     var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
@@ -93,11 +111,9 @@ $$('#skiLookup').click(function() {
 
       modelList += '</select><div class="item-content"><div class="item-inner"><div class="item-title">Model</div><div class="item-after"></div></div></div></a>';
 
-			$$("#ul_stock_list").append(modelList).trigger('create');
-      //$$("#factory_model").html(modelList).trigger('create');
-      //$$("#factory_model").html(modelList).trigger('create');
+			$$(".page #ul_stock_list").append(modelList).trigger('create');
 
-      }, timout: 5000
+      }, timeout: 5000
       , beforeSend: function(){
         console.log('beforeSend skiLookup for models');
         myApp.showIndicator();
@@ -106,6 +122,14 @@ $$('#skiLookup').click(function() {
           console.log('complete skiLookup for models');
           //$$('#model_select_id').click(); // this would autoclick the next selector, but not the correct place to put it.
           console.log('after click triggered');
+
+/*
+          if ($$(".page #list_brand .item-content .item-inner .item-after").text() == null) {
+            console.log("      IN empty brand after selected");
+            $$(".page #list_brand .item-content .item-inner .item-after").text($$('.page .smart-select #brand_select_id')["0"].value) ;
+          }
+*/
+
           myApp.hideIndicator();
 
       }, error: function(brandsObj, status, err) {
@@ -129,12 +153,13 @@ $$('#skiLookup').click(function() {
       //theModel = $$('#list_model .item-content .item-inner .item-after').text();
       if (offline) return onOffline();
 
-      if ($$('#list_year')) $$('#list_year').remove();
+      if ($$('.page #list_year')) $$('.page #list_year').remove();
+      if ($$('.page .smart-select #year_select_id')) $$('.page .smart-select #year_select_id').remove();
       //if ($$('#list_length')) $$('#list_length').remove();
-      $$("#skiSelected").html('').hide();
+      $$(".page #skiSelected").html('').hide();
 
       //theLength = $$('.smart-select select')["2"].value;
-      theLength = $$('.smart-select #length_select_id')["0"].value;
+      theLength = $$('.page .smart-select #length_select_id')["0"].value;
       //theModel = $$('.smart-select select')["1"].value;
       //console.log('model change fired...theModel = ' + theModel)
 
@@ -161,12 +186,12 @@ $$('#skiLookup').click(function() {
     				yearList += '<option value="'+ value.year + '">'+ value.year + '</option>';
     			});
     			yearList += '</select><div class="item-content"><div class="item-inner"><div class="item-title">Year</div><div class="item-after"></div></div></div></a>';
-    			$$("#ul_stock_list").append(yearList).trigger('create');
+    			$$(".page #ul_stock_list").append(yearList).trigger('create');
         } else {
           yearVal=false;
           theYear=null;
         }
-  		}, timout: 5000
+  		}, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for years');
           myApp.showIndicator();
@@ -207,12 +232,17 @@ function getLengths() {
   		    //theYear = ( $$("#year").val() );
           if (offline) return onOffline();
 
-        if ($$('#list_length')) $$('#list_length').remove();
-        if ($$('#list_year')) $$('#list_year').remove();
-        $$("#skiSelected").html('').hide();
+          if ($$('.page #list_length')) $$('.page #list_length').remove();
+          if ($$('.page .smart-select #length_select_id')) $$('.page .smart-select #length_select_id').remove();
+
+          if ($$('.page #list_year')) $$('.page #list_year').remove();
+          if ($$('.page .smart-select #year_select_id')) $$('.page .smart-select #year_select_id').remove();
+
+        $$(".page #skiSelected").html('').hide();
 
         //theModel = $$('.smart-select select')["1"].value;
-        theModel = $$('.smart-select #model_select_id')["0"].value;
+      //  console.log('HOLY Macroni!!!!! models is  ' +  $$(".page .smart-select .item-after").text() );
+        theModel = $$('.page .smart-select #model_select_id')["0"].value;
         /*
         if (nullYear == null) {
           theYear=null;
@@ -237,9 +267,9 @@ function getLengths() {
   				lengthList += '<option value="'+ value.length + '">'+ value.length + '</option>';
   			});
         lengthList += '</select><div class="item-content"><div class="item-inner"><div class="item-title">Length</div><div class="item-after"></div></div></div></a>';
-        $$("#ul_stock_list").append(lengthList).trigger('create');
+        $$(".page #ul_stock_list").append(lengthList).trigger('create');
 
-      }, timout: 5000
+      }, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
           myApp.showIndicator();
@@ -274,7 +304,7 @@ function getStockSettings(nullYear) {
         theYear=null;
       } else {
       //theYear = $$('.smart-select select')["3"].value;
-      theYear = $$('.smart-select #year_select_id')["0"].value;
+      theYear = $$('.page .smart-select #year_select_id')["0"].value;
     }
 
 
@@ -285,21 +315,21 @@ function getStockSettings(nullYear) {
   		$$.ajax({url:url,data:{ theBrand:theBrand, theModel:theModel, theYear:theYear, theLength:theLength},type:'POST',dataType: 'json',success:function(stock_Obj) {
         if (stock_Obj.length>0) { // RETURNED RESULTS
           if (stock_Obj[0].RETURN_CODE==1) {
-            $$("#skiSelected").html('<div class="row head_setting_table"><div class="col-20">Binding</div><div class="col-20">Length</div><div class="col-20">Depth</div><div class="col-20">DFT</div><div class="col-20">Wing</div></div>');
-            $$("#skiSelected").append('<div class="row data_setting_table"><div class="col-20" id="stock_binding">'+stock_Obj[0].stock_binding_location+'</div><div class="col-20" id="stock_length">'+stock_Obj[0].stock_fin_length+'</div><div class="col-20" id="stock_depth">'+stock_Obj[0].stock_fin_depth+'</div><div class="col-20" id="stock_dft">'+stock_Obj[0].stock_fin_dft+'</div><div class="col-20"  id="stock_wing_angle">'+stock_Obj[0].stock_wing_angle+'</div></div>');
-            $$("#skiSelected").append('<div class="center top_padding_5"><a href="#" class="create-picker brand_'+theBrand+'">How is this measured?</a></div>');
+            $$(".page #skiSelected").html('<div class="row head_setting_table"><div class="col-20">Binding</div><div class="col-20">Length</div><div class="col-20">Depth</div><div class="col-20">DFT</div><div class="col-20">Wing</div></div>');
+            $$(".page #skiSelected").append('<div class="row data_setting_table"><div class="col-20" id="stock_binding">'+stock_Obj[0].stock_binding_location+'</div><div class="col-20" id="stock_length">'+stock_Obj[0].stock_fin_length+'</div><div class="col-20" id="stock_depth">'+stock_Obj[0].stock_fin_depth+'</div><div class="col-20" id="stock_dft">'+stock_Obj[0].stock_fin_dft+'</div><div class="col-20"  id="stock_wing_angle">'+stock_Obj[0].stock_wing_angle+'</div></div>');
+            $$(".page #skiSelected").append('<div class="center top_padding_5"><a href="#" class="create-picker brand_'+theBrand+'">How is this measured?</a></div>');
 
-            if ($$("#saveStock").length<1) {
-              $$('<div class="padding_top_5em"><a href="#" class="button button-fill" id="saveStock">Save to Stock List</a></div>').appendTo('#skiSelected');
+            if ($$(".page #saveStock").length<1) {
+              $$('<div class="padding_top_5em"><a href="#" class="button button-fill" id="saveStock">Save to Stock List</a></div>').appendTo('.page #skiSelected');
             }
 
-        		$$("#skiSelected").show();
+        		$$(".page #skiSelected").show();
           } else {
             console.log('json success, but no stock ski data found.');
           }
         }
 
-      }, timout: 5000
+      }, timeout: 5000
         , beforeSend: function(){
           console.log('beforeSend skiLookup for length');
           myApp.showIndicator();
@@ -311,9 +341,9 @@ function getStockSettings(nullYear) {
             $$('#factory_brand').css({'height':fbHeight+'px'});
             document.getElementById('factory_brand').style.height = fbHeight+'px';
 
-            $$('#saveStock').css({'opacity':1,'height':'auto'});
+            $$('.page #saveStock').css({'opacity':1,'height':'auto'});
             //$$('#factory_brand').css({'opacity':1,'display':'show','height':'auto'});
-            $$('#skiSelected').css({'opacity':1,'height':'auto'});
+            $$('.page #skiSelected').css({'opacity':1,'height':'auto'});
             myApp.hideIndicator();
 
     		}, error: function(stock_Obj, status, err) {

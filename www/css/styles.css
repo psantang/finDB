@@ -22,8 +22,12 @@
   margin:0px 0px;
 }
 
-#skiLookup {
-  background-color: rgba(255, 255, 255, .4);
+.inlineBlock {
+  display:inline-block !important;
+}
+
+#skiLookup , .skiLookupHomePageBtn, #registerBtn, .whiteTransBG {
+  background-color: rgba(255, 255, 255, .4) !important;
 }
 
 #stockSkiListing_div.content-block-title {
@@ -75,6 +79,21 @@
   padding: .25em 0;
 }
 
+
+#loginError {
+    text-align: center;
+    color: #F00;
+}
+
+.redText {
+    color: #F00 !important;
+}
+
+.darkGrayText1_1em {
+    color: #333 !important;
+    font-size: 1.1em;
+}
+
 #ul_saved_list li {
   padding-left:12px;
 }
@@ -96,6 +115,14 @@
   text-align: center;
 }
 
+.margin-left_1em {
+  margin-left: 1em !important;
+}
+
+.margin-right_1em {
+  margin-right: 1em !important;
+}
+
 .lightBlueBG {
 background-color: rgba(33, 150, 243,.1);
 }
@@ -105,6 +132,14 @@ background-color: rgba(33, 150, 243,.1);
   padding: .2em 0em;
   border-bottom:1px solid #333;
   color:#333;
+}
+
+#loginForm .list-block {
+    margin-bottom:15px;
+}
+
+#loginForm .list-block ul {
+  background-color: rgba(255, 255, 255,.5);
 }
 
 .bold {
@@ -136,6 +171,177 @@ background-color: rgba(33, 150, 243,.1);
   background-image: url(../img/water_bg.jpg) !important;
 }
 
+#loginPage {
+  background-image: url(../img/homePageImg1_60_opacity.jpg) !important;
+}
+
+#viewHistoryDiv {
+  margin-top: 1.2em !important;
+}
+
 .page-content {
   background-color: rgba(255,255,255,.3) !important;
+}
+
+#profilePage_div .item-media i {
+ /*size-20 color-blue*/
+  font-size: 20px;
+  color:blue;
+ }
+
+ .page .content-block-title {
+   font-weight: bold;
+   font-size: 1.25em;
+   margin-top:30px;
+ }
+
+.page .content-block-title .rightIcon {
+  float: right;
+  padding-bottom: .15em;
+  font-weight: normal;
+}
+
+.page .content-block-title .rightText {
+  float: right;
+  font-weight: normal;
+  font-size: initial;
+}
+
+.vertAlignMiddle {
+  vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+/* DATA TABLES */
+.data-table {
+  overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table thead {
+    font-size: 12px;
+    border-bottom: 1px solid #8e8e93;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+
+
+.data-table thead td:not(.sortable-active), .data-table thead th:not(.sortable-active) {
+    color: #8e8e93;
+}
+
+.data-table th.numeric-cell {
+    text-align: right;
+}
+
+
+.data-table td, .data-table th {
+    padding: 0;
+    position: relative;
+    padding-left: 0px;
+    padding-right: 15px;
+    height: 2.0em;
+}
+
+
+.data-table td.numeric-cell, .data-table th.numeric-cell {
+    text-align: right;
+}
+
+
+.notesPopUpHistory {
+  color: #8e8e93;
+  font-size: 12px;
+  border-bottom: 1px solid #8e8e93;
+  color: #8e8e93;
+  font-weight: bold;
+  margin: .8em 0 0 0;
+}
+
+.notesPopUpDetails {
+  margin: 0 0 1.2em 0;
+}
+
+.closePopup {
+  float: right;
+  padding: 1em;
+}
+
+.smallText {
+  font-size: .9em;
+  padding-left: 1.2em;
+}
+
+/* ALTER SLIDER ON MY SETTINGS PAGE */
+#settingsAdjuster .range-slider input[type=range] {
+  background-size: 100% 9px !important;
+  background: linear-gradient(to right,rgba(255, 132, 0, .6) 0,rgba(0, 122, 255, .6) 100%)!important;
+  height:36px !important;
+}
+
+.stockText {
+  color:#999;
+  line-height: .9em;
+  font-size: .95em;
+}
+.slideAdjust {
+  display:none;
+}
+
+.createdDateText {
+  font-size: .8em;
+  font-weight: normal;
+  color: #888;
+  text-overflow: ellipsis;
+  max-width: 40%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.lightOrangeBG {
+  background-color: rgba(255, 132, 0, .2);
+}
+
+.floatLeft {
+  float:left;
+  margin-right: 1.0em;
+}
+
+.overFlowHidden {
+  overflow: hidden;
+  width: 95%;
+}
+
+.checkedRadio {
+  font-weight: bold;
+}
+
+.measureOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto auto auto .7em;
+  font-size:.9em;
+  color:#007aff;
+  background-color: rgba(255, 255, 255, .7);
+  display:table;
 }

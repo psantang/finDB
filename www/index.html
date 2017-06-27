@@ -39,143 +39,99 @@
   -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
-
+    <link rel="stylesheet" href="css/animate.min.css">
 
 
 </head>
 
 <body>
-    <!-- Status bar overlay for full screen mode (PhoneGap) -->
-    <div class="statusbar-overlay"></div>
+  <div class="views">
+      <div class="view view-main">
 
-    <!-- Panels overlay-->
-    <div class="panel-overlay"></div>
-    <!-- Left panel with reveal effect-->
-    <div class="panel panel-left panel-reveal">
-        <div class="content-block">
-          <b>Features</b>
-          <ul>
-            <li>Stock binding, fin, and wing settings</li>
-            <li>Save for ease of access</li>
-            <li>How each manufacturer measures</li>
-            <li>Delete saved skis by swiping left</li>
-          </ul>
-          <p>
-            More skis will be added to the database.
-          </p>
-          <p>
-            Future release will offer the ability to save custom ski settings and save/view setup history.
-          </p>
+        <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left"> </div>
+                <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                <div class="center sliding">finDB</div>
+                <div class="right"> </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Views -->
-    <div class="views">
-        <!-- Your main view, should have "view-main" class -->
-        <div class="view view-main">
-            <!-- Top Navbar-->
 
-            <!-- Dynamic navbar for iOS theme -->
+      <div class="pages navbar-through">
+        <!-- Page, "data-page" contains page name -->
+        <div class="page" data-page="login" id="loginPage">
 
-            <div class="navbar">
-                <div class="navbar-inner">
-                  <div class="left"></div>
-                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">finDB</div>
-                    <div class="right">
-                        <!--
-                          Right link contains only icon - additional "icon-only" class
-                          Additional "open-panel" class tells app to open panel when we click on this link
-                        -->
-                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-                    </div>
+            <!-- Scrollable page content -->
+            <div class="page-content">
+              <form id="loginForm">
+                <div class="list-block">
+                  <ul>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Username</div>
+                        <div class="item-input">
+                          <input type="text" name="user_name" id="user_name" placeholder="Username" value='paul'>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Password</div>
+                        <div class="item-input">
+                          <input type="password" name="pwd" id="pwd" placeholder="Password" value='calgary1'>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-            </div>
+                </form>
 
+                          <div id='loginError'></div>
 
-
-
-
-
-
-            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-            <div class="pages navbar-through toolbar-through">
-
-
-                <!-- Page, "data-page" contains page name -->
-                <div data-page="index" class="page">
-
-
-
-
-                    <!-- Scrollable page content -->
-                    <div class="page-content">
-                        <div class="content-block">
-                            <div class='black1_1_heading margin_1em_bottom center' id='indexTitle'>Water Ski Stock Settings Lookup System</div>
-
-
-                            <!--<div class="content-block-title">-->
-                              <div id='skiSelector_div'>
-                                <a href="#" class="button" id="skiLookup">Find Stock Ski Settings</a>
+                          <div class="center">
+                            <a href="#" class="inlineBlock whiteTransBG button margin-right_1em" id="loginBtn">Sign In</a>
+                            <a href="#" class="inlineBlock whiteTransBG margin-left_1em button">Forgot Password</a>
+                          </div>
+                          <!--
+                          <div class="list-block">
+                            <ul>
+                              <li>
+                                <a href="#" class="item-link list-button" id="loginBtn">Sign In</a>
+                              </li>
+                              <li>
+                                <a href="register.html" class="item-link list-button close-login-screen" id="forgotBtn">Forgot Password</a>
+                              </li>
+                            </ul>
+                            </div>-->
+                            <!--<div id='pendActivation'></div>-->
+                            <div class="content-block">
+                            <div class="darkGrayText1_1em"><span class="bold center">Use finDB to save custom settings</span>
+                              <ul>
+                                <li>choose skis to add to your list</li>
+                                <li>view stock settings for each</li>
+                                <li>save custom settings per ski</li>
+                                <li>view history of previous settings</li>
+                              </ul>
+                              <div><a href="register.html" class="button close-login-screen" id="registerBtn">Register to Begin</a></div>
+                              <div class="center">
+                                <br /><br />Or use to simply lookup stock settings.</div>
                               </div>
-
-                            <!--</div>-->
-
-                            <div id="factory_brand" class="list-block"></div>
-
+                              <div><a href="about.html" class="button skiLookupHomePageBtn">Find Stock Ski Settings</a></div>
+                            </div>
+                          </div>
 
 
-                            <div id="skiSelected" style="display:none"></div>
+                      </div> <!-- /page-content -->
+                    </div>
+                  </div><!-- END PAGES -->
+              </div>
 
-
-                            <!--<div id="getLocalSettings_div">-->
-                              <!--<a href="#" class="button" id="getLocalSettings">View my List</a>-->
-                              <div id='stockSkiListing_div'></div>
-                            <!--</div>-->
-
-
-                            <!--<div><a href="#" class="button" id="deleteStockSkis">Delete Ski List</a></div>-->
-
-                            <!--<div><a href="#about">About app</a></div>-->
-
-
-
-
-
-
-                        </div> <!-- END CONTENT BLOCK -->
-                    </div> <!-- END PAGE CONTENT -->
-
-
-
-
-
-
-
-
-
-                </div> <!-- END PAGE -->
-
-
-            </div> <!-- END PAGES -->
-
-
-            <!-- Bottom Toolbar-->
-            <!--
-            <div class="toolbar">
-                <div class="toolbar-inner">
-                    <a href="#" class="link">Link 1</a>
-                    <a href="#" class="link">Link 2</a>
-                </div>
             </div>
-          -->
 
 
-
-
-
-        </div> <!-- END VIEW -->
-    </div> <!-- END VIEWS -->
+<!--         </div> END VIEW -->
+<!--    </div>  END VIEWS -->
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.js"></script>
@@ -204,7 +160,16 @@
          })();
        </script>
 
+
     <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/userClass.js"></script>
+    <script type="text/javascript" src="js/skiClass.js"></script>
+    <script type="text/javascript" src="js/settingsClass.js"></script>
+    <script type="text/javascript" src="js/profile.js"></script>
+    <script type="text/javascript" src="js/register.js"></script>
+    <script type="text/javascript" src="js/mySettings.js"></script>
+    <script type="text/javascript" src="js/mySkis.js"></script>
+    <script type="text/javascript" src="js/add_ski_smart_select.js"></script>
     <script type="text/javascript" src="js/ski_settings_smart_select.js"></script>
     <script type="text/javascript" src="js/save_stock_settings_local.js"></script>
 
