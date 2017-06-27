@@ -27,6 +27,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
         }
     },
     "dependent_plugins": {}

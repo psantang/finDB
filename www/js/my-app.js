@@ -1,30 +1,16 @@
 // only needed for ios/android interface differences
+// Determine theme depending on device
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
-var offline = true;
-// only needed for ios/android interface differences if using Template7
-/*
+
+// Set Template7 global devices flags
 Template7.global = {
     android: isAndroid,
     ios: isIos
 };
-*/
-
-
-
-
-// Init App
-var myApp = new Framework7({
-    // Enable Material theme for Android device only
-    material: isAndroid ? true : false //,
-    // Enable Template7 pages
-    //template7Pages: true
-});
-
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
-
 
 // only needed for ios/android interface differences to apply material design
 if (isAndroid) {
@@ -32,22 +18,50 @@ if (isAndroid) {
     $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
     // And move Navbar into Page
     $$('.view .navbar').prependTo('.view .page');
+
+    console.log('**** in isAndroid to alter css properties ****');
 }
+
+
+// only needed for ios/android interface differences if using Template7
+/*
+Template7.global = {
+    android: isAndroid,
+    ios: isIos
+};
+*/
+// Init App
+var myApp = new Framework7({
+  //uniqueHistory:true,
+    // Enable Material theme for Android device only
+    material: isAndroid ? true : false,//,
+    dynamicNavbar: true,
+    // Enable Template7 pages
+    template7Pages: true,
+    animatePages:true
+
+});
 
 
 
 // Add view
 var mainView = myApp.addView('.view-main', {
     // Because we want to use dynamic navbar, we need to enable it for this view:
+    //uniqueHistory:true,
     dynamicNavbar: true,
-    domCache: true
+    domCache: false
 });
 
-
+var offline = true;
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!  Device name is " + device.name);
+
+    $$('.page #loginBtn').click(function() {
+      loginUser();
+    });
+
 
     if (navigator.connection && navigator.connection.type == Connection.NONE) {
           console.log('NO NETWORK CONNECTION');
@@ -58,6 +72,15 @@ $$(document).on('deviceready', function() {
 
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
+
+
+  if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
+    var pendingUserName=localStorage.getItem('pending_user_name');
+    $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
+  } else {
+    $$(".page #registerBtn").text('Register to Begin');
+  }
+
 
 
 
@@ -97,50 +120,24 @@ $$(document).on('deviceready', function() {
     $$(document).on('click', '#saveStock', function () {
       console.log('clicked saveStock to run');
       document.getElementById("factory_brand").setAttribute("style", "height:220px")
-      //$$('#factory_brand').css('height',$$('#factory_brand.list-block').css('height') );
-      //var fbHeight=$$('#factory_brand').height();
-      //$$('#factory_brand').css({'height':fbHeight+'px'});
-      //document.getElementById('factory_brand').style.height = fbHeight+'px';
-      //document.getElementById('factory_brand').style.height='222px';
       console.log('factory_brand height is ' + document.getElementById('factory_brand').style.height );
-      //$$('#factory_brand.list-block').css({'height':'0px'}).transition(2000);
-      $$('#factory_brand, #skiSelected, #saveStock').attr('style','opacity:0;height:0px;margin-top:0px').transition(750);
-      //document.getElementById("factory_brand").setAttribute("style", "height:0px; opacity: 0;").transition(2000);
-      //document.getElementById('factory_brand').css({'height':'0px'}).transition(2000);
+      $$('.page #factory_brand, .page #skiSelected, .page #saveStock').attr('style','opacity:0;height:0px;margin-top:0px').transition(750);
 
       storeSettingsLocally();
 
-      //$$('#skiSelected').hide();
-      //$$('#factory_brand').hide();
-      //$$('#saveStock').css({'height':'0px','opacity':0}).transition(4000);
-      //$$('#factory_brand').css({'height':'0px','opacity':0}).transition(2000);
-      //$$('#skiSelected').css({'height':'0px','opacity':0}).transition(2000);
-
-      //setTimeout($$('#factory_brand').hide(),6500);
-      //setTimeout($$('#saveStock').parent().remove(),1100);
       $$('#saveStock').transitionEnd(function(){
         console.log('TRANSITION ENDED.......');
-        $$('#factory_brand, #skiSelected').hide();
+        $$('.page #factory_brand, .page #skiSelected').hide();
       });
 
       //$$('#saveStock').parent().remove();// removes the save buttons so can't duplicate saving
-      $$('#skiLookup').show();
+      $$('.page #skiLookup').show();
       getLocalSettings(); // this redraws screen for saved settings
       $$('#ul_saved_list>li:first-child').addClass('lightBlueBG'); //.css('background-color','#cfc');
     });
 
 
 
-
-    if ( getLocalStorage('stockSkis') ) {
-        getLocalSettings();
-    } else { // show message on front page so user knows how to get started
-      $$('<div class="center">Start by selecting the link below, then choose a ski brand, model, length and year (optional).<p>Save for quick access in the future.</div>').insertAfter('#indexTitle');
-    }
-
-    //$$('#factory_brand').transitionEnd(function(){ console.log('!!! TRANSITION ENDED !!!!'); });
-
-    //console.log('navigator object is ' + navigator.connection);
 
 
 
@@ -196,7 +193,59 @@ $$(document).on('deviceready', function() {
     });
 
 
+
 }); // end DeviceReady
+
+
+
+function globalDateTimeString () {
+  navigator.globalization.dateToString(
+    new Date(),
+    function (date) { window.dtString = date.value; },
+    function () { console.log('Error getting dateString\n'); },
+    { formatLength: 'medium', selector: 'date and time' }
+    );
+  }
+
+
+function getLocalDateTimeString (output) {
+  globalDateTimeString();
+  if (typeof dtString == 'undefined') {
+    console.log('dtString is undefined from device');
+    window.d=new Date();
+  } else {
+    console.log('dtString is DEFINED from device');
+    window.d=new Date(dtString);
+  }
+
+  if (output=="ISO") {
+    y=d.getFullYear();
+    m=d.getMonth();
+    da=d.getDate();
+    h=d.getHours();
+    mi=d.getMinutes();
+    s=d.getSeconds();
+    localDateTimeString=y+'-'+m+'-'+da+' '+h+':'+mi+':'+s;
+    console.log('local date time from device is ' + localDateTimeString);
+    return localDateTimeString;
+  } else {
+    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun", "Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    ampm='AM';
+    y=d.getFullYear();
+    m=monthNames[d.getMonth()];
+    da=d.getDate();
+    h=d.getHours();
+      if (h>12) h=h-12; ampm='PM';
+    mi=d.getMinutes();
+      if (mi<10) mi="0"+mi;
+    //s=d.getSeconds();
+    localDateTimeString=m+' '+da+', '+y+' '+h+':'+mi + ' ' + ampm;
+    console.log('local date time from device is ' + localDateTimeString);
+    return localDateTimeString;
+  }
+}
+
 
 
 function onOffline() {
@@ -233,52 +282,224 @@ function onOffline() {
 
 
 
-
-// Now we need to run the code that will be executed only for About page.
-
-// Option 1. Using page callback for page (for "about" page in this case) (recommended way):
 myApp.onPageInit('about', function (page) {
-    // Do something here for "about" page
+    console.log('in myApp.onPageInit for ABOUT PAGE');
+
+    if ( getLocalStorage('stockSkis') ) {
+        getLocalSettings();
+    } else { // show message on front page so user knows how to get started
+      $$('<div class="center">Start by selecting the link below, then choose a ski brand, model, length and year (optional).<p>Save for quick access in the future.</div>').insertAfter('#indexTitle');
+    }
+
+    console.log('triggering getHowToMeasure function');
+    var measureObj={}; // make object global
+    getHowToMeasure();
+})
+
+
+
+
+
+
+
+
+// PAGE INITS HERE
+
+myApp.onPageInit('login', function (page) {
+    console.log('login onPageInit fired');
+
+    if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
+      var pendingUserName=localStorage.getItem('pending_user_name');
+      $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
+    } else {
+      $$(".page #registerBtn").text('Register to Begin');
+    }
+
+    $$('.page #loginBtn').click(function() {
+      loginUser();
+    });
+});
+
+
+myApp.onPageInit('register', function (page) {
+    //alert('index page');
+    console.log("register page initialized");
+
+    $$('.create-popup').on('click', function () {
+      viewTerms();
+    });
+
+    $$('.page #registerBtn').click(function() {
+      registerUser();
+    });
+
+    if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
+      var pendingUserName=localStorage.getItem('pending_user_name');
+      console.log("pendActivation initiated");
+      showActivationPrompt(localStorage.getItem('pending_user_name'));
+    }
+});
+
+myApp.onPageInit('mySettings', function (page) {
+    window.page=page;
+    console.log('mySettings onPageInit fired');
+    console.log('   page.name: ' + page.name);
+    console.log('      page.view: ' + page.view);
+    console.log('         page.container: ' + page.container);
+
+
+    //populateCurrentSki();
+    //populateCurrentSettings();
+    init_ski();
+
+    $$('.page #viewStockBtn').click(function() {
+      toggleViewStock();
+    });
+
+    $$('.create-popup').on('click', function () {
+      viewHistory();
+    });
+
+    $$('.page #editFinBtn').click(function() {
+      console.log("editFinBtn clicked");
+      init_slider();
+    });
+
+    $$(document).on('click', '#cancelSaveBtn', function (e) {
+        console.log("cancelSaveBtn clicked");
+        cancelSave();
+    });
+
+
+    /* FOR CHANGING BINDING SETTINGS...INITIALIZING
+    theVal=$$(".page #myCurrentBinding").text();
+
+    console.log("initial value of binding is " + theVal );
+
+    minVal=Number(theVal) - Number(.750);
+    maxVal=Number(theVal) + Number(.750);
+    $$(".page #bindVal").attr("value", theVal);
+    $$(".page #bindVal").attr("min", minVal );
+    $$(".page #bindVal").attr("max", maxVal );
+    $$(".page #bindVal").attr("step", ".0625");
+*/
 
 })
 
-myApp.onPageInit('index', function (page) {
-    // Do something here for "index" page
-    alert('index page');
+
+myApp.onPageInit('mySkis', function (page) {
+    console.log('mySkis onPageInit fired');
+
+      getMySkis(thisUser.user_name);
+
+    $$('.page #ul_mySkis_list').change(function() {
+      var ski_id=$$("input[name='my-radio']:checked"). val();
+      console.log('change current ski triggered with ski_id ' + ski_id);
+      setCurrentSki(thisUser.user_name, ski_id);
+    });
+
+    $$(document).on('click', '#addSkiBtn', function () {
+      addSki();
+    });
+
 })
 
-// Option 2. Using one 'pageInit' event handler for all pages:
+
+
+myApp.onPageInit('profile', function (page) {
+    console.log('profile onPageInit fired');
+
+    init_profile();
+
+    $$('#editProfileBtn').click(function() {
+      toggleEditSave();
+    });
+
+
+        $$('#profileMeasureId').click(function() {
+          var measurePopover = '<div class="popover">'+
+                        '<div class="popover-inner">'+
+                          '<div class="content-block">'+
+                            '<p class="bold">Why offer this data?</p>' +
+                            '<p>How you measure your settings will be stored with each setting saved. If you change how you measure, change this profile.</p>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>';
+          myApp.popover(measurePopover, this,  true);
+        });
+
+
+
+        $$('#profileDemographicId').click(function() {
+          var demographicPopoverHTML = '<div class="popover">'+
+                        '<div class="popover-inner">'+
+                          '<div class="content-block">'+
+                            '<p class="bold">Why offer this data?</p>' +
+                            '<p>As the systems gathers more data, you will be able to view the averages of other settings for your demographic.</p>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>';
+          myApp.popover(demographicPopoverHTML, this,  true);
+        });
+
+
+    console.log (page.query + " is page.query");
+    if (page.query == -1) {
+      $$('#editProfileBtn').click(); // make form editable on load
+
+      myApp.alert(
+        'we have to create your profile for how your measure your settings and get your ability level so you can view settings of others in your ability range as the system gathers more data.',
+        'Before you can begin...',
+        function () {
+          return null;
+        }
+      );
+
+      console.log ("inside of page.query is -1");
+
+    }
+})
+
+
+
+// Option 2. Using one 'pageInit' event handler for ALL pages
+var pageCounter=0;
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
+    pageCounter++;
     var page = e.detail.page;
+    console.log('  ');
+    console.log('------------ data-page = ' + page.name + ' : count: ' + pageCounter + ' -------------');
+    console.log('  ');
 
-
-
-    if (page.name === 'about') {
-        // Following code will be executed for page with data-page attribute equal to "about"
-        myApp.alert('Here comes About page');
-    }
-    if (page.name === 'index') {
-        // Following code will be executed for page with data-page attribute equal to "about"
-        myApp.alert('Here comes index page');
-    }
-
+    $$('.navbar #logoutBtn').click(function() {
+      delete thisUser; // delete all objects
+      delete thisSki;
+      delete thisSetting;
+      console.log('  ');
+      console.log('############# USER LOGGED OUT #############');
+      console.log('  ');
+      mainView.router.load( { url:'index.html' });
+    });
 })
 
+// TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
 
 
 
-// Option 2. Using live 'pageInit' event handlers for each page
-$$(document).on('pageInit', '.page[data-page="index"]', function (e) {
-    // Following code will be executed for page with data-page attribute equal to "about"
-    myApp.alert('Here comes index page');
-})
+
+
+
+
+
+
 
 
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
 $$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
     console.log('brands smart select initialized');
-    $$('.smart-select #brand_select_id').change(getModels); // run getModels function
+
+    $$('.page .smart-select #brand_select_id').change(getModels); // run getModels function
 
   //  if ($$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")) ) {
     //  var theName=$$('.page[data-select-name="brand"]').find(("input[type='radio']:checked"))[0].name;
@@ -300,7 +521,6 @@ $$(document).on('onPageBeforeRemove', '.page[data-select-name="model"]', functio
   $$('.smart-select #model_select_id').change(getYears);
 })
 */
-
 
 
 $$(document).on('pageInit', '.page[data-select-name="year"]', function (e) {
@@ -325,13 +545,6 @@ function getBrandByClass (clickedObj) {
     if ( $$(clickedObj).hasClass(brandVar) ) return Object.keys(measureObj[0])[i];
   }
 
-/*
-  if ( $$(clickedObj).hasClass('brand_Connelly') ) return 'Connelly';
-  if ( $$(clickedObj).hasClass('brand_D3') ) return 'D3';
-  if ( $$(clickedObj).hasClass('brand_Goode') ) return 'Goode';
-  if ( $$(clickedObj).hasClass('brand_Reflex') ) return 'Reflex';
-  else return false;
-  */
 }
 
 
@@ -339,9 +552,7 @@ function getBrandByClass (clickedObj) {
 
 
 
- console.log('triggering getHowToMeasure function');
- var measureObj={}; // make object global
- getHowToMeasure();
+
 
 function getHowToMeasure() {
 console.log('inside getHowToMeasure');
@@ -364,3 +575,19 @@ console.log('inside getHowToMeasure');
  }
 });
 }
+
+
+$$(document).on('click', '#skiLookup', function () {
+  //$$('.page .smart-select #brand_select_id').remove();
+  skiLookup();
+});
+
+
+
+$$(document).on('click', '#goHome', function (e) {
+    console.log('goHome via live pageInit');
+});
+
+//$$(document).on('onPageBack', '.page[data-page="about"]', function (e) {
+//    console.log('onPageBack about page via live pageInit');
+//});
