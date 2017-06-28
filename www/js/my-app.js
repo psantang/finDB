@@ -62,6 +62,8 @@ $$(document).on('deviceready', function() {
       loginUser();
     });
 
+    //$$(".navbar").hide();
+    //$$(".view-main").append("<div class='navbar'></div>");
 
     if (navigator.connection && navigator.connection.type == Connection.NONE) {
           console.log('NO NETWORK CONNECTION');

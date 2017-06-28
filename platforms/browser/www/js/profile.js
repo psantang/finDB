@@ -124,12 +124,16 @@ function toggleEditSave () {
 
 
     var url='http://finappv2.paulsantangelo.com/ws/ws_set_user_profile_ret_json.php';
+    var firstLogin=false;
 
 		$$.ajax({url:url,data: form_data ,type:'POST',dataType: 'json',success:function(profilesObj) {
       if (profilesObj.length>0) { // RETURNED RESULTS
         if (profilesObj[0].RETURN_CODE==1) {
           console.log('successful profile update');
-          thisUser.profileActivated=1;
+          if (thisUser.profileActivated == 0) { //first enry and successful profile update/min fields submitted
+            firstLogin=true;
+            thisUser.profileActivated=1;
+          }
         } else {
             if (profilesObj[0].RETURN_CODE==-2) { // required fields not met
               myApp.alert(
@@ -153,6 +157,9 @@ function toggleEditSave () {
       }, complete: function(){
           console.log('complete profile update');
           window.loginPreLoader = myApp.hidePreloader();
+          if (firstLogin) {
+            mainView.router.load( { url:'mysettings.html' });
+          }
 
       }, error: function(profilesObj, status, err) {
           if (status == "timeout") {
