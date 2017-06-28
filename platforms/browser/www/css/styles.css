@@ -42,6 +42,21 @@
   margin: .5em 0 0 0;
 }
 
+.homeLogo {
+  width:20%;
+  height:20%;
+  margin-bottom: -20px;
+}
+
+/*
+.navbar {
+    background-color: rgba(255,255,255,.75)!important;
+}
+.navbar:after {
+    height:0px!important;
+}
+*/
+
 .head_setting_table {
   font-size: 1.2em;
   font-weight: bold;
@@ -134,8 +149,19 @@ background-color: rgba(33, 150, 243,.1);
   color:#333;
 }
 
-.override_lb .list-block, .override_lb .content-block {
+.override_lb .content-block {
+    margin:34px 0 15px 0 !important;
+}
+
+.override_lb .list-block {
     margin:50px 0 15px 0 !important;
+}
+
+.centerList {
+  text-align: center;
+    list-style-position: inside;
+    -webkit-margin-before: 0px;
+    -webkit-padding-start: 0px;
 }
 
 #loginForm .list-block ul {
