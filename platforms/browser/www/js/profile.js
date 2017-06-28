@@ -155,9 +155,10 @@ function toggleEditSave () {
         window.loginPreLoader = myApp.showPreloader('Saving Profile...');
 
       }, complete: function(){
-          console.log('complete profile update');
+          console.log('complete profile update.  firstLogin is ' + firstLogin);
           window.loginPreLoader = myApp.hidePreloader();
           if (firstLogin) {
+            console.log('automatically sending user to mySettings page...');
             mainView.router.load( { url:'mysettings.html' });
           }
 
