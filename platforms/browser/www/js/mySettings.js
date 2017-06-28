@@ -28,6 +28,7 @@ function populateCurrentSki() {
     }
   } else { // IF USER HAS NO SKI's SELECTED, Like first time entry, direct to ski selection page
     if (viewCounter<1) {
+      viewCounter++;
       myApp.alert(
         'First you must select a ski to start saving your settings.  Select OK below to continue.',
         'Welcome!',
@@ -35,7 +36,6 @@ function populateCurrentSki() {
           mainView.router.load( { url:'mySkis.html' });
         }
       );
-      viewCounter++;
     }
   }
 }
