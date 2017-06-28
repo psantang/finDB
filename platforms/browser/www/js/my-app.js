@@ -58,6 +58,10 @@ var offline = true;
 $$(document).on('deviceready', function() {
     console.log("Device is ready!  Device name is " + device.name);
 
+    // prefill username fields if saved in local storage
+    $$("#user_name").val(localStorage.getItem("user_name"));
+    $$("#pwd").val(localStorage.getItem("pwd"));
+
     $$('.page #loginBtn').click(function() {
       loginUser();
     });
@@ -310,6 +314,10 @@ myApp.onPageInit('about', function (page) {
 myApp.onPageInit('login', function (page) {
     console.log('login onPageInit fired');
 
+    // prefill username fields if saved in local storage
+    $$("#user_name").val(localStorage.getItem("user_name"));
+    $$("#pwd").val(localStorage.getItem("pwd"));
+    
     if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
       var pendingUserName=localStorage.getItem('pending_user_name');
       $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);

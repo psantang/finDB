@@ -87,7 +87,8 @@ function loginUser() {
       		}, complete: function(){
               console.log('ajax complete.')
               if (returnCode==1) {
-                //getProfile(thisUser.user_name);
+                localStorage.setItem("user_name", user_name);
+                localStorage.setItem("pwd", pwd);
               } else if (returnCode==-1) {
                 $$(".page #loginError").html("Invalid Login.  Please try again.");
                 window.loginPreLoader = myApp.hidePreloader();
