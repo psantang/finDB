@@ -317,7 +317,7 @@ myApp.onPageInit('login', function (page) {
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
-    
+
     if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
       var pendingUserName=localStorage.getItem('pending_user_name');
       $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
@@ -566,7 +566,7 @@ function getBrandByClass (clickedObj) {
 
 function getHowToMeasure() {
 console.log('inside getHowToMeasure');
- var url='http://finappv2.paulsantangelo.com/ws/ws_get_how_to_measure_ret_json.php';
+ var url='http://finDB.paulsantangelo.com/ws/ws_get_how_to_measure_ret_json.php';
  $$.ajax({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
    measureObj=measure_Obj;
    console.log(Object.keys(measureObj[0]).length);

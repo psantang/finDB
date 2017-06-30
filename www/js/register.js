@@ -17,7 +17,7 @@ function registerUser() {
       t_and_c=0;
     }
 
-    var url='http://finappv2.paulsantangelo.com/ws/ws_add_register_user_ret_json.php';
+    var url='http://finDB.paulsantangelo.com/ws/ws_add_register_user_ret_json.php';
     var returnCode;
     $$.ajax({url:url,data:{ user_name:user_name,user_email:user_email,user_pwd:user_pwd,user_pwd_confirm:user_pwd_confirm,t_and_c:t_and_c},type:'POST',dataType: 'json',success:function(jsonObj) {
 
@@ -127,7 +127,7 @@ function validateActivationCode(pendingUserName,activation_code) {
     console.log('running validateActivationCode function');
     if (offline) return onOffline();
 
-    var url='http://finappv2.paulsantangelo.com/ws/ws_get_activation_code_ret_json.php';
+    var url='http://finDB.paulsantangelo.com/ws/ws_get_activation_code_ret_json.php';
     var passed;
     $$.ajax({url:url,data:{ user_name:pendingUserName,activation_code:activation_code},type:'POST',dataType: 'json',success:function(jsonObj) {
       if (jsonObj[0].RETURN_CODE==1) {
@@ -205,7 +205,7 @@ function passedValidation () {
 function viewTerms() {
   				console.log('viewTerms function');
 
-          var url='http://finappv2.paulsantangelo.com/ws/ws_get_terms_conditions_ret_text.php';
+          var url='http://finDB.paulsantangelo.com/ws/ws_get_terms_conditions_ret_text.php';
 
         	$$.ajax({url:url,data:{  },type:'POST',dataType: 'text'
   				,success:function(htmlString) {

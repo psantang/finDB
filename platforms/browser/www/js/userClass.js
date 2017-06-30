@@ -43,17 +43,22 @@ class User {
 //$$('.view #loginBtn').click(function() {
 function loginUser() {
 				console.log('submit login button clicked');
+        $$(".page #loginError").html("");
         //createNewUser();
         //return;
 //        var rememberMe=jQuery("#rememberMe").val();
         var user_name=$$('#user_name').val();
         var pwd=$$('#pwd').val();
 
+        if (user_name=='' || pwd =='') {
+          $$(".page #loginError").html("Please enter a User Name and Password.");
+          return;
+        }
 				//var user_name='psantang';
 				//var pwd='calgary1';
 
 				//var url='classes/userClass.php';
-        var url='http://finappv2.paulsantangelo.com/ws/ws_login_ret_json.php';
+        var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
         var returnCode;
 
       	$$.ajax({url:url,data:{ user_name: user_name , pwd: pwd },type:'POST',dataType: 'json'
@@ -131,7 +136,7 @@ function loginUser() {
 function getProfile (user_name) {
 				console.log('getProfile triggered');
 
-        var url='http://finappv2.paulsantangelo.com/ws/ws_get_user_profile_ret_json.php';
+        var url='http://finDB.paulsantangelo.com/ws/ws_get_user_profile_ret_json.php';
         var returnCode;
 
       	$$.ajax({url:url,data:{ user_name: user_name },type:'POST',dataType: 'json'

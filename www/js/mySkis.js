@@ -5,7 +5,7 @@ function getMySkis(user_name) {
 
   console.log('getMySkis function fired with user_name ' + user_name);
 
-  var url='http://finappv2.paulsantangelo.com/ws/ws_get_my_skis_ret_json.php';
+  var url='http://finDB.paulsantangelo.com/ws/ws_get_my_skis_ret_json.php';
 
   $$.ajax({url:url,data:{ user_name:user_name },type:'POST',dataType: 'json',success:function(mySkisObj) {
     if (mySkisObj.length>0) { // RETURNED RESULTS
