@@ -76,32 +76,151 @@ function populateCurrentSettings() {
       $$(".page #mySettingsDFT").html(thisSki.measure_dft);
 
       $$(".page #dateCreated , .page .measureOverlay").addClass('redText');
-      $$("#viewStockBtn").hide();
+      //$$("#viewStockBtn").hide();
     }
   }
 }
 
 
 function toggleViewStock() {
-  if (typeof thisSetting != "undefined") {
-    if ($$(".page #viewStockBtn i").text() == "more_vertical_round") {
+//  if (typeof thisSetting != "undefined") {
+    //if ($$(".page #viewStockBtn i").text() == "more_vertical_round") {
+    if ($$(".page #viewStockBtn").text() == "STOCK") {
+
+/*
+      var diffLength=parseFloat( (parseFloat(thisSetting.length*100) - parseFloat(thisSki.stock_fin_length)*100) / 100).toFixed(3) ;
+      var diffDepth=parseFloat( (parseFloat(thisSetting.depth*100) - parseFloat(thisSki.stock_fin_depth)*100) / 100).toFixed(3) ;
+      var diffDFT=parseFloat( (parseFloat(thisSetting.dft*100) - parseFloat(thisSki.stock_fin_dft)*100) / 100).toFixed(3) ;
+      var diffWingAngle=parseFloat( (parseFloat(thisSetting.wing_angle*100) - parseFloat(thisSki.stock_wing_angle)*100) / 100).toFixed(3) ;
+*/
+/*    //below lines are to calculate differences of user changing settings compared to stock
       var diffBinding=parseFloat( (parseFloat(thisSetting.front_binding*100) - parseFloat(thisSki.stock_binding_location)*100) / 100).toFixed(3) ;
       var diffLength=parseFloat( (parseFloat(thisSetting.length*100) - parseFloat(thisSki.stock_fin_length)*100) / 100).toFixed(3) ;
       var diffDepth=parseFloat( (parseFloat(thisSetting.depth*100) - parseFloat(thisSki.stock_fin_depth)*100) / 100).toFixed(3) ;
       var diffDFT=parseFloat( (parseFloat(thisSetting.dft*100) - parseFloat(thisSki.stock_fin_dft)*100) / 100).toFixed(3) ;
       var diffWingAngle=parseFloat( (parseFloat(thisSetting.wing_angle*100) - parseFloat(thisSki.stock_wing_angle)*100) / 100).toFixed(3) ;
 
+/*    // below lines are for putting stock settings next to users settings...didn't like this so moved under MY SKI
       $$(".page #stockBinding").html( thisSki.stock_binding_location + "<br />(" +diffBinding + ")" );
-      $$(".page #stockLength").text( thisSki.stock_fin_length + " (" +diffLength + ")");
-      $$(".page #stockDepth").text( thisSki.stock_fin_depth + " (" +diffDepth + ")");
-      $$(".page #stockDFT").text( thisSki.stock_fin_dft + " (" +diffDFT + ")");
-      $$(".page #stockWingAngle").text( thisSki.stock_wing_angle + " (" +diffWingAngle + ")");
-      $$(".page #viewStockBtn i").text("more_vertical_round_fill");
+      $$(".page #stockLength").html( thisSki.stock_fin_length + "<br />(" +diffLength + ")");
+      $$(".page #stockDepth").html( thisSki.stock_fin_depth + "<br />(" +diffDepth + ")");
+      $$(".page #stockDFT").html( thisSki.stock_fin_dft + "<br />(" +diffDFT + ")");
+      $$(".page #stockWingAngle").html( thisSki.stock_wing_angle + "<br />(" +diffWingAngle + ")");
+*/
+      stockHTML ='<div id="stockSettings">';
+      stockHTML+='<div class="data-table">';
+      stockHTML+='<table>';
+      stockHTML+='<thead>';
+      stockHTML+='<tr>';
+      stockHTML+='<th class="numeric-cell">Binding</th>';
+      stockHTML+='<th class="numeric-cell">Length</th>';
+      stockHTML+='<th class="numeric-cell">Depth</th>';
+      stockHTML+='<th class="numeric-cell">DFT</th>';
+      stockHTML+='<th class="numeric-cell">Wing</th>';
+      stockHTML+='</tr>';
+      stockHTML+='</thead>';
+      stockHTML+='<tbody>';
+      stockHTML+='<tr>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.stock_binding_location+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.stock_fin_length+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.stock_fin_depth+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.stock_fin_dft+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.stock_wing_angle+ '</td>';
+      stockHTML+='</tr>';
+      stockHTML+='<tr>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.measure_binding+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.measure_length+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.measure_depth+ '</td>';
+      stockHTML+='<td class="numeric-cell">' +thisSki.measure_dft+ '</td>';
+      stockHTML+='<td class="numeric-cell"></td>';
+      stockHTML+='</tr>';
+      stockHTML+='</tbody>';
+      stockHTML+='</table>';
+      stockHTML+='</div>';
+      stockHTML+='</div>';
+
+
+      //$$("#stockSettingsDiv").css("height","100%");
+
+      $$("#stockSettingsDiv").animate(
+        /* CSS properties to animate, e.g.: */
+        {
+            'height': 38,
+            'opacity': 1
+        },
+        {
+            // Animation duraion in ms, optional (default to 300)
+            duration: 500,
+            // Animation easing, optional (default to 'swing'), can be also 'linear'
+            easing: 'swing',
+            /* Callbacks */
+            // Animation begins, optional
+            begin: function (elements) {
+                console.log('animation began');
+                $$("#stockSettingsDiv").html(stockHTML);
+            },
+            // Animation completed, optional
+            complete: function (elements) {
+                console.log('animation completed');
+            },
+            // Animation in progress, optional
+            progress: function (elements, complete, remaining, start) {
+                /* Where
+                complete - The call's completion percentage (as a decimal value)
+                remaining - How much time remains until the call completes (in ms)
+                start - The absolute time at which the call began (in ms)
+                */
+                console.log('animation in progress');
+            }
+        }
+      );
+
+      //$$(".page #viewStockBtn i").text("more_vertical_round_fill");
+      $$(".page #viewStockBtn").text("HIDE");
+
     } else {
       $$(".page #stockBinding, .page #stockLength, .page #stockDepth, .page #stockDFT, .page #stockWingAngle").text("");
-      $$(".page #viewStockBtn i").text("more_vertical_round");
+      //$$(".page #viewStockBtn i").text("more_vertical_round");
+      $$(".page #viewStockBtn").text("STOCK");
+
+      $$('#stockSettingsDiv').animate(
+        /* CSS properties to animate, e.g.: */
+        {
+          'height': '0px',
+          'opacity': 0
+        },
+        /* Animation parameters */
+        {
+            // Animation duraion in ms, optional (default to 300)
+            duration: 200,
+            // Animation easing, optional (default to 'swing'), can be also 'linear'
+            easing: 'swing',
+            /* Callbacks */
+            // Animation begins, optional
+            begin: function (elements) {
+                console.log('animation began');
+            },
+            // Animation completed, optional
+            complete: function (elements) {
+                console.log('animation completed');
+                $$("#stockSettingsDiv").html('');
+            },
+            // Animation in progress, optional
+            progress: function (elements, complete, remaining, start) {
+                /* Where
+                complete - The call's completion percentage (as a decimal value)
+                remaining - How much time remains until the call completes (in ms)
+                start - The absolute time at which the call began (in ms)
+                */
+                console.log('animation in progress');
+            }
+        }
+      );
+
+
+
     }
-  }
+  //}
 }
 
 
@@ -320,7 +439,7 @@ function toggleEditFin () {
       }, complete: function(){
           console.log('ajax complete for save Settings.');
           populateCurrentSettings();
-          //$$("#dateCreated").text(date_time_created);
+          $$("#stockBinding, #stockLength, #stockDepth, #stockDFT, #stockWingAngle").text('');
       }, // end COMPLETE
       timeout: 5000,
       error: function(json_Obj, status, err) {
@@ -394,24 +513,32 @@ $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #
     if (this.id == 'bindingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(4);
       $$(".page #myCurrentBinding").text(sliderValue); // put in view
+      if (typeof thisSetting != "undefined") { $$("#stockBinding").text( (sliderValue - parseFloat(thisSetting.front_binding)).toFixed(4) ); }
     }
     if (this.id == 'lengthRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentLength").text(sliderValue); // put in view
+      if (typeof thisSetting != "undefined") { $$("#stockLength").text( (sliderValue - parseFloat(thisSetting.length)).toFixed(3) ); }
     }
     if (this.id == 'depthRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentDepth").text(sliderValue); // put in view
+      if (typeof thisSetting != "undefined") { $$("#stockDepth").text( (sliderValue - parseFloat(thisSetting.depth)).toFixed(3) ); }
     }
     if (this.id == 'dftRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentDFT").text(sliderValue); // put in view
+      if (typeof thisSetting != "undefined") { $$("#stockDFT").text( (sliderValue - parseFloat(thisSetting.dft)).toFixed(3) ); }
     }
     if (this.id == 'wingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(2);
       $$(".page #myCurrentWingAngle").text(sliderValue); // put in view
+      if (typeof thisSetting != "undefined") { $$("#stockWingAngle").text( (sliderValue - parseFloat(thisSetting.wing_angle)).toFixed(2) ); }
     }
 });
+
+
+
 
 $$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
     currentValue=$$(this).val();
@@ -431,15 +558,15 @@ $$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #d
     console.log("this object is " + this.id)
 });
 
-function updateSlider(obj,currentValue,plusMinusRange,increment) {
 
+
+
+function updateSlider(obj,currentValue,plusMinusRange,increment) {
   minVal=Number(currentValue) - Number(plusMinusRange);
   maxVal=Number(currentValue) + Number(plusMinusRange);
   obj.value=currentValue;
   obj.min=minVal;
   obj.max=maxVal;
   obj.step=increment;
-
   console.log('object value is ' + obj.value)
-
 }
