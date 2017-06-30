@@ -5,6 +5,18 @@ function addSki() {
   console.log('offline is '+ offline);
   if (offline) return onOffline();
 
+  if ($$('.page #list_brand_add')) $$('.page #list_brand_add').remove();
+  if ($$('.page .smart-select #brand_select_id_add')) $$('.page .smart-select #brand_select_id_add').remove();
+
+  if ($$('.page #list_model_add')) $$('.page #list_model_add').remove();
+  if ($$('.page .smart-select #model_select_id_add')) $$('.page .smart-select #model_select_id_add').remove();
+
+  if ($$('.page #list_length_add')) $$('.page #list_length_add').remove();
+  if ($$('.page .smart-select #length_select_id_add')) $$('.page .smart-select #length_select_id_add').remove();
+
+  if ($$('.page #list_year_add')) $$('.page #list_year_add').remove();
+  if ($$('.page .smart-select #year_select_id_add')) $$('.page .smart-select #year_select_id_add').remove();
+
 
   var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
@@ -29,12 +41,11 @@ function addSki() {
       console.log('beforeSend skiLookup for brands in addski');
       myApp.showIndicator();
 
-
     }, complete: function(){
         console.log('complete skiLookup for brands in addski');
-        $$('.page #brand_select_id_add').click();
         $$('.page #add_ski_div').css({'opacity':1,'display':'block','height':'auto'});
         myApp.hideIndicator();
+        $$('.page #brand_select_id_add').click();
 
     }, error: function(brandsObj, status, err) {
         if (status == "timeout") {
