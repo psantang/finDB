@@ -29,7 +29,7 @@ class Ski {
 function getCurrentSki(user_name) {
 				console.log('getCurrentSki function');
 
-        var url='http://finappv2.paulsantangelo.com/ws/ws_get_cur_stock_ret_json.php';
+        var url='http://finDB.paulsantangelo.com/ws/ws_get_cur_stock_ret_json.php';
         var returnCode;
 
       	$$.ajax({url:url,data:{ user_name:user_name },type:'POST',dataType: 'json'
@@ -90,7 +90,7 @@ function getCurrentSki(user_name) {
       function setCurrentSki(user_name, ski_id) {
       				console.log('setCurrentSki function to change users current ski');
 
-              var url='http://finappv2.paulsantangelo.com/ws/ws_set_cur_ski_ret_json.php';
+              var url='http://finDB.paulsantangelo.com/ws/ws_set_cur_ski_ret_json.php';
               var success;
 
             	$$.ajax({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'

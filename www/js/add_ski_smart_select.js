@@ -18,7 +18,7 @@ function addSki() {
   if ($$('.page .smart-select #year_select_id_add')) $$('.page .smart-select #year_select_id_add').remove();
 
 
-  var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+  var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
   $$.ajax({url:url,data:{ ski_attr: "brands"},type:'POST',dataType: 'json',success:function(brandsObj) {
     console.log('in success for skiLookup for brands');
@@ -79,7 +79,7 @@ function addSki() {
     theBrand = $$('.page .smart-select #brand_select_id_add')["0"].value;
 
     console.log('factory_Brand fired change...theBrand = ' + theBrand)
-    var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+    var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
 		$$.ajax({url:url,data:{ ski_attr:"models",brand:theBrand },type:'POST',dataType: 'json',success:function(modelsObj) {
 
@@ -130,7 +130,7 @@ function getLengths_add() {
 
         theModel = $$('.page .smart-select #model_select_id_add')["0"].value;
 
-      var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+      var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
   		//$$.ajax({url:url,data:{ ski_attr: "lengths", brand: theBrand, model: theModel, year: theYear},type:'POST',dataType: 'json',success:function(lengthsObj) {
       $$.ajax({url:url,data:{ ski_attr: "lengths", brand: theBrand, model: theModel},type:'POST',dataType: 'json',success:function(lengthsObj) {
   			var lengthList = '<li id="list_length_add"><a href="#" class="item-link smart-select" data-back-on-select="true" data-page-title="Ski Length"><select name="length_add" id="length_select_id_add">';
@@ -171,7 +171,7 @@ function getLengths_add() {
 
         theLength = $$('.page .smart-select #length_select_id_add')["0"].value;
 
-        var url='http://finappv2.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+        var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
         var yearVal;
         //$$.ajax({url:url,data:{ ski_attr: "years", brand:theBrand, model:theModel},type:'POST',dataType: 'json',success:function(yearsObj) {
@@ -228,7 +228,7 @@ function getLengths_add() {
             theYear = $$('.page .smart-select #year_select_id_add')["0"].value;
           }
 
-          var url='http://finappv2.paulsantangelo.com/ws/ws_add_ski_ret_json.php';
+          var url='http://finDB.paulsantangelo.com/ws/ws_add_ski_ret_json.php';
 
           $$.ajax({url:url,data:{ user_name:thisUser.user_name,my_ski_name:my_ski_name,current:current,brand:theBrand,model:theModel,length:theLength,year:theYear},type:'POST',dataType: 'json',success:function(jsonObj) {
             if (jsonObj[0].RETURN_CODE==1) {

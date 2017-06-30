@@ -123,7 +123,7 @@ function toggleEditSave () {
     }
 
 
-    var url='http://finappv2.paulsantangelo.com/ws/ws_set_user_profile_ret_json.php';
+    var url='http://finDB.paulsantangelo.com/ws/ws_set_user_profile_ret_json.php';
     var firstLogin=false;
 
 		$$.ajax({url:url,data: form_data ,type:'POST',dataType: 'json',success:function(profilesObj) {
