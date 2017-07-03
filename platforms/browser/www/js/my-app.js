@@ -199,6 +199,18 @@ $$(document).on('deviceready', function() {
     });
 
 
+    $$(document).on('click', '#forgotPwBtn', function () {
+        myApp.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
+            generatePwResetCode(value);
+        });
+        // wait until prompt is generated, then populate with username if available
+        if (typeof localStorage.getItem("user_name") != "undefined") {
+          $$(".modal .modal-text-input").val(localStorage.getItem("user_name"));
+        }
+
+    });
+
+
 
 }); // end DeviceReady
 
@@ -601,3 +613,167 @@ $$(document).on('click', '#goHome', function (e) {
 //$$(document).on('onPageBack', '.page[data-page="about"]', function (e) {
 //    console.log('onPageBack about page via live pageInit');
 //});
+
+
+function generatePwResetCode(userNameOrEmail) {
+      console.log('running generatePwResetCode function with value of ' + userNameOrEmail);
+      if (offline) return onOffline();
+
+      var url='http://finDB.paulsantangelo.com/ws/ws_set_forgot_pw_code_ret_json.php';
+      var passed;
+      $$.ajax({url:url,data:{user_input:userNameOrEmail},type:'POST',dataType: 'json',success:function(jsonObj) {
+        if (jsonObj[0].RETURN_CODE==1) {
+          console.log('return code 1...success for pw reset code!');
+          passed=true;
+        } else {
+          console.log('return code NOT 1...no luck activating account');
+          passed=false;
+        }
+      }, timeout: 5000
+        , beforeSend: function() {
+          console.log('beforeSend generatePwResetCode');
+          myApp.showIndicator();
+        }, complete: function(jsonObj) {
+            console.log('in complete generatePwResetCode');
+            myApp.hideIndicator();
+            if (passed) {
+
+                myApp.alert(
+                  'An email has been sent to ' +userNameOrEmail+'.  Please get the code from your email account and supply to the following prompt to reset your password.',
+                  'Email Sent',
+                  function () {
+                    validatePwResetCode(userNameOrEmail);
+                  }
+                );
+
+            } else {
+              myApp.alert(
+                'The User Name or Email address was not found in the system.',
+                'Failed',
+                function () {
+                  return null;
+                }
+              );
+            }
+        }, error: function(jsonObj, status, err) {
+            if (status == "timeout") {
+              console.log("Timeout Error. " + jsonObj + status + err);
+            } else {
+              console.log("error: "  + status + err);
+            }
+        }
+      }) // END ajax function for models
+}
+
+
+function validatePwResetCode (userNameOrEmail) {
+
+      myApp.prompt('Enter the verification code sent to your email.', 'Reset Password Code', function (value) {
+        console.log('running validatePwResetCode function');
+        if (offline) return onOffline();
+
+        var url='http://finDB.paulsantangelo.com/ws/ws_get_forgot_pw_code_ret_json.php';
+        var passed;
+        $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,code:value},type:'POST',dataType: 'json',success:function(jsonObj) {
+          if (jsonObj[0].RETURN_CODE==1) {
+            console.log('return code 1...success for pw reset code!');
+            passed=true;
+          } else {
+            console.log('return code NOT 1...no luck activating account');
+            passed=false;
+          }
+        }, timeout: 5000
+          , beforeSend: function() {
+            console.log('beforeSend validatePwResetCode');
+            myApp.showIndicator();
+          }, complete: function(jsonObj) {
+              console.log('in complete validatePwResetCode');
+              myApp.hideIndicator();
+              if (passed) {
+                setNewPw(userNameOrEmail);
+              } else {
+                myApp.confirm("The Code " +value+ " is not valid.  Press OK to try again or Cancel.",
+                "Incorrect Code",
+                function () {
+                      console.log('in confirm OK');
+                      validatePwResetCode(userNameOrEmail);
+                    },
+                function () {
+                      return null;
+                  }
+                );
+              }
+
+          }, error: function(jsonObj, status, err) {
+              if (status == "timeout") {
+                console.log("Timeout Error. " + jsonObj + status + err);
+              } else {
+                console.log("error: "  + status + err);
+              }
+          }
+      }) // END ajax function for models
+
+    }); // END PROMPT
+}
+
+function setNewPw(userNameOrEmail) {
+  myApp.prompt('Successful validation.<p>Enter a new password.</p>', 'Reset Password', function (value) {
+    console.log('running validatePwResetCode function');
+    if (offline) return onOffline();
+
+    if (value.length<6) {
+      myApp.alert(
+        'Password must be atleast 6 characters.',
+        'Password failed',
+        function () {
+          setNewPw(userNameOrEmail);
+        }
+      );
+      return;
+    }
+
+    var url='http://finDB.paulsantangelo.com/ws/ws_set_reset_password_ret_json.php';
+    var passed;
+    $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,user_pwd:value},type:'POST',dataType: 'json',success:function(jsonObj) {
+      if (jsonObj[0].RETURN_CODE==1) {
+        console.log('return code 1...success for pw reset!');
+        passed=true;
+      } else {
+        console.log('return code NOT 1...failed password reset');
+        passed=false;
+      }
+    }, timeout: 5000
+      , beforeSend: function() {
+        console.log('beforeSend setNewPw');
+        myApp.showIndicator();
+      }, complete: function(jsonObj) {
+          console.log('in complete setNewPw');
+          myApp.hideIndicator();
+          if (passed) {
+            localStorage.removeItem("pwd");
+            myApp.alert(
+              'Password reset has been complete.  Please login with your new password.',
+              'Success!',
+              function () {
+                return null;
+              }
+            );
+          } else {
+            myApp.alert(
+              'Password reset was not successful.  Please try again.',
+              'Password Reset Failed',
+              function () {
+                return null;
+              }
+            );
+          }
+      }, error: function(jsonObj, status, err) {
+          if (status == "timeout") {
+            console.log("Timeout Error. " + jsonObj + status + err);
+          } else {
+            console.log("error: "  + status + err);
+          }
+      }
+    }); // END ajax function for models
+  });
+}
