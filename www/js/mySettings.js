@@ -18,7 +18,7 @@ function init_ski() {
 
 var viewCounter=0;
 function populateCurrentSki() {
-
+  console.log('in populateCurrentSki with viewCounter=' + viewCounter);
   if (typeof thisSki != "undefined") {
     if (thisSki.my_ski_name) {
       $$(".page #myCurrentSki").text(thisSki.my_ski_name);
@@ -29,6 +29,7 @@ function populateCurrentSki() {
   } else { // IF USER HAS NO SKI's SELECTED, Like first time entry, direct to ski selection page
     if (viewCounter<1) {
       viewCounter++;
+      console.log("first select a ski with viewCounter=" + viewCounter);
       myApp.alert(
         'First you must select a ski to start saving your settings.  Select OK below to continue.',
         'Welcome!',
