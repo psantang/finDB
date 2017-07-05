@@ -19,7 +19,7 @@ function init_ski() {
 var viewCounter=0;
 function populateCurrentSki() {
   console.log('in populateCurrentSki with viewCounter=' + viewCounter);
-  if (typeof thisSki != "undefined") {
+  if (typeof thisSki !== "undefined") {
     if (thisSki.my_ski_name) {
       $$(".page #myCurrentSki").text(thisSki.my_ski_name);
     } else {
@@ -57,7 +57,7 @@ function populateCurrentSki() {
 }
 
 function populateCurrentSettings() {
-  if (typeof thisSetting != "undefined") {
+  if (typeof thisSetting !== "undefined") {
     console.log("ObjectthisSetting IS DEFINED");
     if (thisSetting.ski_id) {
       $$(".page #dateCreated").html(thisSetting.date_time_created);
@@ -79,7 +79,7 @@ function populateCurrentSettings() {
     }
   } else {
     console.log("object thisSetting is undefined");
-    if (typeof thisSki != "undefined") {
+    if (typeof thisSki !== "undefined") {
       $$(".page #dateCreated").html('Stock Settings');
       $$(".page #myCurrentBinding").html(thisSki.stock_binding_location);
       $$(".page #myCurrentLength").html(thisSki.stock_fin_length);
@@ -101,7 +101,6 @@ function populateCurrentSettings() {
 
 
 function toggleViewStock() {
-//  if (typeof thisSetting != "undefined") {
     //if ($$(".page #viewStockBtn i").text() == "more_vertical_round") {
     if ($$(".page #viewStockBtn").text() == "STOCK") {
 
@@ -252,7 +251,7 @@ function viewHistory() {
 
   				console.log('viewHistory function');
 
-          if (typeof thisSetting == "undefined") {
+          if (typeof thisSetting === "undefined") {
             myApp.alert(
               'No History is available yet.  After you make your first settings change, you will be able to view all setting changes here.',
               'No History Available.',
@@ -441,7 +440,7 @@ function toggleEditFin () {
             console.log('json_Obj is ' + json_Obj);
             console.log('insertid is ' + json_Obj[0].INSERT_ID);
 
-            if (typeof thisSetting == "undefined") {
+            if (typeof thisSetting === "undefined") {
               const thisSetting = new Settings(json_Obj[0].INSERT_ID, thisUser.user_name, thisSki.id, front_binding, length, depth, dft, wing_angle, measure_binding, measure_length, measure_depth, measure_dft, date_time_created);
               window.thisSetting = thisSetting;
             } else {
@@ -543,27 +542,27 @@ $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #
     if (this.id == 'bindingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(4);
       $$(".page #myCurrentBinding").text(sliderValue); // put in view
-      if (typeof thisSetting != "undefined") { $$("#stockBinding").text( (sliderValue - parseFloat(thisSetting.front_binding)).toFixed(4) ); }
+      if (typeof thisSetting !== "undefined") { $$("#stockBinding").text( (sliderValue - parseFloat(thisSetting.front_binding)).toFixed(4) ); }
     }
     if (this.id == 'lengthRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentLength").text(sliderValue); // put in view
-      if (typeof thisSetting != "undefined") { $$("#stockLength").text( (sliderValue - parseFloat(thisSetting.length)).toFixed(3) ); }
+      if (typeof thisSetting !== "undefined") { $$("#stockLength").text( (sliderValue - parseFloat(thisSetting.length)).toFixed(3) ); }
     }
     if (this.id == 'depthRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentDepth").text(sliderValue); // put in view
-      if (typeof thisSetting != "undefined") { $$("#stockDepth").text( (sliderValue - parseFloat(thisSetting.depth)).toFixed(3) ); }
+      if (typeof thisSetting !== "undefined") { $$("#stockDepth").text( (sliderValue - parseFloat(thisSetting.depth)).toFixed(3) ); }
     }
     if (this.id == 'dftRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentDFT").text(sliderValue); // put in view
-      if (typeof thisSetting != "undefined") { $$("#stockDFT").text( (sliderValue - parseFloat(thisSetting.dft)).toFixed(3) ); }
+      if (typeof thisSetting !== "undefined") { $$("#stockDFT").text( (sliderValue - parseFloat(thisSetting.dft)).toFixed(3) ); }
     }
     if (this.id == 'wingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(2);
       $$(".page #myCurrentWingAngle").text(sliderValue); // put in view
-      if (typeof thisSetting != "undefined") { $$("#stockWingAngle").text( (sliderValue - parseFloat(thisSetting.wing_angle)).toFixed(2) ); }
+      if (typeof thisSetting !== "undefined") { $$("#stockWingAngle").text( (sliderValue - parseFloat(thisSetting.wing_angle)).toFixed(2) ); }
     }
 });
 

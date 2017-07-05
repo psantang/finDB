@@ -104,7 +104,7 @@ function storeSettingsLocally() {
   var s_length=$$('.smart-select #length_select_id')["0"].value;
 
   if ( $$('.smart-select #year_select_id')["0"]) {
-    if ( (typeof $$('.smart-select #year_select_id')["0"].value === 'undefined') || $$('.smart-select #year_select_id')["0"].value == null ) {
+    if ( (typeof $$('.smart-select #year_select_id')["0"].value === "undefined") || $$('.smart-select #year_select_id')["0"].value == null ) {
       var s_year=null;
     } else {
       var s_year=$$('.smart-select #year_select_id')["0"].value;

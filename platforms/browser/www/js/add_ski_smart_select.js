@@ -293,7 +293,7 @@ function promptSkiName (year) {
 
 function defaultToCurrentSki(year,skiName) {
 
-  if (typeof thisSki != "undefined") { // IF THIS IS THE USERS FIRST SKI ENTRY
+  if (typeof thisSki !== "undefined") { // IF THIS IS THE USERS FIRST SKI ENTRY
   console.log('in defaultToCurrentSki and thisSki IS defined');
     myApp.modal({
       title:  'Current Ski?',

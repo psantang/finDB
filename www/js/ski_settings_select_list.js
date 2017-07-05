@@ -127,7 +127,7 @@ $$('#factory_brand').change(function() {
   		//$$('#factory_current,#factory_my_name,#factory_submit').hide(); // HIDE THESE
       //if (yearVal) {
   		    theYear = ( $$("#year").val() );
-          if (typeof theYear == 'undefined') {
+          if (typeof theYear === "undefined") {
             theYear=null;
           }
       //} else {

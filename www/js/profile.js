@@ -10,7 +10,7 @@ function init_profile() {
 
 
 function populateProfile() {
-  if (typeof thisUser != "undefined") {
+  if (typeof thisUser !== "undefined") {
     // populate the fields with values
     $$(".page #first_name").val(thisUser.first_name);
     $$(".page #last_name").val(thisUser.last_name);
