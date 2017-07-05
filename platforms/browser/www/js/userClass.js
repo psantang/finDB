@@ -74,7 +74,7 @@ function loginUser() {
                 console.log(thisUser.validation);
                 getProfile(thisUser.user_name);
 							}
-              else if (json_Obj[0].RETURN_CODE == -1) {
+              else if (json_Obj[0].RETURN_CODE == -1 || json_Obj[0].RETURN_CODE == -2) {
                 returnCode=-1;
                 console.log('sql success, but no user found');
                 delete thisUser;
@@ -90,7 +90,7 @@ function loginUser() {
               if (returnCode==1) {
                 localStorage.setItem("user_name", user_name);
                 localStorage.setItem("pwd", pwd);
-              } else if (returnCode==-1) {
+              } else if (returnCode==-1 || returnCode==-2) {
                 $$(".page #loginError").html("Invalid Login.  Please try again.");
                 window.loginPreLoader = myApp.hidePreloader();
               } else {
