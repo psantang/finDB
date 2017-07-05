@@ -29,11 +29,7 @@ class User {
   }
 
   validateUser() {
-    if (this.user_name == 'psantang') {
-      return true;
-    } else {
-      return false
-    }
+
   }
 
 } // END class User
@@ -161,10 +157,20 @@ function getProfile (user_name) {
       				console.log('ajax complete for getProfile call...now get current ski.');
               if (returnCode==1) {
                 getCurrentSki(user_name); // THIS IS IN THE skiClass.php file
-              } else if (returnCode=-1) { // need to figure this out
+              } else if (returnCode=-1) { // FIRST TIME USER FORCE partial profile completion
+
+
+                /* first solution was to push to profile page below
                 mainView.router.load( { url:'profile.html' , query:-1 });
                 myApp.closeModal('.login-screen', true);
                 $$("#editProfileBtn").click();
+                // first solution to push to profile page above */
+
+                // second solution , use modals to just get essential information of how they measure
+                myApp.closeModal('.login-screen', true);
+                firstTimeEntry();
+
+
                 myApp.hidePreloader();
               } else {
 
