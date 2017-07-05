@@ -30,13 +30,28 @@ function populateCurrentSki() {
     if (viewCounter<1) {
       viewCounter++;
       console.log("first select a ski with viewCounter=" + viewCounter);
+      var modalFirstSki = myApp.modal({
+        title: 'Welcome!',
+        text: 'Before you save any settings, you must select a ski to apply these to.',
+        afterText:  '',
+        buttons: [
+          {
+            text: 'Select My Ski',
+            bold: true,
+            onClick: function () {
+              mainView.router.load( { url:'mySkis.html' });
+            }
+          },
+        ]
+      });
+      /*
       myApp.alert(
-        'First you must select a ski to start saving your settings.  Select OK below to continue.',
+        'Before you save any settings, you must select a ski to apply these to.',
         'Welcome!',
         function () {
           mainView.router.load( { url:'mySkis.html' });
         }
-      );
+      );*/
     }
   }
 }
@@ -52,10 +67,11 @@ function populateCurrentSettings() {
       $$(".page #myCurrentDFT").html(thisSetting.dft);
       $$(".page #myCurrentWingAngle").html(thisSetting.wing_angle);
 
-      $$(".page #mySettingsBinding").html(thisSetting.measure_binding);
-      $$(".page #mySettingsLength").html(thisSetting.measure_length);
-      $$(".page #mySettingsDepth").html(thisSetting.measure_depth);
-      $$(".page #mySettingsDFT").html(thisSetting.measure_dft);
+      //$$(".page #mySettingsBinding").html(thisSetting.measure_binding);
+      $$(".page #stockBinding").html(thisSetting.measure_binding);
+      $$(".page #stockLength").html(thisSetting.measure_length);
+      $$(".page #stockDepth").html(thisSetting.measure_depth);
+      $$(".page #stockDFT").html(thisSetting.measure_dft);
 
       if ( $$(".page #dateCreated , .page .measureOverlay").hasClass('redText') ) { // redText class is for stock settings only when initially loaded
         $$(".page #dateCreated , .page .measureOverlay").removeClass('redText');
@@ -71,12 +87,13 @@ function populateCurrentSettings() {
       $$(".page #myCurrentDFT").html(thisSki.stock_fin_dft);
       $$(".page #myCurrentWingAngle").html(thisSki.stock_wing_angle);
 
-      $$(".page #mySettingsBinding").html(thisSki.measure_binding);
-      $$(".page #mySettingsLength").html(thisSki.measure_length);
-      $$(".page #mySettingsDepth").html(thisSki.measure_depth);
-      $$(".page #mySettingsDFT").html(thisSki.measure_dft);
+      //$$(".page #mySettingsBinding").html(thisSki.measure_binding);
+      $$(".page #stockBinding").html("<span class='redText'>"+thisSki.measure_binding+"</span>");
+      $$(".page #stockLength").html("<span class='redText'>"+thisSki.measure_length+"</span>");
+      $$(".page #stockDepth").html("<span class='redText'>"+thisSki.measure_depth+"</span>");
+      $$(".page #stockDFT").html("<span class='redText'>"+thisSki.measure_dft+"</span>");
 
-      $$(".page #dateCreated , .page .measureOverlay").addClass('redText');
+      $$(".page #dateCreated").addClass('redText');
       //$$("#viewStockBtn").hide();
     }
   }
@@ -367,11 +384,12 @@ function cancelSave () {
   populateCurrentSettings();
   $$(".page .slideAdjust").css('display','none');
   $$(".page #editFinBtn").text("Edit");
+  $$("#mySettingsBinding, #mySettingsLength, #mySettingsDepth, #mySettingsDFT").html('');
 }
 
 
 function toggleEditFin () {
-  if ( $$(".page .slideAdjust").css('display') == 'none' ) {
+  if ( $$(".page .slideAdjust").css('display') == 'none' )  {// Makes the settings editable
     if (isAndroid) {
       $$(".overFlowHidden").css('width','initial');
     }
@@ -379,9 +397,19 @@ function toggleEditFin () {
     $$(".page #editFinBtn").text("Save");
     $$("#dateCreated").html("<a href='#' id='cancelSaveBtn'>Cancel</a>");
     //$$(".page #editFinBtn").addClass('saveClass');
-  } else {
+
+    $$(".page #mySettingsBinding").html(thisUser.measure_binding);
+    $$(".page #mySettingsLength").html(thisUser.measure_length);
+    $$(".page #mySettingsDepth").html(thisUser.measure_depth);
+    $$(".page #mySettingsDFT").html(thisUser.measure_dft);
+
+
+
+  } else { // Changes mode back to disabled and saves the settings
     $$(".page .slideAdjust").css('display','none');
     $$(".page #editFinBtn").text("Edit");
+
+    $$("#mySettingsBinding, #mySettingsLength, #mySettingsDepth, #mySettingsDFT").html('');
     //$$(".page #editFinBtn").removeClass('saveClass');
     // NOTE, but a check here to see if any settings have been changed before saving
 
@@ -394,8 +422,8 @@ function toggleEditFin () {
     var measure_length = thisUser.measure_length;
     var measure_depth = thisUser.measure_depth;
     var measure_dft = thisUser.measure_dft
-    var date_time_created=getLocalDateTimeString("ISO");
-    var date_time_created_pretty=getLocalDateTimeString("pretty");
+    var date_time_created=getLocalDateTimeString(null,"ISO");
+    var date_time_created_pretty=getLocalDateTimeString(null,"pretty");
 
 
 
@@ -440,7 +468,8 @@ function toggleEditFin () {
       }, complete: function(){
           console.log('ajax complete for save Settings.');
           populateCurrentSettings();
-          $$("#stockBinding, #stockLength, #stockDepth, #stockDFT, #stockWingAngle").text('');
+          //$$("#stockBinding, #stockLength, #stockDepth, #stockDFT, #stockWingAngle").text('');
+          $$("#mySettingsBinding, #mySettingsLength, #mySettingsDepth, #mySettingsDFT").html('');
       }, // end COMPLETE
       timeout: 5000,
       error: function(json_Obj, status, err) {

@@ -226,17 +226,21 @@ function globalDateTimeString () {
   }
 
 
-function getLocalDateTimeString (output) {
-  globalDateTimeString();
-  if (typeof dtString == 'undefined') {
-    console.log('dtString is undefined from device');
-    window.d=new Date();
+function getLocalDateTimeString (inputTime,outputFormat) {
+  if (inputTime=='' || typeof inputTime == "undefined" || inputTime==null) {
+    globalDateTimeString();
+    if (typeof dtString == 'undefined') {
+      console.log('dtString is undefined from device');
+      window.d=new Date();
+    } else {
+      console.log('dtString is DEFINED from device');
+      window.d=new Date(dtString);
+    }
   } else {
-    console.log('dtString is DEFINED from device');
-    window.d=new Date(dtString);
+    window.d=new Date(inputTime);
   }
 
-  if (output=="ISO") {
+  if (outputFormat=="ISO") {
     y=d.getFullYear();
     m=d.getMonth();
     da=d.getDate();
@@ -259,7 +263,7 @@ function getLocalDateTimeString (output) {
       if (mi<10) mi="0"+mi;
     //s=d.getSeconds();
     localDateTimeString=m+' '+da+', '+y+' '+h+':'+mi + ' ' + ampm;
-    console.log('local date time from device is ' + localDateTimeString);
+    console.log('local date time from device is NOW FORMATTED AS ' + localDateTimeString);
     return localDateTimeString;
   }
 }
@@ -568,11 +572,6 @@ function getBrandByClass (clickedObj) {
   }
 
 }
-
-
-
-
-
 
 
 
