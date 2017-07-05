@@ -204,7 +204,7 @@ $$(document).on('deviceready', function() {
             generatePwResetCode(value);
         });
         // wait until prompt is generated, then populate with username if available
-        if (typeof localStorage.getItem("user_name") != "undefined") {
+        if (typeof localStorage.getItem("user_name") !== "undefined") {
           $$(".modal .modal-text-input").val(localStorage.getItem("user_name"));
         }
 
@@ -227,9 +227,9 @@ function globalDateTimeString () {
 
 
 function getLocalDateTimeString (inputTime,outputFormat) {
-  if (inputTime=='' || typeof inputTime == "undefined" || inputTime==null) {
+  if (inputTime=='' || typeof inputTime === "undefined" || inputTime==null) {
     globalDateTimeString();
-    if (typeof dtString == 'undefined') {
+    if (typeof dtString === "undefined") {
       console.log('dtString is undefined from device');
       window.d=new Date();
     } else {
@@ -775,4 +775,6 @@ function setNewPw(userNameOrEmail) {
       }
     }); // END ajax function for models
   });
+
+  $$(".modal-in input").prop("type","password"); // change input type to password since it defaults to text
 }

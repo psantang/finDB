@@ -252,9 +252,7 @@ function getLengths() {
 
         console.log("theYear is " + theYear);
       */
-      //    if ( (typeof theYear == 'undefined') || theYear == null ) {
-      //      theYear=null;
-      //    }
+
 
       //} else {
       //  theYear=null;
@@ -293,12 +291,6 @@ function getLengths() {
 function getStockSettings(nullYear) {
   console.log('nullYear = ' + nullYear);
   if (offline) return onOffline();
-
-      /*if ( (typeof theYear == 'undefined') || theYear == null  ) {
-        theYear = null;
-      } else {
-        theYear = $$('.smart-select select')["3"].value;
-      }*/
 
       if (nullYear == null) {
         theYear=null;
