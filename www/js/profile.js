@@ -72,7 +72,7 @@ function toggleEditSave () {
     $$('#profilePage_div .item-input').children().prop("disabled", false);
   } else {
 
-
+    if (offline) return onOffline();
 
         var errorCondition=false;
         $$("#profilePage_div .redText").html(''); // clear all error fields

@@ -1,6 +1,8 @@
 
 $$('#skiLookup').click(function() {
-  console.log('skiLookkup clicked');
+  console.log('skiLook up clicked');
+  if (offline) return onOffline();
+
   var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
 
   $$.ajax({url:url,data:{ ski_attr: "brands"},type:'POST',dataType: 'json',success:function(brandsObj) {
@@ -51,6 +53,7 @@ $$('#skiLookup').click(function() {
 $$('#factory_brand').change(function() {
 		//$$('#factory_year,#factory_length').empty(); // REMOVE ALL OTHERS
 		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
+    if (offline) return onOffline();
 		theBrand = $$('input[name="radio_brand"]:checked').val();
     console.log('theBrand = ' + theBrand)
     var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
@@ -94,6 +97,7 @@ $$('#factory_brand').change(function() {
   $$('#factory_model').change(function() {
   		//$$('#factory_year,#factory_length').empty(); // REMOVE ALL OTHERS
   		//$('#factory_current,#factory_my_name,#factory_submit').hide();// HIDE THESE
+      if (offline) return onOffline();
   		theModel = $$('input[name="radio_model"]:checked').val();
       console.log('theModel = ' + theModel)
       var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
@@ -151,6 +155,7 @@ $$('#factory_brand').change(function() {
   	$$('#factory_year').change(function() {
   		//$$('#factory_current,#factory_my_name,#factory_submit').hide(); // HIDE THESE
       //if (yearVal) {
+      if (offline) return onOffline();
   		    theYear = $$('input[name="radio_year"]:checked').val();
           if (typeof theYear === "undefined") {
             theYear=null;
@@ -196,7 +201,7 @@ $$('#factory_brand').change(function() {
     $$('#factory_length').change(function() {
       theLength = $$('input[name="radio_length"]:checked').val();
       console.log('in factory_length');
-
+      if (offline) return onOffline();
 
       var url='http://finDB.paulsantangelo.com/ws/ws_get_stock_settings_ret_json.php';
   		$$.ajax({url:url,data:{ theBrand:theBrand, theModel:theModel, theYear:theYear, theLength:theLength},type:'POST',dataType: 'json',success:function(stock_Obj) {
