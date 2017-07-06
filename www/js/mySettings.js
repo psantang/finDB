@@ -249,7 +249,8 @@ function toggleViewStock() {
 //$$('.create-popup').on('click', function () {
 function viewHistory() {
 
-  				console.log('viewHistory function');
+	console.log('viewHistory function');
+  if (offline) return onOffline();
 
           if (typeof thisSetting === "undefined") {
             myApp.alert(
@@ -428,7 +429,8 @@ function toggleEditFin () {
 
 
     console.log('date time is: ' + date_time_created);
-
+    if (offline) return onOffline();
+    
     var url='http://finDB.paulsantangelo.com/ws/ws_add_cur_settings_ret_json.php';
 
     $$.ajax({url:url,data:{ user_name:thisUser.user_name,ski_id:thisSki.id,front_binding:front_binding,length:length,depth:depth,dft:dft,wing_angle:wing_angle,measure_binding:measure_binding,measure_length:measure_length,measure_depth:measure_depth,measure_dft:measure_dft,date_time_created:date_time_created},type:'POST',dataType: 'json'

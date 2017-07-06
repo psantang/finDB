@@ -29,7 +29,8 @@ class Settings {
 // Get current settings
 function getCurrentSettings(user_name, ski_id) {
 				console.log('getCurrentSettings function');
-
+        if (offline) return onOffline();
+        
         var url='http://finDB.paulsantangelo.com/ws/ws_get_current_settings_ret_json.php';
 
       	$$.ajax({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'

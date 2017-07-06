@@ -39,6 +39,8 @@ class User {
 //$$('.view #loginBtn').click(function() {
 function loginUser() {
 				console.log('submit login button clicked');
+        if (offline) return onOffline();
+
         $$(".page #loginError").html("");
         //createNewUser();
         //return;
@@ -131,7 +133,8 @@ function loginUser() {
 // LOAD USERS PROFILE INTO USER object
 function getProfile (user_name) {
 				console.log('getProfile triggered');
-
+        if (offline) return onOffline();
+        
         var url='http://finDB.paulsantangelo.com/ws/ws_get_user_profile_ret_json.php';
         var returnCode;
 

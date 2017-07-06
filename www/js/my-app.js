@@ -577,6 +577,8 @@ function getBrandByClass (clickedObj) {
 
 function getHowToMeasure() {
 console.log('inside getHowToMeasure');
+if (offline) return onOffline();
+
  var url='http://finDB.paulsantangelo.com/ws/ws_get_how_to_measure_ret_json.php';
  $$.ajax({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
    measureObj=measure_Obj;

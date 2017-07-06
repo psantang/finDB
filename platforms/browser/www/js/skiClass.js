@@ -29,6 +29,7 @@ class Ski {
 // GET CURRENT SKI SKIER IS USING
 function getCurrentSki(user_name) {
 				console.log('getCurrentSki function');
+        if (offline) return onOffline();
 
         var url='http://finDB.paulsantangelo.com/ws/ws_get_cur_stock_ret_json.php';
         var returnCode;
@@ -90,7 +91,8 @@ function getCurrentSki(user_name) {
       // SET/UPDATE CURRENT SKI FOR USER
       function setCurrentSki(user_name, ski_id) {
       				console.log('setCurrentSki function to change users current ski');
-
+              if (offline) return onOffline();
+              
               var url='http://finDB.paulsantangelo.com/ws/ws_set_cur_ski_ret_json.php';
               var success;
 
