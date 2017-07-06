@@ -344,7 +344,7 @@ thead {
 #settingsAdjuster .range-slider input[type=range] {
   background-size: 100% 9px !important;
   background: linear-gradient(to right,rgba(255, 132, 0, .6) 0,rgba(0, 122, 255, .6) 100%)!important;
-  height:36px !important;
+  height:34px !important;
   border-radius: 18px !important;
 }
 

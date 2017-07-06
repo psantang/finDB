@@ -494,32 +494,32 @@ function init_slider() {
   toggleEditFin();
 bVal=$$(".page #myCurrentBinding").text();
 
-minVal=Number(bVal) - Number(.750);
-maxVal=Number(bVal) + Number(.750);
+minVal=Number(bVal) - Number(.500);
+maxVal=Number(bVal) + Number(.500);
 $$(".page #bindingRange").attr("value", bVal);
 $$(".page #bindingRange").attr("min", minVal );
 $$(".page #bindingRange").attr("max", maxVal );
 
 
 lVal=$$(".page #myCurrentLength").text();
-lminVal=Number(lVal) - Number(.020);
-lmaxVal=Number(lVal) + Number(.020);
+lminVal=Number(lVal) - Number(.012);
+lmaxVal=Number(lVal) + Number(.012);
 $$(".page #lengthRange").attr("value", lVal);
 $$(".page #lengthRange").attr("min", lminVal );
 $$(".page #lengthRange").attr("max", lmaxVal );
 
 
 dVal=$$(".page #myCurrentDepth").text();
-dminVal=Number(dVal) - Number(.020);
-dmaxVal=Number(dVal) + Number(.020);
+dminVal=Number(dVal) - Number(.012);
+dmaxVal=Number(dVal) + Number(.012);
 $$(".page #depthRange").attr("value", dVal);
 $$(".page #depthRange").attr("min", dminVal );
 $$(".page #depthRange").attr("max", dmaxVal );
 
 
 dftVal=$$(".page #myCurrentDFT").text();
-dftminVal=Number(dftVal) - Number(.020);
-dftmaxVal=Number(dftVal) + Number(.020);
+dftminVal=Number(dftVal) - Number(.012);
+dftmaxVal=Number(dftVal) + Number(.012);
 $$(".page #dftRange").attr("value", dftVal);
 $$(".page #dftRange").attr("min", dftminVal );
 $$(".page #dftRange").attr("max", dftmaxVal );
@@ -567,13 +567,11 @@ $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #
 });
 
 
-
-
 $$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
     currentValue=$$(this).val();
     switch (this.id) {
       case 'bindingRange':
-        updateSlider(this,currentValue,.750,.0625);
+        updateSlider(this,currentValue,.500,.0625);
         break;
 
       case 'wingRange':
@@ -581,7 +579,7 @@ $$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #d
         break;
 
       default:
-        updateSlider(this,currentValue,.020,.001);
+        updateSlider(this,currentValue,.012,.001);
         break;
     }
     console.log("this object is " + this.id)
