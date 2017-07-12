@@ -89,6 +89,9 @@ function loginUser() {
 						}
       		}, complete: function(){
               console.log('ajax complete.')
+              alert(loginEventStr);
+
+
               if (returnCode==1) {
                 localStorage.setItem("user_name", user_name);
                 localStorage.setItem("pwd", pwd);
@@ -134,7 +137,7 @@ function loginUser() {
 function getProfile (user_name) {
 				console.log('getProfile triggered');
         if (offline) return onOffline();
-        
+
         var url='http://finDB.paulsantangelo.com/ws/ws_get_user_profile_ret_json.php';
         var returnCode;
 

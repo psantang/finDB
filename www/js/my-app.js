@@ -53,16 +53,29 @@ var mainView = myApp.addView('.view-main', {
 });
 
 var offline = true;
-
+var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
+var loginEventStr="";
+window.loginEventStr;
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
-    console.log("Device is ready!  Device name is " + device.name);
+    alert("Device is ready!  ");
+    loginEventStr += "\r\ndevice ready\r\n";
+    window.deviceManufacturer = device.manufacturer;
+    window.devicePlatform=device.platform;
+    window.deviceModel=device.model;
+    window.deviceVersion=device.version;
+
+    var deviceInfo=deviceManufacturer+ " " +devicePlatform+ " " +deviceModel+ " " + deviceVersion;
+    loginEventStr += "\r\n" + deviceInfo +  "\r\n";
+    alert("Device Data: " +deviceInfo );
 
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
 
     $$('.page #loginBtn').click(function() {
+      alert('initiating LOGIN from onDeviceReady');
+      loginEventStr += "\r\nlogin initiated from device ready\r\n";
       loginUser();
     });
 
@@ -328,8 +341,8 @@ myApp.onPageInit('about', function (page) {
 // PAGE INITS HERE
 
 myApp.onPageInit('login', function (page) {
-    console.log('login onPageInit fired');
-
+    alert('login onPageInit fired');
+    loginEventStr += "In pageInit for login";
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
@@ -342,6 +355,8 @@ myApp.onPageInit('login', function (page) {
     }
 
     $$('.page #loginBtn').click(function() {
+      alert('initiating LOGIN from onPageInit');
+      loginEventStr += "\r\nlogin initiated from onPageInit for login page";
       loginUser();
     });
 });
