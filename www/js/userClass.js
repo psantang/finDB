@@ -38,6 +38,7 @@ class User {
 // VALIDATE THE USER
 //$$('.view #loginBtn').click(function() {
 function loginUser() {
+    alert("inside loginUser function");
 				console.log('submit login button clicked');
         if (offline) return onOffline();
 
@@ -45,36 +46,37 @@ function loginUser() {
         //createNewUser();
         //return;
 //        var rememberMe=jQuery("#rememberMe").val();
-        var user_name=$$('#user_name').val();
-        var pwd=$$('#pwd').val();
+        var user_name=$$('.page #user_name').val();
+        var pwd=$$('.page #pwd').val();
 
         if (user_name=='' || pwd =='') {
           $$(".page #loginError").html("Please enter a User Name and Password.");
           return;
         }
-				//var user_name='psantang';
-				//var pwd='calgary1';
 
-				//var url='classes/userClass.php';
+        //var url='http://'+serverEnv+'.paulsantangelo.com/ws/ws_login_ret_json.php';
         var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
+        console.log("url is " + url);
         var returnCode;
 
       	$$.ajax({url:url,data:{ user_name: user_name , pwd: pwd },type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
-						console.log('ajax success.');
+						alert('ajax success function for loginUser.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
+              alert('return code is ' + json_Obj[0].RETURN_CODE);
+
           		if (json_Obj[0].RETURN_CODE == 1) {
             		returnCode=1;
 
 								console.log('user_name is ' + json_Obj[0].user_name);
 								console.log('id is ' + json_Obj[0].id);
-								console.log('json_Obj length is ' + json_Obj.length)
+								console.log('json_Obj length is ' + json_Obj.length);
 
                 const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email);
                 window.thisUser = thisUser;
                 console.log(thisUser);
                 console.log(thisUser.validation);
-                getProfile(thisUser.user_name);
+
 							}
               else if (json_Obj[0].RETURN_CODE == -1 || json_Obj[0].RETURN_CODE == -2) {
                 returnCode=-1;
@@ -84,52 +86,47 @@ function loginUser() {
               } else {
                 returnCode=json_Obj[0].RETURN_CODE;
                 delete thisUser;
-
               }
-						}
-      		}, complete: function(){
-              console.log('ajax complete.')
-              alert(loginEventStr);
-
+						} else { // NO JSON OBJECT RETURNED
+              alert('NO return code ');
+            }
+      		}, complete: function() {
+              alert('ajax complete....with loginEventStr = '+loginEventStr);
+              console.log('ajax complete.');
 
               if (returnCode==1) {
                 localStorage.setItem("user_name", user_name);
                 localStorage.setItem("pwd", pwd);
+                getProfile(thisUser.user_name);
               } else if (returnCode==-1 || returnCode==-2) {
                 $$(".page #loginError").html("Invalid Login.  Please try again.");
-                window.loginPreLoader = myApp.hidePreloader();
+                myApp.hidePreloader();
               } else {
                 $$(".page #loginError").html("Database error.  Please try again or contact paul@paulsantangel.com .");
                 console.log('invalid credentials...thisUser deleted');
-                window.loginPreLoader = myApp.hidePreloader();
+                myApp.hidePreloader();
               }
 
       	  }, // end COMPLETE
 					timeout: 5000,
 					error: function(json_Obj, status, err) {
 						if (status == "timeout") {
+              alert("timeout error");
 								console.log("Timeout Error. " + json_Obj + status + err);
-								//$( "#error_login").html("Timeout error.  Please retry.")
-								//$(popDiv).html('TimeOut Error:   Please retry.');
 						} else {
-								// another error occured
-								//$( "#error_login").html('Error occurred.  Please retry.');
-								console.log("error: " + json_Obj + status + err);
+              alert("other error");
+							console.log("error: " + json_Obj + status + err);
 						}
           }, // end error
-            beforeSend: function(){
-							console.log('ajax beforeSend.')
+            beforeSend: function() {
+							alert('ajax beforeSend with user_name='+user_name+ ' pwd='+pwd);
               console.log('user_name='+user_name+ ' pwd='+pwd);
-              $$("#loginError").html('');
-              //var window.loginPreLoader;
-              window.loginPreLoader = myApp.showPreloader('Validating User...');
-                //jQuery('.upd').remove();
-                //jQuery('#submit_unassigned_results').html('');
-                //jQuery('#unassigned_list').html('<span class="upd">Retrieving data...</span>');
-							} // END before Send
-        });
-//      }); // END CHANGE function
-}
+              $$(".page #loginError").html('');
+
+              myApp.showPreloader('Validating User...');
+						} // END before Send
+        }); // END AJAX REQUEST
+} // end loginUser function
 
 
 
