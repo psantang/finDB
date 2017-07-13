@@ -358,8 +358,101 @@ myApp.onPageInit('login', function (page) {
 
     $$('.page #loginBtn').click(function() {
       alert('initiating LOGIN from onPageInit');
+
+
+          alert("inside loginUser function");
+      				console.log('submit login button clicked');
+              if (offline) return onOffline();
+
+              $$(".page #loginError").html("");
+              //createNewUser();
+              //return;
+      //        var rememberMe=jQuery("#rememberMe").val();
+              var user_name=$$('.page #user_name').val();
+              var pwd=$$('.page #pwd').val();
+
+              if (user_name=='' || pwd =='') {
+                $$(".page #loginError").html("Please enter a User Name and Password.");
+                return;
+              }
+
+              //var url='http://'+serverEnv+'.paulsantangelo.com/ws/ws_login_ret_json.php';
+              var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
+              console.log("url is " + url);
+              var returnCode;
+
+            	$$.ajax({url:url,data:{ user_name: user_name , pwd: pwd },type:'POST',dataType: 'json'
+      				,success:function(json_Obj) {
+      						alert('ajax success function for loginUser.');
+      						if (json_Obj.length>0) { // RETURNED RESULTS
+                    alert('return code is ' + json_Obj[0].RETURN_CODE);
+
+                		if (json_Obj[0].RETURN_CODE == 1) {
+                  		returnCode=1;
+
+      								console.log('user_name is ' + json_Obj[0].user_name);
+      								console.log('id is ' + json_Obj[0].id);
+      								console.log('json_Obj length is ' + json_Obj.length);
+
+                      const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email);
+                      window.thisUser = thisUser;
+                      console.log(thisUser);
+                      console.log(thisUser.validation);
+
+      							}
+                    else if (json_Obj[0].RETURN_CODE == -1 || json_Obj[0].RETURN_CODE == -2) {
+                      returnCode=-1;
+                      console.log('sql success, but no user found');
+                      delete thisUser;
+                      //$$(".page #loginError").html("Invalid Login.  Please try again.");
+                    } else {
+                      returnCode=json_Obj[0].RETURN_CODE;
+                      delete thisUser;
+                    }
+      						} else { // NO JSON OBJECT RETURNED
+                    alert('NO return code ');
+                  }
+            		}, complete: function() {
+                    alert('ajax complete....with loginEventStr = '+loginEventStr);
+                    console.log('ajax complete.');
+
+                    if (returnCode==1) {
+                      localStorage.setItem("user_name", user_name);
+                      localStorage.setItem("pwd", pwd);
+                      getProfile(thisUser.user_name);
+                    } else if (returnCode==-1 || returnCode==-2) {
+                      $$(".page #loginError").html("Invalid Login.  Please try again.");
+                      myApp.hidePreloader();
+                    } else {
+                      $$(".page #loginError").html("Database error.  Please try again or contact paul@paulsantangel.com .");
+                      console.log('invalid credentials...thisUser deleted');
+                      myApp.hidePreloader();
+                    }
+
+            	  }, // end COMPLETE
+      					timeout: 5000,
+      					error: function(json_Obj, status, err) {
+      						if (status == "timeout") {
+                    alert("timeout error");
+      								console.log("Timeout Error. " + json_Obj + status + err);
+      						} else {
+                    alert("other error");
+      							console.log("error: " + json_Obj + status + err);
+      						}
+                }, // end error
+                  beforeSend: function() {
+      							alert('ajax beforeSend with user_name='+user_name+ ' pwd='+pwd);
+                    console.log('user_name='+user_name+ ' pwd='+pwd);
+                    $$(".page #loginError").html('');
+
+                    myApp.showPreloader('Validating User...');
+      						} // END before Send
+              }); // END AJAX REQUEST
+
+
+
       loginEventStr += "\r\nlogin initiated from onPageInit for login page";
-      loginUser();
+      //loginUser();
     });
 });
 
