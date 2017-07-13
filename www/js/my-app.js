@@ -1,7 +1,9 @@
 // only needed for ios/android interface differences
 // Determine theme depending on device
+//'use strict'; //NOTE: GOOD FOR TROUBLESHOOTING
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
+var serverEnv="finDBdev";
 
 // Set Template7 global devices flags
 Template7.global = {
@@ -11,7 +13,7 @@ Template7.global = {
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
-
+//console.log("$$ is " + $$);
 // only needed for ios/android interface differences to apply material design
 if (isAndroid) {
     // Change class
@@ -54,8 +56,8 @@ var mainView = myApp.addView('.view-main', {
 
 var offline = true;
 var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
-var loginEventStr="";
-window.loginEventStr;
+window.loginEventStr="";
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     alert("Device is ready!  ");
@@ -329,7 +331,7 @@ myApp.onPageInit('about', function (page) {
     console.log('triggering getHowToMeasure function');
     var measureObj={}; // make object global
     getHowToMeasure();
-})
+});
 
 
 
@@ -425,7 +427,7 @@ myApp.onPageInit('mySettings', function (page) {
     $$(".page #bindVal").attr("step", ".0625");
 */
 
-})
+});
 
 
 myApp.onPageInit('mySkis', function (page) {
@@ -443,7 +445,7 @@ myApp.onPageInit('mySkis', function (page) {
       addSki();
     });
 
-})
+});
 
 
 
@@ -499,7 +501,7 @@ myApp.onPageInit('profile', function (page) {
       console.log ("inside of page.query is -1");
 
     }
-})
+});
 
 
 
@@ -514,15 +516,22 @@ $$(document).on('pageInit', function (e) {
     console.log('  ');
 
     $$('.navbar #logoutBtn').click(function() {
-      delete thisUser; // delete all objects
-      delete thisSki;
-      delete thisSetting;
+      //delete thisUser; // delete all objects - NOTE DELETE NOT ALLOWED IN STRICT MODE
+      /*
+      if (typeof thisUser != "undefined") thisUser={};
+      if (typeof thisSki != "undefined") thisSki={};
+      if (typeof thisSetting != "undefined") thisSetting={};
+      */
+      if (typeof thisUser != "undefined") delete thisUser;
+      if (typeof thisSki != "undefined") delete thisSki;
+      if (typeof thisSetting != "undefined") delete thisSetting;
+
       console.log('  ');
       console.log('############# USER LOGGED OUT #############');
       console.log('  ');
       mainView.router.load( { url:'index.html' });
     });
-})
+});
 
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
 
@@ -548,13 +557,13 @@ $$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
       $$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")).prop('checked', false);
     //}
 
-})
+});
 
 $$(document).on('pageInit', '.page[data-select-name="model"]', function (e) {
     console.log('model smart select initialized');
     $$('.smart-select #model_select_id').change(getLengths);
     $$('.page[data-select-name="model"]').find(("input[type='radio']:checked")).prop('checked', false);
-})
+});
 
 /*
 $$(document).on('onPageBeforeRemove', '.page[data-select-name="model"]', function (e) {
