@@ -1,0 +1,12 @@
+RELEASE 1.0.1
+
+
+- Rename Ski (DONE)
+- Add Ski Brand, Make, Model, Year to Stock settings reveal (DONE)
+- Add last_login date/time for when user logs in (DONE)
+- Add Device Manufacturer, Brand, Model, OS version to login (DONE)
+- Add login count to users table (DONE)
+- Add (possibly) skis to stock ski tables without settings data (DONE)
+- Add ability to add ski that is not in DB (NOT SURE I WANT TO DO THIS)
+- Add Notes for settings (NEXT RELEASE)
+- Add LE (leading edge) calculation to adjustments (NEXT RELEASE)

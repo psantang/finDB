@@ -3,7 +3,7 @@ $$('#skiLookup').click(function() {
   console.log('skiLook up clicked');
   if (offline) return onOffline();
 
-  var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+  var url=wsURL+'ws_ski_lookup_ret_json.php';
 
   $$.ajax({url:url,data:{ ski_attr: "brands"},type:'POST',dataType: 'json',success:function(brandsObj) {
     console.log('in success for skiLookup for brands');
@@ -56,7 +56,7 @@ $$('#factory_brand').change(function() {
     if (offline) return onOffline();
 		theBrand = $$('input[name="radio_brand"]:checked').val();
     console.log('theBrand = ' + theBrand)
-    var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+    var url=wsURL+'ws_ski_lookup_ret_json.php';
 
 		$$.ajax({url:url,data:{ ski_attr:"models",brand:theBrand },type:'POST',dataType: 'json',success:function(modelsObj) {
 
@@ -100,7 +100,7 @@ $$('#factory_brand').change(function() {
       if (offline) return onOffline();
   		theModel = $$('input[name="radio_model"]:checked').val();
       console.log('theModel = ' + theModel)
-      var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+      var url=wsURL+'ws_ski_lookup_ret_json.php';
 
       var yearVal;
   		$$.ajax({url:url,data:{ ski_attr: "years", brand:theBrand, model:theModel},type:'POST',dataType: 'json',success:function(yearsObj) {
@@ -163,7 +163,7 @@ $$('#factory_brand').change(function() {
       //} else {
       //  theYear=null;
       //}
-      var url='http://finDB.paulsantangelo.com/ws/ws_ski_lookup_ret_json.php';
+      var url=wsURL+'ws_ski_lookup_ret_json.php';
   		$$.ajax({url:url,data:{ ski_attr: "lengths", brand: theBrand, model: theModel, year: theYear},type:'POST',dataType: 'json',success:function(lengthsObj) {
 
   			var lengthList = '<div class="list-block">';
@@ -203,7 +203,7 @@ $$('#factory_brand').change(function() {
       console.log('in factory_length');
       if (offline) return onOffline();
 
-      var url='http://finDB.paulsantangelo.com/ws/ws_get_stock_settings_ret_json.php';
+      var url=wsURL+'ws_get_stock_settings_ret_json.php';
   		$$.ajax({url:url,data:{ theBrand:theBrand, theModel:theModel, theYear:theYear, theLength:theLength},type:'POST',dataType: 'json',success:function(stock_Obj) {
         if (stock_Obj.length>0) { // RETURNED RESULTS
           if (stock_Obj[0].RETURN_CODE==1) {

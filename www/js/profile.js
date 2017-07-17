@@ -135,7 +135,7 @@ function toggleEditSave () {
     }
     */
 
-    var url='http://finDB.paulsantangelo.com/ws/ws_set_user_profile_ret_json.php';
+    var url=wsURL+'ws_set_user_profile_ret_json.php';
     var firstLogin=false;
     var passed=false;
 		$$.ajax({url:url,data: form_data ,type:'POST',dataType: 'json',success:function(profilesObj) {

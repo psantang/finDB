@@ -72,6 +72,7 @@ function populateCurrentSettings() {
       $$(".page #stockLength").html(thisSetting.measure_length);
       $$(".page #stockDepth").html(thisSetting.measure_depth);
       $$(".page #stockDFT").html(thisSetting.measure_dft);
+      $$(".page #stockWingAngle").html("");
 
       if ( $$(".page #dateCreated , .page .measureOverlay").hasClass('redText') ) { // redText class is for stock settings only when initially loaded
         $$(".page #dateCreated , .page .measureOverlay").removeClass('redText');
@@ -87,11 +88,12 @@ function populateCurrentSettings() {
       $$(".page #myCurrentDFT").html(thisSki.stock_fin_dft);
       $$(".page #myCurrentWingAngle").html(thisSki.stock_wing_angle);
 
-      //$$(".page #mySettingsBinding").html(thisSki.measure_binding);
-      $$(".page #stockBinding").html("<span class='redText'>"+thisSki.measure_binding+"</span>");
-      $$(".page #stockLength").html("<span class='redText'>"+thisSki.measure_length+"</span>");
-      $$(".page #stockDepth").html("<span class='redText'>"+thisSki.measure_depth+"</span>");
-      $$(".page #stockDFT").html("<span class='redText'>"+thisSki.measure_dft+"</span>");
+      //BELOW SHOW HOW STOCK IS MEASURED IF THERE IS A VALUE FOR EACH OF THE SETTINGS FROM THE FACTORY
+      thisSki.stock_binding_location>0 ? $$(".page #stockBinding").html("<span class='redText'>"+thisSki.measure_binding+"</span>") : $$(".page #stockBinding").html("");
+      thisSki.stock_fin_length>0 ? $$(".page #stockLength").html("<span class='redText'>"+thisSki.measure_length+"</span>") : $$(".page #stockLength").html("");
+      thisSki.stock_fin_depth>0 ? $$(".page #stockDepth").html("<span class='redText'>"+thisSki.measure_depth+"</span>") : $$(".page #stockDepth").html("");
+      thisSki.stock_fin_dft>0 ? $$(".page #stockDFT").html("<span class='redText'>"+thisSki.measure_dft+"</span>") : $$(".page #stockDFT").html("");
+      $$(".page #stockWingAngle").html("");
 
       $$(".page #dateCreated").addClass('redText');
       //$$("#viewStockBtn").hide();
@@ -124,8 +126,19 @@ function toggleViewStock() {
       $$(".page #stockDFT").html( thisSki.stock_fin_dft + "<br />(" +diffDFT + ")");
       $$(".page #stockWingAngle").html( thisSki.stock_wing_angle + "<br />(" +diffWingAngle + ")");
 */
+  if (     parseFloat(thisSki.stock_binding_location) <= 0
+        && parseFloat(thisSki.stock_fin_length) <= 0
+        && parseFloat(thisSki.stock_fin_depth) <= 0
+        && parseFloat(thisSki.stock_fin_dft) <= 0
+        && parseFloat(thisSki.stock_wing_angle) <= 0
+      ) {
+        stockHTML ='<div id="stockSettings">';
+        stockHTML+='<div class="stockName center">No stock data is available.</div>';
+        stockHTML+='</div>';
+    } else {
       stockHTML ='<div id="stockSettings">';
       stockHTML+='<div class="data-table">';
+      stockHTML+='<div class="stockName center">'+thisSki.length + ' ' + thisSki.brand + ' ' + thisSki.model + ' ' + thisSki.year + '</div>';
       stockHTML+='<table>';
       stockHTML+='<thead>';
       stockHTML+='<tr>';
@@ -155,14 +168,14 @@ function toggleViewStock() {
       stockHTML+='</table>';
       stockHTML+='</div>';
       stockHTML+='</div>';
-
+    }
 
       //$$("#stockSettingsDiv").css("height","100%");
 
       $$("#stockSettingsDiv").animate(
         /* CSS properties to animate, e.g.: */
         {
-            'height': 38,
+            'height': 70,
             'opacity': 1
         },
         {
@@ -196,7 +209,7 @@ function toggleViewStock() {
       $$(".page #viewStockBtn").text("HIDE");
 
     } else {
-      $$(".page #stockBinding, .page #stockLength, .page #stockDepth, .page #stockDFT, .page #stockWingAngle").text("");
+      //$$(".page #stockBinding, .page #stockLength, .page #stockDepth, .page #stockDFT, .page #stockWingAngle").text("");
       //$$(".page #viewStockBtn i").text("more_vertical_round");
       $$(".page #viewStockBtn").text("STOCK");
 
@@ -263,7 +276,7 @@ function viewHistory() {
             return null;
           }
 
-          var url='http://finDB.paulsantangelo.com/ws/ws_get_settings_history_ret_json.php';
+          var url=wsURL+'ws_get_settings_history_ret_json.php';
 
         	$$.ajax({url:url,data:{ user_name:thisUser.user_name, ski_id:thisSetting.ski_id },type:'POST',dataType: 'json'
   				,success:function(json_Obj) {
@@ -403,7 +416,12 @@ function toggleEditFin () {
     $$(".page #mySettingsDepth").html(thisUser.measure_depth);
     $$(".page #mySettingsDFT").html(thisUser.measure_dft);
 
-
+    // BLOCKS below address cases where there are NO stock settings in the database...set to base defaults
+    if (parseFloat($$("#myCurrentBinding").text() ) <= 0 ) { $$("#myCurrentBinding").text("29.50"); $$(".page #stockBinding").html("Estimated"); }
+    if (parseFloat($$("#myCurrentLength").text() ) <= 0 ) { $$("#myCurrentLength").text("6.900"); $$(".page #stockLength").html("Estimated"); }
+    if (parseFloat($$("#myCurrentDepth").text() ) <= 0 ) { $$("#myCurrentDepth").text("2.500"); $$(".page #stockDepth").html("Estimated"); }
+    if (parseFloat($$("#myCurrentDFT").text() ) <= 0 ) { $$("#myCurrentDFT").text("0.750"); $$(".page #stockDFT").html("Estimated"); }
+    if (parseFloat($$("#myCurrentWingAngle").text() ) <= 0 ) { $$("#myCurrentWingAngle").text("7.00"); $$(".page #stockWingAngle").html("Estimated"); }
 
   } else { // Changes mode back to disabled and saves the settings
     $$(".page .slideAdjust").css('display','none');
@@ -430,8 +448,8 @@ function toggleEditFin () {
 
     console.log('date time is: ' + date_time_created);
     if (offline) return onOffline();
-    
-    var url='http://finDB.paulsantangelo.com/ws/ws_add_cur_settings_ret_json.php';
+
+    var url=wsURL+'ws_add_cur_settings_ret_json.php';
 
     $$.ajax({url:url,data:{ user_name:thisUser.user_name,ski_id:thisSki.id,front_binding:front_binding,length:length,depth:depth,dft:dft,wing_angle:wing_angle,measure_binding:measure_binding,measure_length:measure_length,measure_depth:measure_depth,measure_dft:measure_dft,date_time_created:date_time_created},type:'POST',dataType: 'json'
     ,success:function(json_Obj) {
@@ -541,6 +559,8 @@ $$(".page #wingRange").attr("max", wmaxVal );
 // UPDATE VALUE REAL TIME BASED ON SLIDER POSITION
 $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
     sliderNumberString=$$(this).val(); // get value from slider
+    //console.log('sliderNumberString is ' + sliderNumberString);
+
     if (this.id == 'bindingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(4);
       $$(".page #myCurrentBinding").text(sliderValue); // put in view
@@ -550,6 +570,7 @@ $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentLength").text(sliderValue); // put in view
       if (typeof thisSetting !== "undefined") { $$("#stockLength").text( (sliderValue - parseFloat(thisSetting.length)).toFixed(3) ); }
+      //calculateLE();
     }
     if (this.id == 'depthRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
@@ -560,6 +581,7 @@ $$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #
       sliderValue=parseFloat(sliderNumberString).toFixed(3);
       $$(".page #myCurrentDFT").text(sliderValue); // put in view
       if (typeof thisSetting !== "undefined") { $$("#stockDFT").text( (sliderValue - parseFloat(thisSetting.dft)).toFixed(3) ); }
+      //calculateLE();
     }
     if (this.id == 'wingRange') {
       sliderValue=parseFloat(sliderNumberString).toFixed(2);
@@ -589,7 +611,7 @@ $$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #d
 
 
 
-
+// UPDATES RANGE SLIDER AFTER touchend event, so that it can continually be dragged to adjust settings in small/configured increments
 function updateSlider(obj,currentValue,plusMinusRange,increment) {
   minVal=Number(currentValue) - Number(plusMinusRange);
   maxVal=Number(currentValue) + Number(plusMinusRange);
@@ -598,4 +620,12 @@ function updateSlider(obj,currentValue,plusMinusRange,increment) {
   obj.max=maxVal;
   obj.step=increment;
   console.log('object value is ' + obj.value)
+}
+
+function calculateLE (change) {
+  var length =parseFloat($$(".page #myCurrentLength").text());
+  var dft =parseFloat($$(".page #myCurrentDFT").text());
+  var LE= (length+dft).toFixed(3);
+  console.log ("---- LE is : "+LE);
+  $$(".page #mySettingsLE").text(LE);
 }
