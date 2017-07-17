@@ -185,7 +185,7 @@ function saveMeasuring() {
 
   console.log('saveMeasuring function fired with user_name ' + user_name);
 
-  var url='http://finDB.paulsantangelo.com/ws/ws_set_how_i_measure_ret_json.php';
+  var url=wsURL+'ws_set_how_i_measure_ret_json.php';
   var passed;
 
   $$.ajax({url:url,data:{ user_name:thisUser.user_name,measure_binding:ftBinding,measure_length:ftLength,measure_depth:ftDepth,measure_dft:ftDFT },type:'POST',dataType: 'json',success:function(json_Obj) {

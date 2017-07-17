@@ -3,7 +3,9 @@
 //'use strict'; //NOTE: GOOD FOR TROUBLESHOOTING
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
-var serverEnv="finDBdev";
+
+var api_vers="1_0_1";
+var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/";
 
 // Set Template7 global devices flags
 Template7.global = {
@@ -23,7 +25,6 @@ if (isAndroid) {
 
     console.log('**** in isAndroid to alter css properties ****');
 }
-
 
 // only needed for ios/android interface differences if using Template7
 /*
@@ -60,7 +61,7 @@ window.loginEventStr="";
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
-    alert("Device is ready!  ");
+    console.log("Device is ready!  ");
     loginEventStr += "\r\ndevice ready\r\n";
     window.deviceManufacturer = device.manufacturer;
     window.devicePlatform=device.platform;
@@ -69,14 +70,14 @@ $$(document).on('deviceready', function() {
 
     var deviceInfo=deviceManufacturer+ " " +devicePlatform+ " " +deviceModel+ " " + deviceVersion;
     loginEventStr += "\r\n" + deviceInfo +  "\r\n";
-    alert("Device Data: " +deviceInfo );
+    console.log("Device Data: " +deviceInfo );
 
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
 
     $$('.page #loginBtn').click(function() {
-      alert('initiating LOGIN from onDeviceReady');
+      console.log('initiating LOGIN from onDeviceReady');
       loginEventStr += "\r\nlogin initiated from device ready\r\n";
       loginUser();
     });
@@ -161,12 +162,27 @@ $$(document).on('deviceready', function() {
 
 
 
+// Capture "RENAME SKI" event and handle
+  //$$('.swipeout').on('swipeout', function (e) {
+  $$(document).on('swipeout', 'a', function (e) {
+    console.log('Item opened on: ' + e.detail.progress + '%');
+  });
+
+    $$(document).on('click', '#saved_ski_list a.renameSki', function (e) {
+      console.log('captured swipe to rename ski');
+      var theID=$$(this).attr("id")
+      theID=theID.substring(theID.lastIndexOf("_")+1, theID.length);
+      console.log('the rename id is ' + theID);
+      changeSkiName(theID);
+    });
+
+
 
     //$$('.create-picker').on('click', function () { // THIS BINDS IT IF ALREADY IN DOB
     $$(document).on('click', '.create-picker', function () { // THIS BINDS IT IF DYNAMICALLY CREATED AFTER DOM INTIALLY LOADS
       // Check first, if we already have opened picker
       console.log($$(this).attr('class'));
-      //var theBrand=getBrandByClass($$(this).attr('class'));
+      
       var theBrand=getBrandByClass(this);
       console.log('theBrand=' + theBrand);
 
@@ -343,7 +359,7 @@ myApp.onPageInit('about', function (page) {
 // PAGE INITS HERE
 
 myApp.onPageInit('login', function (page) {
-    alert('login onPageInit fired');
+    console.log('login onPageInit fired');
     loginEventStr += "In pageInit for login";
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
@@ -357,108 +373,14 @@ myApp.onPageInit('login', function (page) {
     }
 
     $$('.page #loginBtn').click(function() {
-      alert('initiating LOGIN from onPageInit');
-
-
-          alert("inside loginUser function");
-      				console.log('submit login button clicked');
-              if (offline) return onOffline();
-
-              $$(".page #loginError").html("");
-              //createNewUser();
-              //return;
-      //        var rememberMe=jQuery("#rememberMe").val();
-              var user_name=$$('.page #user_name').val();
-              var pwd=$$('.page #pwd').val();
-
-              if (user_name=='' || pwd =='') {
-                $$(".page #loginError").html("Please enter a User Name and Password.");
-                return;
-              }
-
-              //var url='http://'+serverEnv+'.paulsantangelo.com/ws/ws_login_ret_json.php';
-              var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
-              console.log("url is " + url);
-              var returnCode;
-
-            	$$.ajax({url:url,data:{ user_name: user_name , pwd: pwd },type:'POST',dataType: 'json'
-      				,success:function(json_Obj) {
-      						alert('ajax success function for loginUser.');
-      						if (json_Obj.length>0) { // RETURNED RESULTS
-                    alert('return code is ' + json_Obj[0].RETURN_CODE);
-
-                		if (json_Obj[0].RETURN_CODE == 1) {
-                  		returnCode=1;
-
-      								console.log('user_name is ' + json_Obj[0].user_name);
-      								console.log('id is ' + json_Obj[0].id);
-      								console.log('json_Obj length is ' + json_Obj.length);
-
-                      const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email);
-                      window.thisUser = thisUser;
-                      console.log(thisUser);
-                      console.log(thisUser.validation);
-
-      							}
-                    else if (json_Obj[0].RETURN_CODE == -1 || json_Obj[0].RETURN_CODE == -2) {
-                      returnCode=-1;
-                      console.log('sql success, but no user found');
-                      delete thisUser;
-                      //$$(".page #loginError").html("Invalid Login.  Please try again.");
-                    } else {
-                      returnCode=json_Obj[0].RETURN_CODE;
-                      delete thisUser;
-                    }
-      						} else { // NO JSON OBJECT RETURNED
-                    alert('NO return code ');
-                  }
-            		}, complete: function() {
-                    alert('ajax complete....with loginEventStr = '+loginEventStr);
-                    console.log('ajax complete.');
-
-                    if (returnCode==1) {
-                      localStorage.setItem("user_name", user_name);
-                      localStorage.setItem("pwd", pwd);
-                      getProfile(thisUser.user_name);
-                    } else if (returnCode==-1 || returnCode==-2) {
-                      $$(".page #loginError").html("Invalid Login.  Please try again.");
-                      myApp.hidePreloader();
-                    } else {
-                      $$(".page #loginError").html("Database error.  Please try again or contact paul@paulsantangel.com .");
-                      console.log('invalid credentials...thisUser deleted');
-                      myApp.hidePreloader();
-                    }
-
-            	  }, // end COMPLETE
-      					timeout: 5000,
-      					error: function(json_Obj, status, err) {
-      						if (status == "timeout") {
-                    alert("timeout error");
-      								console.log("Timeout Error. " + json_Obj + status + err);
-      						} else {
-                    alert("other error");
-      							console.log("error: " + json_Obj + status + err);
-      						}
-                }, // end error
-                  beforeSend: function() {
-      							alert('ajax beforeSend with user_name='+user_name+ ' pwd='+pwd);
-                    console.log('user_name='+user_name+ ' pwd='+pwd);
-                    $$(".page #loginError").html('');
-
-                    myApp.showPreloader('Validating User...');
-      						} // END before Send
-              }); // END AJAX REQUEST
-
-
-
+      console.log('initiating LOGIN from onPageInit');
       loginEventStr += "\r\nlogin initiated from onPageInit for login page";
-      //loginUser();
+      loginUser();
     });
 });
 
 
 myApp.onPageInit('register', function (page) {
-    //alert('index page');
     console.log("register page initialized");
 
     $$('.create-popup').on('click', function () {
@@ -641,15 +563,8 @@ $$(document).on('pageInit', function (e) {
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
 $$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
     console.log('brands smart select initialized');
-
     $$('.page .smart-select #brand_select_id').change(getModels); // run getModels function
-
-  //  if ($$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")) ) {
-    //  var theName=$$('.page[data-select-name="brand"]').find(("input[type='radio']:checked"))[0].name;
-    //  alert(theName);
-      $$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")).prop('checked', false);
-    //}
-
+    $$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")).prop('checked', false);
 });
 
 $$(document).on('pageInit', '.page[data-select-name="model"]', function (e) {
@@ -657,13 +572,6 @@ $$(document).on('pageInit', '.page[data-select-name="model"]', function (e) {
     $$('.smart-select #model_select_id').change(getLengths);
     $$('.page[data-select-name="model"]').find(("input[type='radio']:checked")).prop('checked', false);
 });
-
-/*
-$$(document).on('onPageBeforeRemove', '.page[data-select-name="model"]', function (e) {
-  console.log('onPageAfterAnimation to GET YEARS NEXT');
-  $$('.smart-select #model_select_id').change(getYears);
-})
-*/
 
 
 $$(document).on('pageInit', '.page[data-select-name="year"]', function (e) {
@@ -696,7 +604,7 @@ function getHowToMeasure() {
 console.log('inside getHowToMeasure');
 if (offline) return onOffline();
 
- var url='http://finDB.paulsantangelo.com/ws/ws_get_how_to_measure_ret_json.php';
+ var url=wsURL+'ws_get_how_to_measure_ret_json.php';
  $$.ajax({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
    measureObj=measure_Obj;
    console.log(Object.keys(measureObj[0]).length);
@@ -737,7 +645,7 @@ function generatePwResetCode(userNameOrEmail) {
       console.log('running generatePwResetCode function with value of ' + userNameOrEmail);
       if (offline) return onOffline();
 
-      var url='http://finDB.paulsantangelo.com/ws/ws_set_forgot_pw_code_ret_json.php';
+      var url=wsURL+'ws_set_forgot_pw_code_ret_json.php';
       var passed;
       $$.ajax({url:url,data:{user_input:userNameOrEmail},type:'POST',dataType: 'json',success:function(jsonObj) {
         if (jsonObj[0].RETURN_CODE==1) {
@@ -790,7 +698,7 @@ function validatePwResetCode (userNameOrEmail) {
         console.log('running validatePwResetCode function');
         if (offline) return onOffline();
 
-        var url='http://finDB.paulsantangelo.com/ws/ws_get_forgot_pw_code_ret_json.php';
+        var url=wsURL+'ws_get_forgot_pw_code_ret_json.php';
         var passed;
         $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,code:value},type:'POST',dataType: 'json',success:function(jsonObj) {
           if (jsonObj[0].RETURN_CODE==1) {
@@ -850,7 +758,7 @@ function setNewPw(userNameOrEmail) {
       return;
     }
 
-    var url='http://finDB.paulsantangelo.com/ws/ws_set_reset_password_ret_json.php';
+    var url=wsURL+'ws_set_reset_password_ret_json.php';
     var passed;
     $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,user_pwd:value},type:'POST',dataType: 'json',success:function(jsonObj) {
       if (jsonObj[0].RETURN_CODE==1) {

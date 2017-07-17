@@ -38,7 +38,7 @@ class User {
 // VALIDATE THE USER
 //$$('.view #loginBtn').click(function() {
 function loginUser() {
-    alert("inside loginUser function");
+    console.log("inside loginUser function");
 				console.log('submit login button clicked');
         if (offline) return onOffline();
 
@@ -54,16 +54,17 @@ function loginUser() {
           return;
         }
 
-        //var url='http://'+serverEnv+'.paulsantangelo.com/ws/ws_login_ret_json.php';
-        var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
+
+        var url=wsURL+'ws_login_ret_json.php';
+        //var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
         console.log("url is " + url);
         var returnCode;
 
-      	$$.ajax({url:url,data:{ user_name: user_name , pwd: pwd },type:'POST',dataType: 'json'
+      	$$.ajax({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion }, type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
-						alert('ajax success function for loginUser.');
+						console.log('ajax success function for loginUser.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
-              alert('return code is ' + json_Obj[0].RETURN_CODE);
+              console.log('return code is ' + json_Obj[0].RETURN_CODE);
 
           		if (json_Obj[0].RETURN_CODE == 1) {
             		returnCode=1;
@@ -88,10 +89,10 @@ function loginUser() {
                 delete thisUser;
               }
 						} else { // NO JSON OBJECT RETURNED
-              alert('NO return code ');
+              console.log('NO return code ');
             }
       		}, complete: function() {
-              alert('ajax complete....with loginEventStr = '+loginEventStr);
+              console.log('ajax complete....with loginEventStr = '+loginEventStr);
               console.log('ajax complete.');
 
               if (returnCode==1) {
@@ -111,15 +112,12 @@ function loginUser() {
 					timeout: 5000,
 					error: function(json_Obj, status, err) {
 						if (status == "timeout") {
-              alert("timeout error");
 								console.log("Timeout Error. " + json_Obj + status + err);
 						} else {
-              alert("other error");
-							console.log("error: " + json_Obj + status + err);
+							console.log("non-timeout error: " + json_Obj + status + err);
 						}
           }, // end error
             beforeSend: function() {
-							alert('ajax beforeSend with user_name='+user_name+ ' pwd='+pwd);
               console.log('user_name='+user_name+ ' pwd='+pwd);
               $$(".page #loginError").html('');
 
@@ -135,7 +133,7 @@ function getProfile (user_name) {
 				console.log('getProfile triggered');
         if (offline) return onOffline();
 
-        var url='http://finDB.paulsantangelo.com/ws/ws_get_user_profile_ret_json.php';
+        var url=wsURL+'ws_get_user_profile_ret_json.php';
         var returnCode;
 
       	$$.ajax({url:url,data:{ user_name: user_name },type:'POST',dataType: 'json'
