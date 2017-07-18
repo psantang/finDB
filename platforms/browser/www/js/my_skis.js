@@ -23,7 +23,7 @@ function getMySkis(user_name) {
                 str+='<li class="swipeout transitioning">';
               }
 
-              str+='<label class="label-radio item-content">';
+              str+='<label class="label-radio">';
               str+='<div class="swipeout-content item-content">';
 
               str+='<input type="radio" name="my-radio" value="'+value.id+'"';
@@ -38,10 +38,14 @@ function getMySkis(user_name) {
               } else {
                 str+='<div class="item-title" id="ski_name_'+value.id+'">'+value.my_ski_name+'</div>';
               }
-              str+='</div>';
-              str+='</div>';
-              str+='<div class="swipeout-actions-right"><a href="#" id="ski_id_'+value.id+'" class="renameSki swipeout-close">Rename</a></div>';
+
+              str+='<div class="item-after"><i class="icon f7-icons ">chevron_left</i><i class="chevronB icon f7-icons ">chevron_left</i><i class="chevronC icon f7-icons">chevron_left</i></div>';
+              str+='</div>'; // inner
+
+              str+='</div>'; //item-content
               str+='</label>';
+              str+='<div class="swipeout-actions-right"><a href="#" id="ski_id_'+value.id+'" class="renameSki swipeout-close">Rename</a></div>';
+
 
               str+='</li>';
       			});
