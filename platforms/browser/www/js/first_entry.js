@@ -1,6 +1,8 @@
-var ftBinding, ftLength, ftDepth, ftDFT;
+var ftBinding, ftLength, ftDepth, ftDFT, measure_water_temp;
 
 function firstTimeEntry() {
+  console.log("in firstTimeEntry");
+
   var modal = myApp.modal({
     title: 'Successful Login!',
     text: 'Before you get started, let us know how you plan to measure your set-up.',
@@ -23,6 +25,11 @@ function firstTimeEntry() {
 }
 
 function firstTimeBinding() {
+  if (thisUser.measure_binding) {// BY PASS IF THIS IS ALREADY SET
+    //ftBinding=thisUser.measure_binding;
+    return firstTimeLength();
+  }
+
   var modalBinding = myApp.modal({
     title:  'Front Binding',
     text: 'How do you measure your front binding?',
@@ -50,6 +57,12 @@ function firstTimeBinding() {
 
 
 function firstTimeLength() {
+  if (thisUser.measure_length) {// BY PASS IF THIS IS ALREADY SET
+    //ftLength=thisUser.measure_length;
+    return firstTimeDepth();
+  }
+
+
   var modalLength = myApp.modal({
     title:  'Fin Length',
     text: 'How do you measure the LENGTH of your fin?',
@@ -82,6 +95,10 @@ function firstTimeLength() {
 
 
 function firstTimeDepth() {
+  if (thisUser.measure_depth) { // BY PASS IF THIS IS ALREADY SET
+    //ftDepth=thisUser.measure_depth;
+    return firstTimeDFT();
+  }
   var modalDepth = myApp.modal({
     title:  'Fin Depth',
     text: 'How do you measure the DEPTH of your fin?',
@@ -108,6 +125,11 @@ function firstTimeDepth() {
 
 
 function firstTimeDFT() {
+  if (thisUser.measure_dft) { // BY PASS IF THIS IS ALREADY SET
+    //ftDFT=thisUser.measure_dft;
+    return firstTimeWaterTemp();
+  }
+
   var modalDFT = myApp.modal({
     title:  'Fin DFT',
     text: 'How do you measure the Depth From Tail (DFT) of your fin?',
@@ -117,28 +139,28 @@ function firstTimeDFT() {
         text: 'Flat',
         onClick: function() {
           ftDFT='Flat';
-          firstTimeSummary();
+          firstTimeWaterTemp();
         }
       },
       {
         text: 'Needle',
         onClick: function() {
           ftDFT='Needle';
-          firstTimeSummary();
+          firstTimeWaterTemp();
         }
       },
       {
         text: 'Slot',
         onClick: function() {
           ftDFT='Slot';
-          firstTimeSummary();
+          firstTimeWaterTemp();
         }
       },
       {
         text: 'Axiom Tool',
         onClick: function() {
           ftDFT='Axiom';
-          firstTimeSummary();
+          firstTimeWaterTemp();
         }
       },
     ]
@@ -146,17 +168,58 @@ function firstTimeDFT() {
 }
 
 
+function firstTimeWaterTemp() {
+  if (thisUser.measure_water_temp) {
+    return firstTimeSummary(); // BY PASS IF THIS IS ALREADY SET
+  }
+
+  var modalWaterTemp = myApp.modal({
+    title:  'Water Temperature',
+    text: 'What scale do you use for water temperature?',
+    verticalButtons: true,
+    buttons: [
+      {
+        text: 'Celcius',
+        onClick: function() {
+          measure_water_temp='C';
+          firstTimeSummary();
+        }
+      },
+      {
+        text: 'Farenheit',
+        onClick: function() {
+          measure_water_temp='F';
+          firstTimeSummary();
+        }
+      }
+    ]
+  });
+}
+
+
 
 function firstTimeSummary() {
+  var summaryStr='<div class="ftSummaryList">';
+  if (typeof ftBinding!="undefined") {summaryStr+='<div>Front Binding: <span class="floatRight bold">'+ ftBinding +'</span></div>'};
+  if (typeof ftLength!="undefined") {summaryStr+='<div>Fin Length: <span class="floatRight bold">'+ ftLength +'</span></div>'};
+  if (typeof ftDepth!="undefined") {summaryStr+='<div>Fin Depth: <span class="floatRight bold">'+ ftDepth +'</span></div>'};
+  if (typeof ftDFT!="undefined") {summaryStr+='<div>Fin DFT: <span class="floatRight bold">'+ ftDFT +'</span></div>'};
+  if (typeof measure_water_temp!="undefined") {summaryStr+='<div>Water Temp: <span class="floatRight bold">'+ measure_water_temp +'</span></div>'};
+  summaryStr+='</div>';
+
   var modalSummary = myApp.modal({
     title: 'Complete!',
     text: 'Below are the settings you\'ve chosen.  These can be changed at anytime in your profile.',
-    afterText:  '<div class="ftSummaryList">' +
-                '<div>Front Binding: <span class="floatRight bold">'+ ftBinding +'</span></div>' +
-                '<div>Fin Length: <span class="floatRight bold">'+ ftLength +'</span></div>' +
-                '<div>Fin Depth: <span class="floatRight bold">'+ ftDepth +'</span></div>' +
-                '<div>Fin DFT: <span class="floatRight bold">'+ ftDFT +'</span></div>' +
-                '</div>',
+/*
+      summaryStr='<div class="ftSummaryList">';
+      if (typeof ftBinding!="ftBinding") {summaryStr+='<div>Front Binding: <span class="floatRight bold">'+ ftBinding +'</span></div>'};
+      summaryStr+='<div>Fin Length: <span class="floatRight bold">'+ ftLength +'</span></div>';
+      summaryStr+='<div>Fin Depth: <span class="floatRight bold">'+ ftDepth +'</span></div>';
+      summaryStr+='<div>Fin DFT: <span class="floatRight bold">'+ ftDFT +'</span></div>';
+      summaryStr+='<div>Water Temp: <span class="floatRight bold">'+ measure_water_temp +'</span></div>';
+      summaryStr+='</div>';
+      */
+      afterText:summaryStr,
     buttons: [
       {
         text: 'Oops!',
@@ -188,7 +251,7 @@ function saveMeasuring() {
   var url=wsURL+'ws_set_how_i_measure_ret_json.php';
   var passed;
 
-  $$.ajax({url:url,data:{ user_name:thisUser.user_name,measure_binding:ftBinding,measure_length:ftLength,measure_depth:ftDepth,measure_dft:ftDFT },type:'POST',dataType: 'json',success:function(json_Obj) {
+  $$.ajax({url:url,data:{ user_name:thisUser.user_name,measure_binding:ftBinding,measure_length:ftLength,measure_depth:ftDepth,measure_dft:ftDFT,measure_water_temp:measure_water_temp },type:'POST',dataType: 'json',success:function(json_Obj) {
       if (json_Obj.length>0) { // RETURNED RESULTS
         if (json_Obj[0].RETURN_CODE==1) {
           console.log('success with obj ' + json_Obj)
@@ -208,13 +271,15 @@ function saveMeasuring() {
       myApp.showIndicator();
     }, complete: function(){
         console.log('complete saveMeasuring');
-        if (passed) {
-          thisUser.measure_binding=ftBinding;
-          thisUser.measure_length=ftLength;
-          thisUser.measure_depth=ftDepth;
-          thisUser.measure_dft=ftDFT;
+        if (passed) { // CHANGE THESE OBJECT PROPERTIES IF CHANGED DURING LOGIN SELF SELECTION
+          if (ftBinding) thisUser.measure_binding=ftBinding;
+          if (ftLength) thisUser.measure_length=ftLength;
+          if (ftDepth) thisUser.measure_depth=ftDepth;
+          if (ftDFT) thisUser.measure_dft=ftDFT;
+          if (measure_water_temp) thisUser.measure_water_temp=measure_water_temp;
           myApp.hideIndicator();
-          mainView.router.load( { url:'mySettings.html'});
+//          mainView.router.load( { url:'mySettings.html'});
+          getCurrentSki(thisUser.user_name); // THIS IS IN THE skiClass.php file...first time user will not have any but it will route around
         } else {
           myApp.alert(
             'Data could not be saved due to an unknown error.  Please try again.',

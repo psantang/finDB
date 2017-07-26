@@ -1,5 +1,5 @@
 class Ski {
-  constructor(id, user_name, my_ski_name, stock_ski_id, brand, model, length, year, stock_binding_location, stock_fin_length, stock_fin_depth, stock_fin_dft, stock_wing_angle, measure_binding, measure_length, measure_depth, measure_dft) {
+  constructor(id, user_name, my_ski_name, stock_ski_id, brand, model, length, year, stock_binding_location, stock_fin_length, stock_fin_depth, stock_fin_dft, stock_wing_angle, measure_binding, measure_length, measure_depth, measure_dft, ski_count) {
     this.id = id; // this is the ski_id for thisSetting.ski_id
     this.user_name = user_name;
     this.my_ski_name = my_ski_name;
@@ -17,6 +17,7 @@ class Ski {
     this.measure_length = measure_length;
     this.measure_depth = measure_depth;
     this.measure_dft = measure_dft;
+    this.ski_count = ski_count;
   }
 
   currentSki(json_Obj) {
@@ -43,7 +44,7 @@ function getCurrentSki(user_name) {
 								console.log('my_ski_name is ' + json_Obj[0].my_ski_name);
 								console.log('id is ' + json_Obj[0].id);
 
-                const thisSki = new Ski(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].my_ski_name,json_Obj[0].stock_ski_id,json_Obj[0].brand, json_Obj[0].model, json_Obj[0].length, json_Obj[0].year, json_Obj[0].stock_binding_location, json_Obj[0].stock_fin_length, json_Obj[0].stock_fin_depth, json_Obj[0].stock_fin_dft, json_Obj[0].stock_wing_angle,json_Obj[0].measure_binding,json_Obj[0].measure_length,json_Obj[0].measure_depth,json_Obj[0].measure_dft);
+                const thisSki = new Ski(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].my_ski_name,json_Obj[0].stock_ski_id,json_Obj[0].brand, json_Obj[0].model, json_Obj[0].length, json_Obj[0].year, json_Obj[0].stock_binding_location, json_Obj[0].stock_fin_length, json_Obj[0].stock_fin_depth, json_Obj[0].stock_fin_dft, json_Obj[0].stock_wing_angle,json_Obj[0].measure_binding,json_Obj[0].measure_length,json_Obj[0].measure_depth,json_Obj[0].measure_dft,json_Obj[0].ski_count);
                 window.thisSki = thisSki;
 
 							} else {
@@ -54,6 +55,16 @@ function getCurrentSki(user_name) {
 						}
       		}, complete: function(){
               console.log('ajax complete for getCurrentSki.')
+              if (typeof thisSki != "undefined" && thisSki.ski_count>0) {
+                if (thisSki.ski_count==1) {
+                  $$("#skiCount").html(thisSki.ski_count + " other member is currently riding the " + thisSki.brand + " " + thisSki.model);
+                } else {
+                  $$("#skiCount").html(thisSki.ski_count + " other members are currently riding the " + thisSki.brand + " " + thisSki.model);
+                }
+              } else {
+                $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
+              }
+              
               if (returnCode==1) {
                 getCurrentSettings(thisSki.user_name, thisSki.id);
               } else { // PS need to figure out what to do here.

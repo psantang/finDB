@@ -45,6 +45,24 @@
 </head>
 
 <body>
+
+  <div class="panel-overlay"></div>
+  <!-- Left panel with reveal effect-->
+  <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <div class="menu_head">Welcome, <span id="userNameInPanel"></span></div>
+        <div class="menu_items">
+          <p><a href="mySkis.html" class="close-panel">My Ski's</a></p>
+          <p><a href="profile.html" class="close-panel">Profile</a></p>
+          <p><a href="#" class="view_history close-panel">Setup History</a></p>
+          <p></p>
+          <p><a href="#" id="logoutBtn" class="close-panel">Log Out</a></p>
+        </div>
+        <div id="skiCount"></div>
+        <div class="flushBottom">Last Login: <span id="userLastLogin"></span></div>
+      </div>
+  </div>
+
   <div class="views">
       <div class="view view-main">
 
@@ -108,19 +126,25 @@
                             <!--<div id='pendActivation'></div>-->
                           <div id="homeDetails" class="override_lb">
                             <div class="content-block">
-                            <div class="darkGrayText1_1em center"><span class="bold center">Use finDB to save custom settings</span>
+
+                            <div class="darkGrayText1_1em home_register_box"><span class="bold center">Features of finDB:</span>
                               <ul class="centerList">
                                 <li>choose skis to add to your list</li>
-                                <li>view stock settings for each</li>
-                                <li>save custom settings per ski</li>
+                                <li>view stock settings for each ski</li>
+                                <li>save custom settings for each ski</li>
+                                <li>add notes for each setting</li>
                                 <li>view history of previous settings</li>
                               </ul>
-                              <div><a href="register.html" class="button close-login-screen" id="registerBtn">Register to Begin</a></div>
-                              <div class="center">
-                                <br /><br />Or use to simply lookup stock settings.</div>
-                              </div>
-                              <div><a href="about.html" class="button skiLookupHomePageBtn">Find Stock Ski Settings</a></div>
+
+                              <div class="center"><a href="register.html" class="button close-login-screen" id="registerBtn">Register to Begin</a></div>
                             </div>
+
+
+                              <div class="darkGrayText1_1em center home_register_box margin_top_1_5em">Or use to simply lookup stock settings.
+                                <div class="center"><a href="about.html" class="button skiLookupHomePageBtn">Find Stock Ski Settings</a></div>
+                              </div>
+
+                            </div> <!-- end content block -->
                           </div>
                         </div>
 

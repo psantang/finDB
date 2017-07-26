@@ -34,6 +34,7 @@ function populateProfile() {
     $$(".page #measure_dft").val(thisUser.measure_dft);
     //$$(".page #measure_dft").selectmenu('refresh');
     //$$(".page #measure_dft").val(thisUser.notes_dft);
+    $$(".page #measure_water_temp").val(thisUser.measure_water_temp);
   }
 }
 

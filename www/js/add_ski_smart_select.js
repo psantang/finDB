@@ -360,6 +360,7 @@ myApp.confirm('Do you want this to be your current ski?','Current Ski?',
 // BELOW ARE EVENT LISTENERS FOR ADD SKI SMART SELECT
 $$(document).on('pageInit', '.page[data-select-name="brand_add"]', function (e) {
     console.log('brands smart select initialized in addski');
+
     $$('.smart-select #brand_select_id_add').change(getModels_add); // run getModels function
       $$('.page[data-select-name="brand_add"]').find(("input[type='radio']:checked")).prop('checked', false);
 })
