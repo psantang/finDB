@@ -327,6 +327,19 @@ function viewHistory() {
                       popupHTML+='</table>';
                       popupHTML+='</div>';
 
+                      popupHTML+='<div class="center">';
+                      if (value.leading_edge>0) {
+                        popupHTML+='<div class="chip">';
+                        popupHTML+='<div class="chip-label">LE: '+value.leading_edge+'</div>';
+                        popupHTML+='</div> ';
+                      }
+                      if (value.binding_to_le>0) {
+                        popupHTML+=' <div class="chip">';
+                        popupHTML+='<div class="chip-label">B-LE: '+value.binding_to_le+'</div>';
+                        popupHTML+='</div>';
+                      }
+                      popupHTML+='</div>';
+
                       if (value.notes) {
                         popupHTML+='<div class="metaNotes" id="note_'+value.notes+'"></div>';
                         notesIdArray.push(value.notes);

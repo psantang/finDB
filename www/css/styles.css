@@ -312,6 +312,9 @@ thead {
     height: 2.0em;
 }
 
+#ulHistory .data-table td, #ulHistory .data-table th {
+  height: 1.5em;
+}
 
 .data-table td.numeric-cell, .data-table th.numeric-cell {
     text-align: right;
