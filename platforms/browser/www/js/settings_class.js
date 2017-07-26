@@ -1,5 +1,5 @@
 class Settings {
-  constructor(id, user_name, ski_id, front_binding, length, depth, dft, wing_angle, measure_binding, measure_length, measure_depth, measure_dft, date_time_created) {
+  constructor(id, user_name, ski_id, front_binding, length, depth, dft, wing_angle, leading_edge, binding_to_le, measure_binding, measure_length, measure_depth, measure_dft, date_time_created) {
     this.id = id;
     this.user_name = user_name;
     this.ski_id = ski_id;
@@ -8,6 +8,8 @@ class Settings {
     this.depth = depth;
     this.dft = dft;
     this.wing_angle = wing_angle;
+    this.leading_edge = leading_edge;
+    this.binding_to_le = binding_to_le;
     this.measure_binding = measure_binding;
     this.measure_length = measure_length;
     this.measure_depth = measure_depth;
@@ -42,7 +44,7 @@ function getCurrentSettings(user_name, ski_id) {
 								console.log('ski_id is ' + json_Obj[0].ski_id);
 								console.log('id is ' + json_Obj[0].id);
 
-                const thisSetting = new Settings(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].ski_id, json_Obj[0].front_binding, json_Obj[0].length, json_Obj[0].depth, json_Obj[0].dft, json_Obj[0].wing_angle, json_Obj[0].measure_binding, json_Obj[0].measure_length, json_Obj[0].measure_depth, json_Obj[0].measure_dft, json_Obj[0].date_time_created);
+                const thisSetting = new Settings(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].ski_id, json_Obj[0].front_binding, json_Obj[0].length, json_Obj[0].depth, json_Obj[0].dft, json_Obj[0].wing_angle, json_Obj[0].leading_edge, json_Obj[0].binding_to_le, json_Obj[0].measure_binding, json_Obj[0].measure_length, json_Obj[0].measure_depth, json_Obj[0].measure_dft, json_Obj[0].date_time_created);
                 window.thisSetting = thisSetting;
 
 							} else {

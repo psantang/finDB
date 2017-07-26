@@ -1,12 +1,28 @@
 class User {
-  constructor(id, user_name, user_email) {
+  constructor(id, user_name, user_email, last_login) {
     this.id = id;
     this.user_name = user_name;
     this.user_email = user_email;
+    this.last_login = last_login;
   }
 
-  get validation() {
-    return this.validateUser();
+  validProfile(userObj) {
+    var reqArray = ["measure_binding", "measure_length", "measure_depth", "measure_dft", "measure_water_temp"];
+    var missing =[];
+    reqArray.forEach(function(property) {
+      console.log(property);
+      if (!userObj[property]) {
+        console.log('userObj.property is ' + userObj[property]);
+        console.log(" ---- Missing: " + property);
+        missing.push(property);
+       }
+    });
+    console.log("missing.length is " + missing.length);
+    if (missing.length>0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   profile(json_Obj) {
@@ -24,6 +40,7 @@ class User {
     this.measure_length = json_Obj[0].measure_length;
     this.measure_depth = json_Obj[0].measure_depth;
     this.measure_dft = json_Obj[0].measure_dft;
+    this.measure_water_temp = json_Obj[0].measure_water_temp;
     this.speed_units = json_Obj[0].speed_units;
     this.profileActivated = json_Obj[0].profileActivated;
   }
@@ -48,6 +65,7 @@ function loginUser() {
 //        var rememberMe=jQuery("#rememberMe").val();
         var user_name=$$('.page #user_name').val();
         var pwd=$$('.page #pwd').val();
+        var loginTime=getLocalDateTimeString(null,"ISO");
 
         if (user_name=='' || pwd =='') {
           $$(".page #loginError").html("Please enter a User Name and Password.");
@@ -60,7 +78,7 @@ function loginUser() {
         console.log("url is " + url);
         var returnCode;
 
-      	$$.ajax({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion }, type:'POST',dataType: 'json'
+      	$$.ajax({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion,last_login:loginTime }, type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
 						console.log('ajax success function for loginUser.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
@@ -73,7 +91,7 @@ function loginUser() {
 								console.log('id is ' + json_Obj[0].id);
 								console.log('json_Obj length is ' + json_Obj.length);
 
-                const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email);
+                const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email, json_Obj[0].last_login);
                 window.thisUser = thisUser;
                 console.log(thisUser);
                 console.log(thisUser.validation);
@@ -98,6 +116,8 @@ function loginUser() {
               if (returnCode==1) {
                 localStorage.setItem("user_name", user_name);
                 localStorage.setItem("pwd", pwd);
+                $$("#userNameInPanel").html(thisUser.user_name);
+                $$("#userLastLogin").html( getLocalDateTimeString(thisUser.last_login,"pretty"));
                 getProfile(thisUser.user_name);
               } else if (returnCode==-1 || returnCode==-2) {
                 $$(".page #loginError").html("Invalid Login.  Please try again.");
@@ -157,7 +177,14 @@ function getProfile (user_name) {
       		}, complete: function(){
       				console.log('ajax complete for getProfile call...now get current ski.');
               if (returnCode==1) {
-                getCurrentSki(user_name); // THIS IS IN THE skiClass.php file
+                if (thisUser.validProfile(thisUser)) {
+                  getCurrentSki(user_name); // THIS IS IN THE skiClass.php file
+                } else {
+                  myApp.closeModal('.login-screen', true);
+                  firstTimeEntry(); // FOR FIRST TIME ENTRY AND WHEN PROFILE IS NOT COMPLETE/REQURIED ITEMS ADDED
+                  myApp.hidePreloader();
+                }
+
               } else if (returnCode=-1) { // FIRST TIME USER FORCE partial profile completion
 
 

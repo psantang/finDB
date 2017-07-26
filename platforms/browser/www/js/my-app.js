@@ -4,7 +4,7 @@
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
-var api_vers="1_0_1";
+var api_vers="1_0_2";
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/";
 
 // Set Template7 global devices flags
@@ -62,6 +62,7 @@ window.loginEventStr="";
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!  ");
+
     loginEventStr += "\r\ndevice ready\r\n";
     window.deviceManufacturer = device.manufacturer;
     window.devicePlatform=device.platform;
@@ -182,7 +183,7 @@ $$(document).on('deviceready', function() {
     $$(document).on('click', '.create-picker', function () { // THIS BINDS IT IF DYNAMICALLY CREATED AFTER DOM INTIALLY LOADS
       // Check first, if we already have opened picker
       console.log($$(this).attr('class'));
-      
+
       var theBrand=getBrandByClass(this);
       console.log('theBrand=' + theBrand);
 
@@ -398,13 +399,13 @@ myApp.onPageInit('register', function (page) {
     }
 });
 
+
 myApp.onPageInit('mySettings', function (page) {
     window.page=page;
     console.log('mySettings onPageInit fired');
     console.log('   page.name: ' + page.name);
     console.log('      page.view: ' + page.view);
     console.log('         page.container: ' + page.container);
-
 
     //populateCurrentSki();
     //populateCurrentSettings();
@@ -414,35 +415,46 @@ myApp.onPageInit('mySettings', function (page) {
       toggleViewStock();
     });
 
-    $$('.create-popup').on('click', function () {
-      viewHistory();
-    });
-
     $$('.page #editFinBtn').click(function() {
       console.log("editFinBtn clicked");
       init_slider();
     });
 
-    $$(document).on('click', '#cancelSaveBtn', function (e) {
-        console.log("cancelSaveBtn clicked");
-        cancelSave();
-    });
+});
 
+// MY SETTINGS LIVE EVENT HANDLERS...outside if pag init
+$$(document).on('click', '#cancelSaveBtn', function (e) {
+    console.log("cancelSaveBtn clicked");
+    cancelSave();
+});
 
-    /* FOR CHANGING BINDING SETTINGS...INITIALIZING
-    theVal=$$(".page #myCurrentBinding").text();
+$$(document).on('click', '.view_history', function (e) {
+  viewHistory();
+});
 
-    console.log("initial value of binding is " + theVal );
+$$(document).on('click', '.navbar #newSettingNote', function (e) {
+  console.log("newSettingNote clicked");
+  AddNotePopUp();
+});
 
-    minVal=Number(theVal) - Number(.750);
-    maxVal=Number(theVal) + Number(.750);
-    $$(".page #bindVal").attr("value", theVal);
-    $$(".page #bindVal").attr("min", minVal );
-    $$(".page #bindVal").attr("max", maxVal );
-    $$(".page #bindVal").attr("step", ".0625");
-*/
+$$(document).on('click', '.popup #addNoteBtn', function (e) {
+    console.log("addNote clicked");
+    addNote();
+});
+
+$$(document).on('closed', '.popup-history', function (e) {
+  console.log('History - Popup is closed')
+  var popupHTML;
 
 });
+
+$$(document).on('closed', '.popup-notes', function (e) {
+  console.log('popup-notes is closed')
+
+});
+
+
+
 
 
 myApp.onPageInit('mySkis', function (page) {
@@ -520,7 +532,7 @@ myApp.onPageInit('profile', function (page) {
 
 
 
-// Option 2. Using one 'pageInit' event handler for ALL pages
+// Option 2. Using one LIVE 'pageInit' event handler for ALL pages
 var pageCounter=0;
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
@@ -530,22 +542,17 @@ $$(document).on('pageInit', function (e) {
     console.log('------------ data-page = ' + page.name + ' : count: ' + pageCounter + ' -------------');
     console.log('  ');
 
-    $$('.navbar #logoutBtn').click(function() {
-      //delete thisUser; // delete all objects - NOTE DELETE NOT ALLOWED IN STRICT MODE
-      /*
-      if (typeof thisUser != "undefined") thisUser={};
-      if (typeof thisSki != "undefined") thisSki={};
-      if (typeof thisSetting != "undefined") thisSetting={};
-      */
-      if (typeof thisUser != "undefined") delete thisUser;
-      if (typeof thisSki != "undefined") delete thisSki;
-      if (typeof thisSetting != "undefined") delete thisSetting;
+});
 
-      console.log('  ');
-      console.log('############# USER LOGGED OUT #############');
-      console.log('  ');
-      mainView.router.load( { url:'index.html' });
-    });
+$$(document).on('click','#logoutBtn',function(page) {
+  if (typeof thisUser != "undefined") delete thisUser;
+  if (typeof thisSki != "undefined") delete thisSki;
+  if (typeof thisSetting != "undefined") delete thisSetting;
+
+  console.log('  ');
+  console.log('############# USER LOGGED OUT #############');
+  console.log('  ');
+  mainView.router.load( { url:'index.html' });
 });
 
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
@@ -554,15 +561,9 @@ $$(document).on('pageInit', function (e) {
 
 
 
-
-
-
-
-
-
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
 $$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
-    console.log('brands smart select initialized');
+    console.log('*********** brands smart select initialized');
     $$('.page .smart-select #brand_select_id').change(getModels); // run getModels function
     $$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")).prop('checked', false);
 });

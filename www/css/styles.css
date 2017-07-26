@@ -34,6 +34,10 @@
   margin-top:11px;
 }
 
+.margin_top_1_5em {
+  margin-top:1.5em;
+}
+
 #skiSelected {
   border: 1px solid #fff;
   border-radius: 0em;
@@ -46,6 +50,12 @@
   width:20%;
   height:20%;
   margin-bottom: -20px;
+}
+
+.home_register_box {
+  background-color: rgba(255,255,255,.4);
+  border-radius: .5em;
+  padding: .5em;
 }
 
 .ftSummaryList {
@@ -142,6 +152,10 @@
   margin-right: 1em !important;
 }
 
+.margin-right_qarter_em {
+  margin-right: .25em !important;
+}
+
 .lightBlueBG {
 background-color: rgba(33, 150, 243,.1);
 }
@@ -162,10 +176,12 @@ background-color: rgba(33, 150, 243,.1);
 }
 
 .centerList {
-  text-align: center;
+  width:100%;
+  text-align: left;
     list-style-position: inside;
     -webkit-margin-before: 0px;
     -webkit-padding-start: 0px;
+  padding:.3em .5em;
 }
 
 #loginForm .list-block ul {
@@ -301,6 +317,10 @@ thead {
     text-align: right;
 }
 
+#addNoteSettingsTable .data-table td, #addNoteSettingsTable .data-table .numeric-cell {
+  height:.3em !important;
+}
+
 #stockSettings {
     background-color: rgba(255, 255, 255, 0.6);
     padding:0 0 .25em 0;
@@ -348,6 +368,10 @@ thead {
 .smallText {
   font-size: .9em;
   padding-left: 1.2em;
+}
+
+.text_8em {
+  font-size: .8em;
 }
 
 /* ALTER SLIDER ON MY SETTINGS PAGE */
@@ -421,11 +445,6 @@ thead {
   margin-left: 1.9em;
 }
 
-#mySettingsLE {
-  bottom:0;
-  margin-top:3em;
-}
-
 .content-block {
   margin:18px 0 !important;
 }
@@ -440,4 +459,89 @@ thead {
 
 .chevronC {
   color: #d2d2e6;
+}
+
+#userNameInPanel {
+  text-transform: capitalize;
+}
+.menu_head {
+  background-color: #007aff;
+  padding: 1em;
+  margin: -1.1em -1.1em;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu_items {
+  margin-top: 2.2em;
+  font-size: 17px;
+  font-weight: 600;
+  color: #007aff;
+}
+
+.flushBottom {
+  bottom: 0;
+  height: 1.5em;
+  position: absolute;
+  width: 100%;
+}
+
+#myLE_POS {
+  position: absolute;
+  top: 65%;
+  left: 6%;
+}
+
+#myBindToLE_POS {
+  position: absolute;
+  top: 65%;
+  left: 23%;
+}
+
+#summary_POS {
+  position: absolute;
+  top: 65%;
+  left: 47%;
+  line-height: 1.2em;
+  color: #007aff;
+  display:none;
+}
+
+.newLeadinEdgeInfo {
+  line-height: .5em;
+  color: #007aff;
+}
+
+#editSkiBtn i , .view_history i {
+  font-size:1.2em;
+  margin-top: -5px;
+}
+
+.historyNotes {
+  border-bottom:1px solid #444;
+  padding: .3em .3em .6em .3em;
+}
+
+.historyNotesHdr {
+  background-color: rgba(0,0,0,.07);
+  border-bottom:1px solid #aaa;
+  padding:.3em;
+}
+
+#LE_def_POS {
+  position: absolute;
+  top:10%;
+  left:6%;
+}
+
+#BLE_def_POS {
+  position: absolute;
+  top:10%;
+  left:20%;
+}
+
+#skiCount {
+  border-top:1px solid #aaa;
+
 }
