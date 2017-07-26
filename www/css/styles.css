@@ -294,7 +294,6 @@ thead {
 }
 
 
-
 .data-table thead td:not(.sortable-active), .data-table thead th:not(.sortable-active) {
     color: #8e8e93;
 }
@@ -312,6 +311,9 @@ thead {
     height: 2.0em;
 }
 
+#ulHistory .data-table td, #ulHistory .data-table th {
+  height: 1.5em;
+}
 
 .data-table td.numeric-cell, .data-table th.numeric-cell {
     text-align: right;
