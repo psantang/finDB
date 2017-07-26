@@ -294,7 +294,6 @@ thead {
 }
 
 
-
 .data-table thead td:not(.sortable-active), .data-table thead th:not(.sortable-active) {
     color: #8e8e93;
 }
