@@ -247,27 +247,28 @@ $$(document).on('deviceready', function() {
 }); // end DeviceReady
 
 
-
+// NOTE: this function did not work with IOS as it didn't return a date format STRING that an new Date object could be created from
 function globalDateTimeString () {
+  // this is one of the formats needed by IOS/Safari:  Sat Aug 26 2017 11:12:13 GMT-0400 (EDT)
   navigator.globalization.dateToString(
     new Date(),
     function (date) { window.dtString = date.value; },
     function () { console.log('Error getting dateString\n'); },
-    { formatLength: 'medium', selector: 'date and time' }
+    { formatLength: 'short', selector: 'date and time' }
     );
   }
 
 
 function getLocalDateTimeString (inputTime,outputFormat) {
   if (inputTime=='' || typeof inputTime === "undefined" || inputTime==null) {
-    globalDateTimeString();
-    if (typeof dtString === "undefined") {
-      console.log('dtString is undefined from device');
+//    globalDateTimeString();
+//    if (typeof dtString === "undefined") {
+      console.log('dtString determined from JS in browser');
       window.d=new Date();
-    } else {
-      console.log('dtString is DEFINED from device');
-      window.d=new Date(dtString);
-    }
+//    } else {
+//      console.log('dtString is DEFINED from device');
+//      window.d=new Date(dtString);
+//    }
   } else {
     window.d=new Date(inputTime);
   }
