@@ -270,7 +270,11 @@ function getLocalDateTimeString (inputTime,outputFormat) {
 //      window.d=new Date(dtString);
 //    }
   } else {
-    window.d=new Date(inputTime);
+    dt=inputTime.split(/[- :]/);
+    //console.log('dt is ' + dt);
+    //inputTime=inputTime.replace(/-| |:/gi,',');
+    //window.d=new Date(inputTime);
+    window.d=new Date(dt[0],dt[1],dt[2],dt[3],dt[4],dt[5]);
   }
 
   if (outputFormat=="ISO") {
