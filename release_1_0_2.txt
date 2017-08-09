@@ -7,7 +7,17 @@ RELEASE 1.0.2
 - Add LE (leading edge) calculation to adjustments (DONE)
 - Add Binding to LE calculation to adjustment (DONE)
 - Add side panel navigation (DONE)
-- Add metric for number of members currently riding the same brand/model of users current ski
+- Add metric for number of members currently riding the same brand/model of users current ski (DONE)
+
+
+RELEASE 1.0.3
+- BUG FIX:  Issue for first time user under V 1.0.2 where user does not have ski DEFINED
+- config update for NPM packages
+
+RELEASE 1.0.4
+- BUG FIXES
+  - date off 1 month on settings history and my settings page (note: fixed via mysql by increasing date by 1 month)
+
 - Add Binding Type to setup configuration(Front: Rubber, Firmshell, Hardshell) (Rear: Rubber Toe plate, Highwrap Rubber, Firmshell, Hardshell, Midrise )
 - Add metrics data on users ski???
 - Wing direction, screws above/below

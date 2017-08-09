@@ -58,13 +58,13 @@ function getCurrentSki(user_name) {
               if (typeof thisSki != "undefined" && thisSki.ski_count>0) {
                 if (thisSki.ski_count==1) {
                   $$("#skiCount").html(thisSki.ski_count + " other member is currently riding the " + thisSki.brand + " " + thisSki.model);
+                } else if (thisSki.ski_count==0) {
+                  $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
                 } else {
                   $$("#skiCount").html(thisSki.ski_count + " other members are currently riding the " + thisSki.brand + " " + thisSki.model);
                 }
-              } else {
-                $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
               }
-              
+
               if (returnCode==1) {
                 getCurrentSettings(thisSki.user_name, thisSki.id);
               } else { // PS need to figure out what to do here.
