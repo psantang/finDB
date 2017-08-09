@@ -55,14 +55,20 @@ function getCurrentSki(user_name) {
 						}
       		}, complete: function(){
               console.log('ajax complete for getCurrentSki.')
-              if (typeof thisSki != "undefined" && thisSki.ski_count>0) {
-                if (thisSki.ski_count==1) {
-                  $$("#skiCount").html(thisSki.ski_count + " other member is currently riding the " + thisSki.brand + " " + thisSki.model);
-                } else if (thisSki.ski_count==0) {
+              if (typeof thisSki != "undefined") {
+                if (thisSki.ski_count==0) {
                   $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
                 } else {
-                  $$("#skiCount").html(thisSki.ski_count + " other members are currently riding the " + thisSki.brand + " " + thisSki.model);
+                  if (thisSki.ski_count==1) {
+                    $$("#skiCount").html(thisSki.ski_count + " other member is currently riding the " + thisSki.brand + " " + thisSki.model);
+                  } else {
+                    $$("#skiCount").html(thisSki.ski_count + " other members are currently riding the " + thisSki.brand + " " + thisSki.model);
+                  }
                 }
+              }
+
+              if (typeof thisSki != "undefined" && thisSki.ski_count==0) {
+                $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
               }
 
               if (returnCode==1) {
