@@ -35,7 +35,7 @@ function getCurrentSettings(user_name, ski_id) {
 
         var url=wsURL+'ws_get_current_settings_ret_json.php';
 
-      	$$.ajax({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'
+      	myApp.request({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
 						console.log('ajax success.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
@@ -56,9 +56,15 @@ function getCurrentSettings(user_name, ski_id) {
       		}, complete: function(){
       				//alert('complete function called');
               console.log('ajax complete for getCurrentSettings.')
-              mainView.router.load( { url:'mySettings.html' });
-              myApp.closeModal('.login-screen', true);
-              myApp.hidePreloader();
+              //mainView.router.load( { url:'mySettings.html' });
+              //mainView.router.navigate('mySettings.html'); // v2???
+              //myApp.router.navigate('mySettings.html'); // V2
+              //mainView.router.navigate('mySettings.html');
+              //myApp.router.navigate('/mySettings/'); //V2
+              myApp.views.main.router.navigate('/mySettings/'); //V2
+              //myApp.closeModal('.login-screen', true);
+              //modal.close();
+              myApp.preloader.hide();
       	  }, // end COMPLETE
 					timeout: 5000,
 					error: function(json_Obj, status, err) {

@@ -1,22 +1,25 @@
 function displayStockSkis_listview(ski_Obj) {
 
-  var str="<div class='content-block-title'>Saved Stock Ski List</div>";
+  var str="<div class='block-title bold'>Saved Stock Ski List</div>";
       str+="<div class='list-block media-list' id='stock_list_div'>";
-      str+="<ul id='ul_saved_list' class='padding_left_15px'>";
+      str+="<ul id='ul_saved_list' class='padding_left_0px'>";
   console.log('in displayStockSkis');
   if (ski_Obj.length>0) {
     for (i=0; i<ski_Obj.length; i++) {
       //var tmp_ski_year = ski_Obj[i][0].year || null;
       //if (tmp_ski_year != null) tmp_ski_year = "("+ski_Obj[i][0].year+")";
-      if (ski_Obj[i][0].year != null) { tmp_ski_year = "("+ski_Obj[i][0].year+")" } else {tmp_ski_year=""};
+      console.log('^^^^^^^^^ ski_Obj[i][0].year='+ski_Obj[i][0].year.length);
+      if (ski_Obj[i][0].year.length != 0) { tmp_ski_year = "("+ski_Obj[i][0].year+")" } else {tmp_ski_year=""};
 
       str+="<li class='swipeout'>";
+      str+="<div class='item-content swipeout-content'>";
+
 
       str+="<div class='item-inner'>";
-        str+="<div class='item-title-row'>";
-          str+="<div class='item-title'><a href='#' class='create-picker brand_"+ski_Obj[i][0].brand+"'><i class='size-20 orange f7-icons'>info_fill</i></a> " + ski_Obj[i][0].brand + " " + ski_Obj[i][0].model + " " + ski_Obj[i][0].length + "</div>";
-          str+="<div class='item-after'>" + tmp_ski_year + "</div>";
-        str+="</div>"; // item-title-row
+        //str+="<div class='item-title-row'>";
+          str+="<div class='item-title'><a href='#' id='ski_id_"+i+"' class='create-sheet brand_"+ski_Obj[i][0].brand+"'><i class='size-20 orange f7-icons'>info_fill</i></a> " + tmp_ski_year + " "+ ski_Obj[i][0].brand + " " + ski_Obj[i][0].model + " " + ski_Obj[i][0].length + "</div>";
+        //  str+="<div class='item-after'>" + tmp_ski_year + "</div>";
+        //str+="</div>"; // item-title-row
 
 
         str+="<div class='item-textA'>";
@@ -28,7 +31,7 @@ function displayStockSkis_listview(ski_Obj) {
       //str+="</div>";
         str+="<div class='swipeout-actions-right'><a href='#' class='swipeout-delete' id='stockSki_"+i+"_'>Delete</a></div>";
       str+="</div>"; //item-inner
-  //    str+="</a>";
+      str+="</div>"; //item-content
       str+="</li>";
 
       console.log ('SKI: '+  ski_Obj[i][0].brand + ' | ' + ski_Obj[i][0].model + ' | ' +ski_Obj[i][0].length + ' | ' +ski_Obj[i][0].year + ' | ' +ski_Obj[i][0].f_length + ' | ' + ski_Obj[i][0].f_depth + ' | ' + ski_Obj[i][0].f_dft + ' | ' + ski_Obj[i][0].f_wing_angle);
@@ -99,17 +102,17 @@ function storeSettingsLocally() {
 
   console.log('saveStock clicked');
 
-  var s_brand=$$('.smart-select #brand_select_id')["0"].value;
-  var s_model=$$('.smart-select #model_select_id')["0"].value;
-  var s_length=$$('.smart-select #length_select_id')["0"].value;
+//  var s_brand=$$('.smart-select #brand_select_id')["0"].value;
+//  var s_model=$$('.smart-select #model_select_id')["0"].value;
+//  var s_length=$$('.smart-select #length_select_id')["0"].value;
 
-  if ( $$('.smart-select #year_select_id')["0"]) {
-    if ( (typeof $$('.smart-select #year_select_id')["0"].value === "undefined") || $$('.smart-select #year_select_id')["0"].value == null ) {
-      var s_year=null;
-    } else {
-      var s_year=$$('.smart-select #year_select_id')["0"].value;
-    }
-  }
+//  if ( $$('.smart-select #year_select_id')["0"]) {
+//    if ( (typeof $$('.smart-select #year_select_id')["0"].value === "undefined") || $$('.smart-select #year_select_id')["0"].value == null ) {
+//      var s_year=null;
+//    } else {
+//      var s_year=$$('.smart-select #year_select_id')["0"].value;
+//    }
+//  }
 
   var s_binding=$$('#stock_binding').text();
   var s_flength=$$('#stock_length').text();
@@ -119,10 +122,10 @@ function storeSettingsLocally() {
 
   var stockSki = [
              {
-              'brand': s_brand,
-              'model': s_model,
-              'length': s_length,
-              'year': s_year,
+              'brand': myApp.data.lookup.skiBrand,
+              'model': myApp.data.lookup.skiModel,
+              'length': myApp.data.lookup.skiLength,
+              'year': myApp.data.lookup.skiYear,
               'binding': s_binding,
               'f_length': s_flength,
               'f_depth': s_depth,

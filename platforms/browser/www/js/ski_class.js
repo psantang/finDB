@@ -35,7 +35,7 @@ function getCurrentSki(user_name) {
         var url=wsURL+'ws_get_cur_stock_ret_json.php';
         var returnCode;
 
-      	$$.ajax({url:url,data:{ user_name:user_name },type:'POST',dataType: 'json'
+      	myApp.request({url:url,data:{ user_name:user_name },type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
 						console.log('ajax success.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
@@ -74,9 +74,10 @@ function getCurrentSki(user_name) {
               if (returnCode==1) {
                 getCurrentSettings(thisSki.user_name, thisSki.id);
               } else { // PS need to figure out what to do here.
-                mainView.router.load( { url:'mySettings.html' , query:{ski:0} });
-                myApp.closeModal('.login-screen', true);
-                myApp.hidePreloader();
+                //mainView.router.load( { url:'mySettings.html' , query:{ski:0} });
+                myApp.router.navigate('/mySettings/?ski=0');
+              //  myApp.closeModal('.login-screen', true);
+                myApp.preloader.hide();
               }
       	  }, // end COMPLETE
 					timeout: 5000,
@@ -113,7 +114,7 @@ function getCurrentSki(user_name) {
               var url=wsURL+'ws_set_cur_ski_ret_json.php';
               var success;
 
-            	$$.ajax({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'
+            	myApp.request({url:url,data:{ user_name:user_name, ski_id:ski_id },type:'POST',dataType: 'json'
       				,success:function(json_Obj) {
       						console.log('ajax success.');
       						if (json_Obj.length>0) { // RETURNED RESULTS
@@ -142,7 +143,7 @@ function getCurrentSki(user_name) {
                     } else {
                       console.log("alert user update failed");
                     }
-                    window.loginPreLoader = myApp.hidePreloader();
+                    window.loginPreLoader = myApp.preloader.hide();
             	  }, // end COMPLETE
       					timeout: 5000,
       					error: function(json_Obj, status, err) {
@@ -159,7 +160,7 @@ function getCurrentSki(user_name) {
                   beforeSend: function(){
       							console.log('ajax beforeSend.')
                     console.log('user_name='+user_name+ ' ski_id='+ski_id);
-                    window.loginPreLoader = myApp.showPreloader('Changing ski...');
+                    window.loginPreLoader = myApp.preloader.show('Changing ski...');
                       //jQuery('.upd').remove();
                       //jQuery('#submit_unassigned_results').html('');
                       //jQuery('#unassigned_list').html('<span class="upd">Retrieving data...</span>');

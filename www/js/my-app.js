@@ -4,8 +4,9 @@
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
-var api_vers="1_0_2";
-var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/";
+var api_vers="2_0_0";
+var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
+//var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
 
 // Set Template7 global devices flags
 Template7.global = {
@@ -16,6 +17,13 @@ Template7.global = {
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 //console.log("$$ is " + $$);
+
+// Theme
+var theme = 'auto';
+if (document.location.search.indexOf('theme=') >= 0) {
+  theme = document.location.search.split('theme=')[1].split('&')[0];
+}
+
 // only needed for ios/android interface differences to apply material design
 if (isAndroid) {
     // Change class
@@ -34,30 +42,69 @@ Template7.global = {
 };
 */
 // Init App
+
 var myApp = new Framework7({
-  //uniqueHistory:true,
-    // Enable Material theme for Android device only
+    id: 'com.paulsantangelo.finDB',
+    root: '#app',
     material: isAndroid ? true : false,//,
     dynamicNavbar: true,
     // Enable Template7 pages
     template7Pages: true,
-    animatePages:true
+    animatePages:true,
+    routes: routes,
+    on: {
+    pageInit(page) {
+       console.log('myApp - on pageInit for page ' +page)
+    }
+  }
 
 });
 
+// Init App
+/*
+var myApp = new Framework7({
+  id: 'io.framework7.testapp',
+  root: '#app',
+  theme: theme,
+  data: function () {
+    return {
+      user: {
+        firstName: 'John',
+        lastName: 'Doe',
+      },
+    };
+  },
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('Hello World!');
+    },
+  },
+  routes: routes,
+  vi: {
+    placementId: 'pltd4o7ibb9rc653x14',
+  },
+});
+*/
 
 
 // Add view
-var mainView = myApp.addView('.view-main', {
+//var mainView = myApp.addView('.view-main', {
     // Because we want to use dynamic navbar, we need to enable it for this view:
     //uniqueHistory:true,
-    dynamicNavbar: true,
-    domCache: false
-});
+//    dynamicNavbar: true,
+//    domCache: false
+//});
 
 var offline = true;
 var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
 window.loginEventStr="";
+
+// THIS WILL SUPPRESS ALL console.log output
+//var console = {};
+//console.log = function(){};
+
+
+G_LOOKUP_TYPE='';
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
@@ -73,6 +120,7 @@ $$(document).on('deviceready', function() {
     loginEventStr += "\r\n" + deviceInfo +  "\r\n";
     console.log("Device Data: " +deviceInfo );
 
+/* moved to router
     // prefill username fields if saved in local storage
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
@@ -82,7 +130,7 @@ $$(document).on('deviceready', function() {
       loginEventStr += "\r\nlogin initiated from device ready\r\n";
       loginUser();
     });
-
+*/
     //$$(".navbar").hide();
     //$$(".view-main").append("<div class='navbar'></div>");
 
@@ -96,14 +144,14 @@ $$(document).on('deviceready', function() {
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
 
-
+/* moved to router
   if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
     var pendingUserName=localStorage.getItem('pending_user_name');
     $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
   } else {
     $$(".page #registerBtn").text('Register to Begin');
   }
-
+*/
 
 
 
@@ -130,7 +178,7 @@ $$(document).on('deviceready', function() {
               var theID=e.target.id;
               console.log('in swipeout:deleted with target id='+theID);
               //deleteStockSki(theID);
-              myApp.alert('Item removed');
+              myApp.dialog.alert('Item removed');
               console.log('in swipeout:deleted');
             });
 
@@ -180,28 +228,31 @@ $$(document).on('deviceready', function() {
 
 
     //$$('.create-picker').on('click', function () { // THIS BINDS IT IF ALREADY IN DOB
-    $$(document).on('click', '.create-picker', function () { // THIS BINDS IT IF DYNAMICALLY CREATED AFTER DOM INTIALLY LOADS
+    $$(document).on('click', '.create-sheet', function () { // THIS BINDS IT IF DYNAMICALLY CREATED AFTER DOM INTIALLY LOADS
       // Check first, if we already have opened picker
       console.log($$(this).attr('class'));
+
+      console.log("this id is " + $$(this).attr('id') );
 
       var theBrand=getBrandByClass(this);
       console.log('theBrand=' + theBrand);
 
-      if (theBrand) {
-      if ($$('.picker-modal.modal-in').length > 0) {
-        myApp.closeModal('.picker-modal.modal-in');
-      }
+      if (measureObj[0][theBrand].binding!='Unknown') {
+      //if ($$('.picker-modal.modal-in').length > 0) {
+      //  myApp.closeModal('.picker-modal.modal-in');
+      //}
       console.log('theBrand is ' + theBrand);
-      myApp.pickerModal(
-        '<div class="picker-modal" id="measure_picker">' +
+      //myApp.pickerModal(
+      var measureSheet=myApp.sheet.create({
+        content:'<div class="sheet-modal" id="measure_sheet">' +
           '<div class="toolbar">' +
             '<div class="toolbar-inner">' +
               '<div class="left bold">Measuring for ' +theBrand+'</div>' +
-              '<div class="right"><a href="#" class="close-picker"><i class="f7-icons">close_round_fill</i></a></div>' +
+              '<div class="right"><a href="#" class="sheet-close"><i class="f7-icons">close_round_fill</i></a></div>' +
             '</div>' +
           '</div>' +
-          '<div class="picker-modal-inner">' +
-            '<div class="content-block">' +
+          '<div class="sheet-modal-inner">' +
+            '<div class="block">' +
               //'<div class="row measure_table"><div class="col-25 bold">Binding</div><div class="col-75">'+measureObj[theBrand].binding+'</div></div>' +
               '<div class="row measure_table"><div class="col-25 bold">Binding</div><div class="col-75">'+measureObj[0][theBrand].binding+'</div></div>' +
               '<div class="row measure_table"><div class="col-25 bold">Length</div><div class="col-75">'+measureObj[0][theBrand].length+'</div></div>' +
@@ -211,9 +262,12 @@ $$(document).on('deviceready', function() {
             '</div>' +
           '</div>' +
         '</div>'
-      )
+      });
+      measureSheet.open();
     } else {
-      var popoverHTML = '<div class="popover">'+
+      var measurePopover=myApp.popover.create({
+            targetEl: '#'+$$(this).attr('id'),
+            content:'<div class="popover">'+
                     '<div class="popover-inner">'+
                       '<div class="content-block">'+
                         '<p>No measurement data for this ski is documented.  However, standard practice is:</p>'+
@@ -225,14 +279,15 @@ $$(document).on('deviceready', function() {
                         '</ul>'+
                       '</div>'+
                     '</div>'+
-                  '</div>';
-      myApp.popover(popoverHTML, this,  true);
+                  '</div>'
+              });
+      measurePopover.open();
     }
     });
 
 
     $$(document).on('click', '#forgotPwBtn', function () {
-        myApp.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
+        myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
             generatePwResetCode(value);
         });
         // wait until prompt is generated, then populate with username if available
@@ -309,13 +364,12 @@ function getLocalDateTimeString (inputTime,outputFormat) {
 
 function onOffline() {
       offline = true;
+      /*
       myApp.addNotification({
          title: 'Connection Status',
          message: 'No network connection established.  Ski lookup requires network access.'
       });
-        //if (isIos) $$('.fa-wifi').removeClass('color-green').addClass('color-gray');
-         //else $$('.fa-wifi').removeClass('color-white').addClass('color-gray');
-         //$$('.left').html('Offline');
+      */
          return false;
   }
 
@@ -341,7 +395,9 @@ function onOffline() {
 
 
 
-myApp.onPageInit('about', function (page) {
+//myApp.onPageInit('about', function (page) {
+/*
+myApp.on('pageInit', about => {
     console.log('in myApp.onPageInit for ABOUT PAGE');
 
     if ( getLocalStorage('stockSkis') ) {
@@ -354,7 +410,7 @@ myApp.onPageInit('about', function (page) {
     var measureObj={}; // make object global
     getHowToMeasure();
 });
-
+*/
 
 
 
@@ -363,11 +419,12 @@ myApp.onPageInit('about', function (page) {
 
 
 // PAGE INITS HERE
-
-myApp.onPageInit('login', function (page) {
+//myApp.onPageInit('login', function (page) {
+/*
+myApp.on('pageInit', login => {
     console.log('login onPageInit fired');
     loginEventStr += "In pageInit for login";
-    // prefill username fields if saved in local storage
+
     $$("#user_name").val(localStorage.getItem("user_name"));
     $$("#pwd").val(localStorage.getItem("pwd"));
 
@@ -384,9 +441,12 @@ myApp.onPageInit('login', function (page) {
       loginUser();
     });
 });
+*/
 
 
-myApp.onPageInit('register', function (page) {
+//myApp.onPageInit('register', function (page) {
+/*
+myApp.on('pageInit', register => {
     console.log("register page initialized");
 
     $$('.create-popup').on('click', function () {
@@ -403,17 +463,15 @@ myApp.onPageInit('register', function (page) {
       showActivationPrompt(localStorage.getItem('pending_user_name'));
     }
 });
+*/
 
-
-myApp.onPageInit('mySettings', function (page) {
-    window.page=page;
+//myApp.onPageInit('mySettings', function (page) {
+/*
+myApp.on('pageInit', mySettings => {
+  pageName = myApp.views.main.router.currentPageEl.dataset.page; // this is V2 for page name
     console.log('mySettings onPageInit fired');
-    console.log('   page.name: ' + page.name);
-    console.log('      page.view: ' + page.view);
-    console.log('         page.container: ' + page.container);
+    console.log('   page.name: ' + pageName);
 
-    //populateCurrentSki();
-    //populateCurrentSettings();
     init_ski();
 
     $$('.page #viewStockBtn').click(function() {
@@ -426,6 +484,7 @@ myApp.onPageInit('mySettings', function (page) {
     });
 
 });
+*/
 
 // MY SETTINGS LIVE EVENT HANDLERS...outside if pag init
 $$(document).on('click', '#cancelSaveBtn', function (e) {
@@ -437,11 +496,11 @@ $$(document).on('click', '.view_history', function (e) {
   viewHistory();
 });
 
+
 $$(document).on('click', '.navbar #newSettingNote', function (e) {
   console.log("newSettingNote clicked");
   AddNotePopUp();
 });
-
 $$(document).on('click', '.popup #addNoteBtn', function (e) {
     console.log("addNote clicked");
     addNote();
@@ -458,11 +517,15 @@ $$(document).on('closed', '.popup-notes', function (e) {
 
 });
 
+$$(document).on('click', '.panel-left', function (e) {
+  myApp.panel.open("left", true);
+});
 
 
 
-
-myApp.onPageInit('mySkis', function (page) {
+//myApp.onPageInit('mySkis', function (page) {
+/*
+myApp.on('pageInit', mySkis => {
     console.log('mySkis onPageInit fired');
 
       getMySkis(thisUser.user_name);
@@ -478,10 +541,12 @@ myApp.onPageInit('mySkis', function (page) {
     });
 
 });
+*/
 
 
-
-myApp.onPageInit('profile', function (page) {
+//myApp.onPageInit('profile', function (page) {
+/*
+myApp.on('pageInit', profile => {
     console.log('profile onPageInit fired');
 
     init_profile();
@@ -522,7 +587,7 @@ myApp.onPageInit('profile', function (page) {
     if (page.query == -1) {
       $$('#editProfileBtn').click(); // make form editable on load
 
-      myApp.alert(
+      myApp.dialog.alert(
         'we have to create your profile for how your measure your settings and get your ability level so you can view settings of others in your ability range as the system gathers more data.',
         'Before you can begin...',
         function () {
@@ -534,20 +599,23 @@ myApp.onPageInit('profile', function (page) {
 
     }
 });
-
+*/
 
 
 // Option 2. Using one LIVE 'pageInit' event handler for ALL pages
+
 var pageCounter=0;
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
     pageCounter++;
-    var page = e.detail.page;
+    var page = myApp.views.main.router.currentPageEl.getAttribute('data-page');
+
     console.log('  ');
-    console.log('------------ data-page = ' + page.name + ' : count: ' + pageCounter + ' -------------');
+    console.log('------------ data-page = ' + page + ' : count: ' + pageCounter + ' -------------');
     console.log('  ');
 
 });
+
 
 $$(document).on('click','#logoutBtn',function(page) {
   if (typeof thisUser != "undefined") delete thisUser;
@@ -557,7 +625,9 @@ $$(document).on('click','#logoutBtn',function(page) {
   console.log('  ');
   console.log('############# USER LOGGED OUT #############');
   console.log('  ');
-  mainView.router.load( { url:'index.html' });
+  //mainView.router.load( { url:'index.html' });
+  myApp.views.main.router.navigate('/'); //V2
+  //myApp.panel.close("left", true);
 });
 
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
@@ -567,6 +637,7 @@ $$(document).on('click','#logoutBtn',function(page) {
 
 
 // TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
+/*
 $$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
     console.log('*********** brands smart select initialized');
     $$('.page .smart-select #brand_select_id').change(getModels); // run getModels function
@@ -582,19 +653,16 @@ $$(document).on('pageInit', '.page[data-select-name="model"]', function (e) {
 
 $$(document).on('pageInit', '.page[data-select-name="year"]', function (e) {
     console.log('year smart select initialized');
-    $$('.smart-select #year_select_id').change(getStockSettings);
+    //$$('.smart-select #year_select_id').change(getStockSettings);
     $$('.page[data-select-name="year"]').find(("input[type='radio']:checked")).prop('checked', false);
-
 })
 
 $$(document).on('pageInit', '.page[data-select-name="length"]', function (e) {
     console.log('length smart select initialized');
     $$('.smart-select #length_select_id').change(getYears);
     $$('.page[data-select-name="length"]').find(("input[type='radio']:checked")).prop('checked', false);
-
-
 })
-
+*/
 
 function getBrandByClass (clickedObj) {
   for (i=0; i<Object.keys(measureObj[0]).length; i++) {
@@ -611,7 +679,7 @@ console.log('inside getHowToMeasure');
 if (offline) return onOffline();
 
  var url=wsURL+'ws_get_how_to_measure_ret_json.php';
- $$.ajax({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
+ myApp.request({url:url,data:{ source:'mobileApp'},type:'POST',dataType: 'json',success:function(measure_Obj) {
    measureObj=measure_Obj;
    console.log(Object.keys(measureObj[0]).length);
    if (measureObj.length>0) { // RETURNED RESULTS
@@ -653,7 +721,7 @@ function generatePwResetCode(userNameOrEmail) {
 
       var url=wsURL+'ws_set_forgot_pw_code_ret_json.php';
       var passed;
-      $$.ajax({url:url,data:{user_input:userNameOrEmail},type:'POST',dataType: 'json',success:function(jsonObj) {
+      myApp.request({url:url,data:{user_input:userNameOrEmail},type:'POST',dataType: 'json',success:function(jsonObj) {
         if (jsonObj[0].RETURN_CODE==1) {
           console.log('return code 1...success for pw reset code!');
           passed=true;
@@ -664,13 +732,15 @@ function generatePwResetCode(userNameOrEmail) {
       }, timeout: 5000
         , beforeSend: function() {
           console.log('beforeSend generatePwResetCode');
-          myApp.showIndicator();
+          //myApp.showIndicator();
+          myApp.preloader.show();
         }, complete: function(jsonObj) {
             console.log('in complete generatePwResetCode');
-            myApp.hideIndicator();
+            //myApp.hideIndicator();
+            myApp.preloader.hide();
             if (passed) {
 
-                myApp.alert(
+                myApp.dialog.alert(
                   'An email has been sent to ' +userNameOrEmail+'.  Please get the code from your email account and supply to the following prompt to reset your password.',
                   'Email Sent',
                   function () {
@@ -679,7 +749,7 @@ function generatePwResetCode(userNameOrEmail) {
                 );
 
             } else {
-              myApp.alert(
+              myApp.dialog.alert(
                 'The User Name or Email address was not found in the system.',
                 'Failed',
                 function () {
@@ -700,13 +770,13 @@ function generatePwResetCode(userNameOrEmail) {
 
 function validatePwResetCode (userNameOrEmail) {
 
-      myApp.prompt('Enter the verification code sent to your email.', 'Reset Password Code', function (value) {
+      myApp.dialog.prompt('Enter the verification code sent to your email.', 'Reset Password Code', function (value) {
         console.log('running validatePwResetCode function');
         if (offline) return onOffline();
 
         var url=wsURL+'ws_get_forgot_pw_code_ret_json.php';
         var passed;
-        $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,code:value},type:'POST',dataType: 'json',success:function(jsonObj) {
+        myApp.request({url:url,data:{ userNameOrEmail:userNameOrEmail,code:value},type:'POST',dataType: 'json',success:function(jsonObj) {
           if (jsonObj[0].RETURN_CODE==1) {
             console.log('return code 1...success for pw reset code!');
             passed=true;
@@ -717,14 +787,16 @@ function validatePwResetCode (userNameOrEmail) {
         }, timeout: 5000
           , beforeSend: function() {
             console.log('beforeSend validatePwResetCode');
-            myApp.showIndicator();
+            //myApp.showIndicator();
+            myApp.preloader.show();
           }, complete: function(jsonObj) {
               console.log('in complete validatePwResetCode');
-              myApp.hideIndicator();
+              //myApp.hideIndicator();
+              myApp.preloader.hide();
               if (passed) {
                 setNewPw(userNameOrEmail);
               } else {
-                myApp.confirm("The Code " +value+ " is not valid.  Press OK to try again or Cancel.",
+                myApp.dialog.confirm("The Code " +value+ " is not valid.  Press OK to try again or Cancel.",
                 "Incorrect Code",
                 function () {
                       console.log('in confirm OK');
@@ -749,12 +821,12 @@ function validatePwResetCode (userNameOrEmail) {
 }
 
 function setNewPw(userNameOrEmail) {
-  myApp.prompt('Successful validation.<p>Enter a new password.</p>', 'Reset Password', function (value) {
+  myApp.dialog.prompt('Successful validation.<p>Enter a new password.</p>', 'Reset Password', function (value) {
     console.log('running validatePwResetCode function');
     if (offline) return onOffline();
 
     if (value.length<6) {
-      myApp.alert(
+      myApp.dialog.alert(
         'Password must be atleast 6 characters.',
         'Password failed',
         function () {
@@ -766,7 +838,7 @@ function setNewPw(userNameOrEmail) {
 
     var url=wsURL+'ws_set_reset_password_ret_json.php';
     var passed;
-    $$.ajax({url:url,data:{ userNameOrEmail:userNameOrEmail,user_pwd:value},type:'POST',dataType: 'json',success:function(jsonObj) {
+    myApp.request({url:url,data:{ userNameOrEmail:userNameOrEmail,user_pwd:value},type:'POST',dataType: 'json',success:function(jsonObj) {
       if (jsonObj[0].RETURN_CODE==1) {
         console.log('return code 1...success for pw reset!');
         passed=true;
@@ -777,13 +849,15 @@ function setNewPw(userNameOrEmail) {
     }, timeout: 5000
       , beforeSend: function() {
         console.log('beforeSend setNewPw');
-        myApp.showIndicator();
+        //myApp.showIndicator();
+        myApp.preloader.show();
       }, complete: function(jsonObj) {
           console.log('in complete setNewPw');
-          myApp.hideIndicator();
+          //myApp.hideIndicator();
+          myApp.preloader.hide();
           if (passed) {
             localStorage.removeItem("pwd");
-            myApp.alert(
+            myApp.dialog.alert(
               'Password reset has been complete.  Please login with your new password.',
               'Success!',
               function () {
@@ -791,7 +865,7 @@ function setNewPw(userNameOrEmail) {
               }
             );
           } else {
-            myApp.alert(
+            myApp.dialog.alert(
               'Password reset was not successful.  Please try again.',
               'Password Reset Failed',
               function () {
@@ -810,4 +884,17 @@ function setNewPw(userNameOrEmail) {
   });
 
   $$(".modal-in input").prop("type","password"); // change input type to password since it defaults to text
+}
+
+
+function routeSkiLookup() {
+  console.log("In routeSkiLookup Function");
+
+  if (G_LOOKUP_TYPE=='findSki') {
+    myApp.router.navigate('/lookup/');
+  } else {
+    myApp.router.navigate('/mySkis/');
+    promptSkiName(myApp.data.lookup.skiYear);
+  }
+
 }
