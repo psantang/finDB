@@ -72,20 +72,20 @@
 */
 
 .head_setting_table {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.0em;
+  font-weight: normal;
   border-bottom: 1px solid #ddd;
   color: #000;
-  padding: .5em 0em;
+  padding: .3em 0em;
 }
 
 .data_setting_table {
-  font-size: 1.2em;
-  padding: .5em 0em;
+  font-size: 1.0em;
+  padding: .3em 0em;
 }
 
 .sm {
-  font-size: .85em;
+  font-size: .95em;
   padding: .25em 0em;
   color: rgba(0, 122, 255, 0.85);
 }
@@ -96,6 +96,10 @@
 
 .padding_left_15px {
   padding-left: 15px;
+}
+
+.padding_left_0px {
+  padding-left: 0px;
 }
 
 .black1_1_heading {
@@ -123,8 +127,13 @@
     font-size: 1.1em;
 }
 
+#ul_saved_list {
+  background-color: rgba(255,255,255,1);
+}
+
 #ul_saved_list li {
   padding-left:12px;
+  border-bottom: 1px solid #EEE;
 }
 
 .lightGreenBG {
@@ -171,7 +180,7 @@ background-color: rgba(33, 150, 243,.1);
     margin:34px 0 15px 0 !important;
 }
 
-.override_lb .list-block {
+.override_lb .list {
     margin:50px 0 15px 0 !important;
 }
 
@@ -184,7 +193,7 @@ background-color: rgba(33, 150, 243,.1);
   padding:.3em .5em;
 }
 
-#loginForm .list-block ul {
+#loginForm .list ul {
   background-color: rgba(255, 255, 255,.5);
 }
 
@@ -204,12 +213,12 @@ background-color: rgba(33, 150, 243,.1);
   margin-top:17px;
 }
 
-#measure_picker {
+#measure_sheet {
   background-color: rgb(251, 240, 228);
   /*background-image: url(../img/water_bg.jpg);*/
 }
 
-#measure_picker .toolbar {
+#measure_sheet .toolbar {
   background-color: rgba(255, 200, 143, 1);
 }
 
@@ -229,6 +238,13 @@ background-color: rgba(33, 150, 243,.1);
   background-color: rgba(255,255,255,.3) !important;
 }
 
+.popover-inner .content-block {
+  margin: 1px 10px !important;
+}
+.popup .page-content {
+  background-color: rgba(255,255,255,1) !important;
+}
+
 #profilePage_div .item-media i {
  /*size-20 color-blue*/
   font-size: 20px;
@@ -236,7 +252,7 @@ background-color: rgba(33, 150, 243,.1);
  }
 
 #homeDetails .content-block {
-  margin:30px 0;
+  margin:30px 10px !important;
 }
 
  .page .content-block-title {
@@ -300,6 +316,7 @@ thead {
 
 .data-table th.numeric-cell {
     text-align: right;
+    padding-left: 0px !important;
 }
 
 
@@ -317,10 +334,12 @@ thead {
 
 .data-table td.numeric-cell, .data-table th.numeric-cell {
     text-align: right;
+    padding-left: 0px !important;
 }
 
 #addNoteSettingsTable .data-table td, #addNoteSettingsTable .data-table .numeric-cell {
   height:.3em !important;
+  padding-left: 0px !important;
 }
 
 #stockSettings {
@@ -377,7 +396,7 @@ thead {
 }
 
 /* ALTER SLIDER ON MY SETTINGS PAGE */
-#settingsAdjuster .range-slider input[type=range] {
+#settingsAdjuster .range-slider {
   background-size: 100% 9px !important;
   background: linear-gradient(to right,rgba(255, 132, 0, .6) 0,rgba(0, 122, 255, .6) 100%)!important;
   height:34px !important;
@@ -390,6 +409,11 @@ thead {
 
 }
 
+/* turn off range bar on all sliders */
+#settingsAdjuster .range-bar {
+  display:none;
+}
+
 .stockText {
   color:#999;
   line-height: .9em;
@@ -400,17 +424,15 @@ thead {
 }
 
 .createdDateText {
-  font-size: .8em;
   font-weight: normal;
   color: #888;
   text-overflow: ellipsis;
   max-width: 40%;
-  display: inline-block;
   overflow: hidden;
 }
 
 .lightOrangeBG {
-  background-color: rgba(255, 132, 0, .2);
+  background-color: rgba(255, 132, 0, .2) !important;
 }
 
 .floatLeft {
@@ -451,7 +473,11 @@ thead {
   margin:18px 0 !important;
 }
 
-.list-block {
+.padding_l_r_15px {
+  padding: 0 15px;
+}
+
+.list {
   margin:18px 0 !important;
 }
 
@@ -461,6 +487,10 @@ thead {
 
 .chevronC {
   color: #d2d2e6;
+}
+
+.panel.panel-left .content-block {
+  padding-left: 1em;
 }
 
 #userNameInPanel {
@@ -515,7 +545,14 @@ thead {
   color: #007aff;
 }
 
-#editSkiBtn i , .view_history i {
+#editSkiBtn i {
+  font-size:1.2em;
+  margin-top: -5px;
+  color:inherit;
+  height: 100%;
+}
+
+.view_history i {
   font-size:1.2em;
   margin-top: -5px;
 }
@@ -529,6 +566,10 @@ thead {
   background-color: rgba(0,0,0,.07);
   border-bottom:1px solid #aaa;
   padding:.3em;
+}
+
+.popup-notes>.page-content>.block {
+  margin-top:1px !important;
 }
 
 #LE_def_POS {
@@ -545,5 +586,32 @@ thead {
 
 #skiCount {
   border-top:1px solid #aaa;
+  margin-right: 1em;
+  color: #aaa;
+}
 
+.txtAreaHeight {
+  height:fit-content !important;
+  padding:.3em 0 !important;
+}
+
+#ski_card .card-content-inner {
+  padding: .5em;
+}
+
+.logo_36height {
+  min-height: 30px;
+  max-height: 40px;
+  max-width: 50px;
+  min-width: 30px;
+}
+
+#ul_mySki .item-content .item-inner {
+  margin-left: 7px;
+}
+
+#ul_mySki .item-content .item-inner a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -78,7 +78,8 @@ function loginUser() {
         console.log("url is " + url);
         var returnCode;
 
-      	$$.ajax({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion,last_login:loginTime }, type:'POST',dataType: 'json'
+      	//$$.ajax({url:url,data:{
+        myApp.request({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion,last_login:loginTime }, type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
 						console.log('ajax success function for loginUser.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
@@ -121,11 +122,13 @@ function loginUser() {
                 getProfile(thisUser.user_name);
               } else if (returnCode==-1 || returnCode==-2) {
                 $$(".page #loginError").html("Invalid Login.  Please try again.");
-                myApp.hidePreloader();
+                //myApp.hidePreloader();
+                myApp.preloader.hide();
               } else {
-                $$(".page #loginError").html("Database error.  Please try again or contact paul@paulsantangel.com .");
+                $$(".page #loginError").html("Database error.  Please try again or contact paul@paulsantangelo.com .");
                 console.log('invalid credentials...thisUser deleted');
-                myApp.hidePreloader();
+                //myApp.hidePreloader();
+                myApp.preloader.hide();
               }
 
       	  }, // end COMPLETE
@@ -141,7 +144,8 @@ function loginUser() {
               console.log('user_name='+user_name+ ' pwd='+pwd);
               $$(".page #loginError").html('');
 
-              myApp.showPreloader('Validating User...');
+              //myApp.showPreloader('Validating User...');
+              myApp.preloader.show('Validating User...');
 						} // END before Send
         }); // END AJAX REQUEST
 } // end loginUser function
@@ -156,8 +160,9 @@ function getProfile (user_name) {
         var url=wsURL+'ws_get_user_profile_ret_json.php';
         var returnCode;
 
-      	$$.ajax({url:url,data:{ user_name: user_name },type:'POST',dataType: 'json'
-				,success:function(json_Obj) {
+      	//$$.ajax({url:url,data:{ user_name: user_name },type:'POST',dataType: 'json'
+				myApp.request({url:url,data:{ user_name: user_name },type:'POST',dataType: 'json'
+        ,success:function(json_Obj) {
 						console.log('ajax success.');
 						if (json_Obj.length>0) { // RETURNED RESULTS
           		if (json_Obj[0].RETURN_CODE==1) {
@@ -182,7 +187,8 @@ function getProfile (user_name) {
                 } else {
                   myApp.closeModal('.login-screen', true);
                   firstTimeEntry(); // FOR FIRST TIME ENTRY AND WHEN PROFILE IS NOT COMPLETE/REQURIED ITEMS ADDED
-                  myApp.hidePreloader();
+                  //myApp.hidePreloader();
+                  myApp.preloader.hide();
                 }
 
               } else if (returnCode=-1) { // FIRST TIME USER FORCE partial profile completion
@@ -195,11 +201,12 @@ function getProfile (user_name) {
                 // first solution to push to profile page above */
 
                 // second solution , use modals to just get essential information of how they measure
-                myApp.closeModal('.login-screen', true);
+                //myApp.closeModal('.login-screen', true);
                 firstTimeEntry();
 
 
-                myApp.hidePreloader();
+                //myApp.hidePreloader();
+                myApp.preloader.hide();
               } else {
 
               }

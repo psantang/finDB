@@ -69,7 +69,7 @@ function toggleEditSave () {
     $$("#editProfileBtn").text("Save");
 //    $$('#profilePage_div .content-block-title').hide();
     //$$('#profilePage_div .list-block ul').css('background-color','rgba(245,255,245,.5)');
-    $$('#profilePage_div .list-block ul').addClass('lightOrangeBG');
+    $$('#profilePage_div .list ul').addClass('lightOrangeBG');
     $$('#profilePage_div .item-input').children().prop("disabled", false);
   } else {
 
@@ -107,7 +107,7 @@ function toggleEditSave () {
     $$("#editProfileBtn").text("Edit");
     $$('#profilePage_div .content-block-title').show();
     //$$('#profilePage_div .list-block ul').css('background-color','rgba(255,255,255,1)');
-    $$('#profilePage_div .list-block ul').removeClass('lightOrangeBG');
+    $$('#profilePage_div .list ul').removeClass('lightOrangeBG');
     $$('#profilePage_div .item-input').children().prop("disabled", true);
 
 
@@ -139,7 +139,7 @@ function toggleEditSave () {
     var url=wsURL+'ws_set_user_profile_ret_json.php';
     var firstLogin=false;
     var passed=false;
-		$$.ajax({url:url,data: form_data ,type:'POST',dataType: 'json',success:function(profilesObj) {
+		myApp.request({url:url,data: form_data ,type:'POST',dataType: 'json',success:function(profilesObj) {
       if (profilesObj.length>0) { // RETURNED RESULTS
         if (profilesObj[0].RETURN_CODE==1) {
           console.log('successful profile update');
@@ -178,7 +178,8 @@ function toggleEditSave () {
 
       , beforeSend: function(){
         console.log('beforeSend profile update');
-        window.loginPreLoader = myApp.showPreloader('Saving Profile...');
+        //window.loginPreLoader = myApp.showPreloader('Saving Profile...');
+        myApp.preloader.show();
 
       }, complete: function(){
           console.log('complete profile update.  firstLogin is ' + firstLogin);
@@ -195,9 +196,11 @@ function toggleEditSave () {
           if (firstLogin) {
             console.log('automatically sending user to mySettings page...');
             mainView.router.load( { url:'mySettings.html' });
-            window.loginPreLoader = myApp.hidePreloader();
+            //window.loginPreLoader = myApp.hidePreloader();
+            myApp.preloader.hide();
           } else {
-            window.loginPreLoader = myApp.hidePreloader();
+            //window.loginPreLoader = myApp.hidePreloader();
+            myApp.preloader.hide();
           }
 
       }, error: function(profilesObj, status, err) {

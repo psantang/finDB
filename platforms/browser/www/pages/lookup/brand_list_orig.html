@@ -1,0 +1,94 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Brands</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <a @click="openAlert" class="red-link">Open Alert</a>
+      <div class="list simple-list">
+        <ul>
+          {{#each brand}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+// NOTE: For components, you have to have a script with a return....and it seems nothing else!
+  return {
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+    },
+    created() {
+      console.log('componentCreated', this)
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+    },
+    mounted() {
+      console.log('componentMounted', this);
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
+    },
+    // Component Data
+    data: function () {
+      // Must return an object
+    //  return users;
+      /*return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tennis', 'Chess', 'Football'],
+      }*/
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Hello World');
+      },
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  }
+
+
+</script>
