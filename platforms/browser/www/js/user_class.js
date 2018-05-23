@@ -1,9 +1,10 @@
 class User {
-  constructor(id, user_name, user_email, last_login) {
+  constructor(id, user_name, user_email, last_login, user_vers) {
     this.id = id;
     this.user_name = user_name;
     this.user_email = user_email;
     this.last_login = last_login;
+    this.user_vers = user_vers;
   }
 
   validProfile(userObj) {
@@ -92,7 +93,7 @@ function loginUser() {
 								console.log('id is ' + json_Obj[0].id);
 								console.log('json_Obj length is ' + json_Obj.length);
 
-                const thisUser = new User(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].user_email, json_Obj[0].last_login);
+                const thisUser = new User(json_Obj[0].id,json_Obj[0].user_name,json_Obj[0].user_email,json_Obj[0].last_login,json_Obj[0].user_vers);
                 window.thisUser = thisUser;
                 console.log(thisUser);
                 console.log(thisUser.validation);
@@ -183,7 +184,7 @@ function getProfile (user_name) {
       				console.log('ajax complete for getProfile call...now get current ski.');
               if (returnCode==1) {
                 if (thisUser.validProfile(thisUser)) {
-                  getCurrentSki(user_name); // THIS IS IN THE skiClass.php file
+                  getCurrentSki(user_name,null); // THIS IS IN THE skiClass.php file
                 } else {
                   myApp.closeModal('.login-screen', true);
                   firstTimeEntry(); // FOR FIRST TIME ENTRY AND WHEN PROFILE IS NOT COMPLETE/REQURIED ITEMS ADDED

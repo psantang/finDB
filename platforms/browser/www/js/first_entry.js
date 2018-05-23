@@ -280,7 +280,7 @@ function saveMeasuring() {
           //myApp.hideIndicator();
           myApp.preloader.hide();
 //          mainView.router.load( { url:'mySettings.html'});
-          getCurrentSki(thisUser.user_name); // THIS IS IN THE skiClass.php file...first time user will not have any but it will route around
+          getCurrentSki(thisUser.user_name,null); // THIS IS IN THE skiClass.php file...first time user will not have any but it will route around
         } else {
           myApp.dialog.alert(
             'Data could not be saved due to an unknown error.  Please try again.',

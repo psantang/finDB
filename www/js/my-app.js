@@ -5,6 +5,7 @@ var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
 var api_vers="2_0_0";
+var user_vers=api_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
 
@@ -53,12 +54,36 @@ var myApp = new Framework7({
     animatePages:true,
     routes: routes,
     on: {
-    pageInit(page) {
+      pageInit(page) {
        console.log('myApp - on pageInit for page ' +page)
-    }
-  }
+     }
+   }
 
 });
+
+// LISTENER / SUBSCRIBER for when user selects a ski and ski count is displayed in nav
+myApp.on('skiUsageCount', function (thisSki) {
+  console.log("emitted function skiUsageCount");
+  if (thisSki) {
+    if (thisSki.ski_count==0) {
+      $$("#skiCount").html("You are the only member currently riding the " + thisSki.brand + " " + thisSki.model);
+    } else {
+      if (thisSki.ski_count==1) {
+        $$("#skiCount").html(thisSki.ski_count + " other member is currently riding the " + thisSki.brand + " " + thisSki.model);
+      } else {
+        $$("#skiCount").html(thisSki.ski_count + " other members are currently riding the " + thisSki.brand + " " + thisSki.model);
+      }
+    }
+  }
+});
+// 2nd LISTENER/SUBSCRIBER TO THE skiUsageCount emitter
+myApp.on('skiUsageCount', function (skiCount) {
+  console.log("emitted function skiUsageCount");
+  if (thisSki) {
+    console.log("This is an emitted function with skiCount="+thisSki.ski_count);
+  }
+});
+
 
 // Init App
 /*
@@ -710,6 +735,7 @@ $$(document).on('click', '#goHome', function (e) {
     console.log('goHome via live pageInit');
 });
 
+
 //$$(document).on('onPageBack', '.page[data-page="about"]', function (e) {
 //    console.log('onPageBack about page via live pageInit');
 //});
@@ -897,4 +923,87 @@ function routeSkiLookup() {
     promptSkiName(myApp.data.lookup.skiYear);
   }
 
+}
+
+
+$$(document).once('deviceready', function (page) {
+  console.log(" ^^^^^^^^^^^^ pageinit only once ^^^^^^^^^ making call to CallMethod to get data..... ");
+  var url=wsURL+'get_user_version_status_ret_json.php';
+  //data="user_vers="+thisUser.user_vers;
+  data="user_vers="+api_vers.replace(/_/g,".");
+  CallMethod(url, data , onSuccess);
+});
+
+
+function CallMethod(url, parameters, successCallback) {
+                console.log("in CallMethod function");
+                if (offline) return onOffline();
+
+                myApp.request({
+                    type: 'POST',
+                    url: url,
+                    data: parameters,
+                    //contentType: 'application/json;',
+                    dataType: 'json',
+                    success: successCallback,
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log('---------- ------- -------- error from CallMethod');
+                    }
+                });
+            }
+
+
+function onSuccess(vers_Obj) {
+    console.log("++++++++++ +++++++++ +++++++++ this is onSuccess function with param="+vers_Obj);
+
+    vers_Obj = {user_vers:user_vers,latest_vers:vers_Obj[0].latest_vers,vers_features:vers_Obj[0].vers_features,vers_update:vers_Obj[0].vers_update};
+    window.vers_Obj=vers_Obj;
+
+    notify_text="Your version: "+ vers_Obj.user_vers+ ". Latest version: "+vers_Obj.latest_vers;
+    if (isIos) {
+      update_link="<a class='external' href='https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
+    }
+    if (isAndroid) {
+      update_link="<a class='external' href='https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
+    }
+
+
+    if (typeof vers_Obj != "undefined" && vers_Obj.vers_update<0) {
+      console.log('need an update available');
+      var notificationClickToClose = myApp.notification.create({
+        icon: '<img src="/res/icon/ios/icon-40.png" width="24" height="24" />',
+        title: 'finDB version ' + vers_Obj.user_vers,
+        titleRightText: 'now',
+        subtitle: 'Update available. Version: ' +vers_Obj.latest_vers,
+        text: update_link,
+        closeOnClick: true,
+      });
+      notificationClickToClose.open();
+
+      // NOTE: Below was my old approach before going to notification
+      /*
+      if (isIos) {
+        $$("#update_available").html("<i class='icon f7-icons color-red'>cloud_download_fill</i> <a class='external' href='https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8' target='_system'>Update Available.</a>");
+      }
+      if (isAndroid) {
+        $$("#update_available").html("<i class='icon f7-icons color-red'>cloud_download_fill</i> <a class='external' href='https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB' target='_system'>Update Available.</a>");
+      }
+      */
+    }
+
+    /*
+    console.log(" ------ > page after in for mySettings ");
+    if (vers_Obj[0]['vers_update']<0) {
+      console.log('need an update');
+      $$("#versBadge").removeClass('hide');
+      $$("#update_msg").html("New version available.  <a href='#' id='versDetails'>View Details.</a>");
+    } else {
+      $$("#update_msg").html("");
+    }
+
+    $$('#versDetails').click(function() {
+        console.log('versDetails via clicked from router');
+        versionDetails(vers_Obj[0]);
+    });
+    */
 }

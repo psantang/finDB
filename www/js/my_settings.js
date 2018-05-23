@@ -14,19 +14,27 @@ function init_ski() {
     populateCurrentSettings();
   }
 
-/*
-  rangeBindingB = myApp.range.create({
-    el: '#bindingRangeB',
-    on: {
-      change: function (e, range) {
-        console.log("value="+this.params.value);
-        //updateSlider(this,this.params.value,.500,.0625);
-      }
-    }
-  });
-*/
+
+
+
+
+
 
 } // end init_ski functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function checkImageExists(imageUrl, callBack) {
   var imageData = new Image();
@@ -109,7 +117,7 @@ function populateCurrentSettings() {
   console.log("in populateCurrentSettings");
   if (typeof thisSetting !== "undefined") { // window object
     console.log("Object thisSetting IS DEFINED");
-    if (thisSetting.ski_id) {
+    if (thisSetting.id) {
       $$(".page #dateCreated").html(thisSetting.date_time_created);
       $$(".page #myCurrentBinding").html(thisSetting.front_binding);
       $$(".page #myCurrentLength").html(thisSetting.length);
@@ -1237,3 +1245,45 @@ $$(document).on('touchmove', '.popup  #note_temp_slider', function (e) {
 
 });
 */
+
+function versionDetails(vers_Obj) {
+  console.log("in versionDetails function");
+  var popupNote = '<div class="popup popup-notes">';
+      popupNote +='<div class="view view-init">';
+      popupNote +='<div class="page">';
+
+      popupNote+='<div class="navbar">';
+      popupNote+='<div class="navbar-inner">';
+      popupNote+='<div class="title">Version Update</div>';
+      popupNote+='<div class="right"><a href="#" class="link popup-close">Close</a></div>';
+      popupNote+='</div>';
+      popupNote+='</div>';
+
+      popupNote+='<div class="page-content">';
+      popupNote+='<div class="block">';
+
+      if (vers_Obj.user_vers) {
+        popupNote+='<div class="content-block bold">Your Version: '+vers_Obj.user_vers+'</div>';
+      }
+      if (vers_Obj.latest_vers) {
+        popupNote+='<div class="content-block bold">Latest Version: '+vers_Obj.latest_vers+'</div>';
+      }
+
+      popupNote+='<div>Version Details</div>';
+      if (vers_Obj.vers_features) {
+        popupNote+='<div>Latest Version: '+vers_Obj.vers_features+'</div>';
+      }
+
+
+
+
+
+      popupNote+='</div>'; // END  block
+      popupNote+='</div>'; // END  page content
+
+      popupNote+='</div>'; // end class page
+      popupNote+='</div>'; // end class view
+      popupNote+='</div>'; // end class popup
+
+  myApp.popup.open(popupNote,true);
+}
