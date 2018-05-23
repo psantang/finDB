@@ -615,3 +615,35 @@ thead {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+#reg_ul li .item-media {
+  padding-bottom:14px;
+}
+
+#tc_toggle > .item-input-wrap, #tc_toggle > .item-after  {
+  display: inline-block;
+  width: initial;
+  padding: .6em .5em 0em 0em;
+}
+
+.hide {
+  display:none !important;
+}
+
+#update_msg {
+  font-size: .8em;
+  border: 1px solid #f54336;
+  padding: .3em;
+  display: inline-block;
+  background-color: #f54336;
+  border-radius: .3em;
+}
+
+#versDetails {
+  color:#FFF;
+}
+
+#versDetails i {
+  font-size:1.2em
+}

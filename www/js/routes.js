@@ -28,6 +28,8 @@ var routes = [
             loginUser();
           });
 
+
+
         }
     }
   },
@@ -55,13 +57,33 @@ var routes = [
             AddNotePopUp();
           });
 
+
+
+
         } ,
         pageAfterIn: function () {
           console.log(" ------ > page after in for mySettings ");
 
+          console.log("update msg is " + $$("#app .panel #update_msg") );
+          if (typeof vers_Obj != "undefined" && vers_Obj.vers_update<0) {
+            console.log('need an update');
+            $$("#versBadge").removeClass('hide');
+            $$("#app .panel #update_msg").html("<a href='#' id='versDetails'>Software update available.  <i class='icon f7-icons color-white'>info_fill</i></a>");
+
+          } else {
+            console.log('NO update needed');
+            $$("#update_msg").html("");
+          }
+
+          $$('#versDetails').click(function() {
+              console.log('versDetails via clicked from router');
+              versionDetails(vers_Obj);
+          });
         }
     }
   },
+
+
 // popup route below
   {
     path: '/popupNoteC/',

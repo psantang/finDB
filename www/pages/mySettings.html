@@ -1,7 +1,7 @@
 {{#if @global.ios}}
       <div class="navbar">
           <div class="navbar-inner">
-            <div class="left link icon-only"><a href="#" class="panel-open" data-panel="left"><i class="icon f7-icons">menu</i></a></div>
+            <div class="left link icon-only"><a href="#" class="panel-open" data-panel="left"><i class="icon f7-icons">menu<span id="versBadge" class="hide badge color-red">New</span></i></a></div>
               <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
               <div class="center sliding">My Settings</div>
               <div class="right"><a href="#" id="newSettingNote" class="link icon-only"><i class="icon f7-icons">compose</i></a></div>
@@ -14,7 +14,7 @@
 {{#if @global.android}}
   <div class="navbar">
       <div class="navbar-inner">
-        <div class="left link icon-only"><a href="#" class="panel-open" data-panel="left"><i class="icon f7-icons">menu</i></a></div>
+        <div class="left link icon-only"><a href="#" class="panel-open" data-panel="left"><i class="icon f7-icons">menu<span id="versBadge" class="hide badge color-red">New</span></i></a></div>
 
           <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
           <div class="center sliding">My Settings</div>
@@ -29,7 +29,7 @@
               <ul id="ul_mySki">
                 <li class="item-content">
                   <div class="item-media">
-                    
+
                   </div>
                   <div class="item-inner">
                     <a class="vertAlignMiddle" href="/mySkis/" id="editSkiBtn"><span class="item-title" id="myCurrentSki"></span> <i class="icon f7-icons">chevron_right</i></a>

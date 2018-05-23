@@ -28,7 +28,9 @@ class Settings {
 } // END class Ski
 
 
-// Get current settings
+// GET SETTINGS OF THE CURRENTLY ACTIVE SKI
+// INPUT: user_name, ski id number
+// OUTPUT: Return code, ski settings, date settings saved, how measured
 function getCurrentSettings(user_name, ski_id) {
 				console.log('getCurrentSettings function');
         if (offline) return onOffline();
@@ -44,6 +46,7 @@ function getCurrentSettings(user_name, ski_id) {
 								console.log('ski_id is ' + json_Obj[0].ski_id);
 								console.log('id is ' + json_Obj[0].id);
 
+                // TODO !IMPORTANT ABSTRACT THIS TO A FUNCTION
                 const thisSetting = new Settings(json_Obj[0].id, json_Obj[0].user_name, json_Obj[0].ski_id, json_Obj[0].front_binding, json_Obj[0].length, json_Obj[0].depth, json_Obj[0].dft, json_Obj[0].wing_angle, json_Obj[0].leading_edge, json_Obj[0].binding_to_le, json_Obj[0].measure_binding, json_Obj[0].measure_length, json_Obj[0].measure_depth, json_Obj[0].measure_dft, json_Obj[0].date_time_created);
                 window.thisSetting = thisSetting;
 
