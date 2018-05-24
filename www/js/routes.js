@@ -69,10 +69,11 @@ var routes = [
             console.log('need an update');
             $$("#versBadge").removeClass('hide');
             $$("#app .panel #update_msg").html("<a href='#' id='versDetails'>Software update available.  <i class='icon f7-icons color-white'>info_fill</i></a>");
-
+            $$("#app .panel #update_msg").css("display","inline-block");
           } else {
             console.log('NO update needed');
-            $$("#update_msg").html("");
+            $$("#app .panel #update_msg").html("");
+            $$("#app .panel #update_msg").hide();
           }
 
           $$('#versDetails').click(function() {

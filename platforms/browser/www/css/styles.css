@@ -635,7 +635,7 @@ thead {
   font-size: .8em;
   border: 1px solid #f54336;
   padding: .3em;
-  display: inline-block;
+  display: none;
   background-color: #f54336;
   border-radius: .3em;
 }
