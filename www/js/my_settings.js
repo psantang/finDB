@@ -1269,9 +1269,9 @@ function versionDetails(vers_Obj) {
         popupNote+='<div class="content-block bold">Latest Version: '+vers_Obj.latest_vers+'</div>';
       }
 
-      popupNote+='<div>Version Details</div>';
+      popupNote+='<div>New or upgraded features:</div>';
       if (vers_Obj.vers_features) {
-        popupNote+='<div>Latest Version: '+vers_Obj.vers_features+'</div>';
+        popupNote+='<div>'+vers_Obj.vers_features+'</div>';
       }
 
 
