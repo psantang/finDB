@@ -563,7 +563,7 @@ function toggleEditFin () {
   console.log("in toggleEditFin");
   if ( $$(".page .slideAdjust").css('display') == 'none' )  {// Makes the settings editable
     if (isAndroid) {
-      $$(".overFlowHidden").css('width','initial');
+      //$$(".overFlowHidden").css('width','initial');
     }
     $$(".page .slideAdjust").css('display','inline-block');
 /*
@@ -589,6 +589,8 @@ function toggleEditFin () {
 
     // V2 specific code for range slider move all range sliders to center on init;
     $$(".page .range-knob-wrap").css("left","50%");
+
+
 
     $$(".page #editFinBtn").text("Save");
     $$("#dateCreated").html("<a href='#' id='cancelSaveBtn'>Cancel</a>");
@@ -827,6 +829,11 @@ function init_ranges() {
     }
   });
 
+  // THIS IS A FIX/OVERRIDE FOR SMALL RANGE KNOB IN ANDROID
+  if (isAndroid) {
+    $$(".page .range-knob-wrap > .range-knob").addClass('androidSliderRangeKnob');
+  }
+
 }
 
 // INITIALIZE slider
@@ -879,72 +886,6 @@ $$(".page #wingRange").attr("min", wminVal );
 $$(".page #wingRange").attr("max", wmaxVal );
 }
 
-
-
-
-
-// UPDATE VALUE REAL TIME BASED ON SLIDER POSITION
-/*
-$$(document).on('touchmove', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
-    sliderNumberString=$$(this).val(); // get value from slider
-    //console.log('sliderNumberString is ' + sliderNumberString);
-
-    if (this.id == 'bindingRange') {
-      sliderValue=parseFloat(sliderNumberString).toFixed(4);
-      $$(".page #myCurrentBinding").text(sliderValue); // put in view
-      if (typeof thisSetting !== "undefined") {
-        $$("#stockBinding").text( (sliderValue - parseFloat(thisSetting.front_binding)).toFixed(4) );
-      } else {
-        $$("#stockBinding").text( (sliderValue - parseFloat(thisSki.stock_binding_location)).toFixed(4) );
-      }
-      calculateBindingToLE();
-    }
-    if (this.id == 'lengthRange') {
-      sliderValue=parseFloat(sliderNumberString).toFixed(3);
-      $$(".page #myCurrentLength").text(sliderValue); // put in view
-      if (typeof thisSetting !== "undefined") {
-        $$("#stockLength").text( (sliderValue - parseFloat(thisSetting.length)).toFixed(3) );
-      } else {
-        $$("#stockLength").text( (sliderValue - parseFloat(thisSki.stock_fin_length)).toFixed(3) );
-      }
-      calculateLE();
-      calculateBindingToLE();
-
-    }
-    if (this.id == 'depthRange') {
-      sliderValue=parseFloat(sliderNumberString).toFixed(3);
-      $$(".page #myCurrentDepth").text(sliderValue); // put in view
-      if (typeof thisSetting !== "undefined") {
-        $$("#stockDepth").text( (sliderValue - parseFloat(thisSetting.depth)).toFixed(3) );
-      } else {
-        $$("#stockDepth").text( (sliderValue - parseFloat(thisSki.stock_fin_depth)).toFixed(3) );
-      }
-
-    }
-    if (this.id == 'dftRange') {
-      sliderValue=parseFloat(sliderNumberString).toFixed(3);
-      $$(".page #myCurrentDFT").text(sliderValue); // put in view
-      if (typeof thisSetting !== "undefined") {
-        $$("#stockDFT").text( (sliderValue - parseFloat(thisSetting.dft)).toFixed(3) );
-      } else {
-        $$("#stockDFT").text( (sliderValue - parseFloat(thisSki.stock_fin_dft)).toFixed(3) );
-      }
-      calculateLE();
-      calculateBindingToLE();
-
-    }
-    if (this.id == 'wingRange') {
-      sliderValue=parseFloat(sliderNumberString).toFixed(2);
-      $$(".page #myCurrentWingAngle").text(sliderValue); // put in view
-      if (typeof thisSetting !== "undefined") {
-        $$("#stockWingAngle").text( (sliderValue - parseFloat(thisSetting.wing_angle)).toFixed(2) );
-      } else {
-        $$("#stockWingAngle").text( (sliderValue - parseFloat(thisSki.stock_wing_angle)).toFixed(2) );
-      }
-    }
-
-});
-*/
 
 //$$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
 $$(document).on('touchend', '#bindingRange, #lengthRange , #depthRange , #dftRange , #wingRange', function (e) {

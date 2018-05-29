@@ -35,13 +35,7 @@ if (isAndroid) {
     console.log('**** in isAndroid to alter css properties ****');
 }
 
-// only needed for ios/android interface differences if using Template7
-/*
-Template7.global = {
-    android: isAndroid,
-    ios: isIos
-};
-*/
+
 // Init App
 
 var myApp = new Framework7({
@@ -85,40 +79,6 @@ myApp.on('skiUsageCount', function (skiCount) {
 });
 
 
-// Init App
-/*
-var myApp = new Framework7({
-  id: 'io.framework7.testapp',
-  root: '#app',
-  theme: theme,
-  data: function () {
-    return {
-      user: {
-        firstName: 'John',
-        lastName: 'Doe',
-      },
-    };
-  },
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
-    },
-  },
-  routes: routes,
-  vi: {
-    placementId: 'pltd4o7ibb9rc653x14',
-  },
-});
-*/
-
-
-// Add view
-//var mainView = myApp.addView('.view-main', {
-    // Because we want to use dynamic navbar, we need to enable it for this view:
-    //uniqueHistory:true,
-//    dynamicNavbar: true,
-//    domCache: false
-//});
 
 var offline = true;
 var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
@@ -128,6 +88,8 @@ window.loginEventStr="";
 //var console = {};
 //console.log = function(){};
 
+appLinkiOS="https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8";
+appLinkAndroid="https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB";
 
 G_LOOKUP_TYPE='';
 
@@ -145,19 +107,6 @@ $$(document).on('deviceready', function() {
     loginEventStr += "\r\n" + deviceInfo +  "\r\n";
     console.log("Device Data: " +deviceInfo );
 
-/* moved to router
-    // prefill username fields if saved in local storage
-    $$("#user_name").val(localStorage.getItem("user_name"));
-    $$("#pwd").val(localStorage.getItem("pwd"));
-
-    $$('.page #loginBtn').click(function() {
-      console.log('initiating LOGIN from onDeviceReady');
-      loginEventStr += "\r\nlogin initiated from device ready\r\n";
-      loginUser();
-    });
-*/
-    //$$(".navbar").hide();
-    //$$(".view-main").append("<div class='navbar'></div>");
 
     if (navigator.connection && navigator.connection.type == Connection.NONE) {
           console.log('NO NETWORK CONNECTION');
@@ -169,20 +118,10 @@ $$(document).on('deviceready', function() {
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
 
-/* moved to router
-  if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
-    var pendingUserName=localStorage.getItem('pending_user_name');
-    $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
-  } else {
-    $$(".page #registerBtn").text('Register to Begin');
-  }
-*/
-
 
 
     // NOTE: THIS is call live/delegated event handling and is used for dynamic content added to dom (IE. doing document.write or jQuery appends, etc.)
 
-        //$$(document).on('click', '.deleteStockSki, .swipeout', function (e) {
         $$(document).on('click', '#ul_saved_list li a.swipeout-delete', function (e) {
 
           //var theID=e.target.parentNode.id;
@@ -403,7 +342,6 @@ function onOffline() {
       if ($$('.close-notification')) {
         $$('.close-notification').click();
       }
-
           // Show a toast notification to indicate the change
       /*
           myApp.addNotification({
@@ -415,101 +353,9 @@ function onOffline() {
           //if (isIos) $$('.fa-wifi').removeClass('color-gray').addClass('color-green');
           //else $$('.fa-wifi').removeClass('color-gray').addClass('color-white');
           //$$('.left').html('Online');
-
       }
 
 
-
-//myApp.onPageInit('about', function (page) {
-/*
-myApp.on('pageInit', about => {
-    console.log('in myApp.onPageInit for ABOUT PAGE');
-
-    if ( getLocalStorage('stockSkis') ) {
-        getLocalSettings();
-    } else { // show message on front page so user knows how to get started
-      $$('<div class="center">Start by selecting the link below, then choose a ski brand, model, length and year (optional).<p>Save for quick access in the future.</div>').insertAfter('#indexTitle');
-    }
-
-    console.log('triggering getHowToMeasure function');
-    var measureObj={}; // make object global
-    getHowToMeasure();
-});
-*/
-
-
-
-
-
-
-
-// PAGE INITS HERE
-//myApp.onPageInit('login', function (page) {
-/*
-myApp.on('pageInit', login => {
-    console.log('login onPageInit fired');
-    loginEventStr += "In pageInit for login";
-
-    $$("#user_name").val(localStorage.getItem("user_name"));
-    $$("#pwd").val(localStorage.getItem("pwd"));
-
-    if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
-      var pendingUserName=localStorage.getItem('pending_user_name');
-      $$(".page #registerBtn").text('Pending Activation for '+ pendingUserName);
-    } else {
-      $$(".page #registerBtn").text('Register to Begin');
-    }
-
-    $$('.page #loginBtn').click(function() {
-      console.log('initiating LOGIN from onPageInit');
-      loginEventStr += "\r\nlogin initiated from onPageInit for login page";
-      loginUser();
-    });
-});
-*/
-
-
-//myApp.onPageInit('register', function (page) {
-/*
-myApp.on('pageInit', register => {
-    console.log("register page initialized");
-
-    $$('.create-popup').on('click', function () {
-      viewTerms();
-    });
-
-    $$('.page #registerBtn').click(function() {
-      registerUser();
-    });
-
-    if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
-      var pendingUserName=localStorage.getItem('pending_user_name');
-      console.log("pendActivation initiated");
-      showActivationPrompt(localStorage.getItem('pending_user_name'));
-    }
-});
-*/
-
-//myApp.onPageInit('mySettings', function (page) {
-/*
-myApp.on('pageInit', mySettings => {
-  pageName = myApp.views.main.router.currentPageEl.dataset.page; // this is V2 for page name
-    console.log('mySettings onPageInit fired');
-    console.log('   page.name: ' + pageName);
-
-    init_ski();
-
-    $$('.page #viewStockBtn').click(function() {
-      toggleViewStock();
-    });
-
-    $$('.page #editFinBtn').click(function() {
-      console.log("editFinBtn clicked");
-      init_slider();
-    });
-
-});
-*/
 
 // MY SETTINGS LIVE EVENT HANDLERS...outside if pag init
 $$(document).on('click', '#cancelSaveBtn', function (e) {
@@ -521,11 +367,21 @@ $$(document).on('click', '.view_history', function (e) {
   viewHistory();
 });
 
-
+/*
 $$(document).on('click', '.navbar #newSettingNote', function (e) {
   console.log("newSettingNote clicked");
   AddNotePopUp();
 });
+*/
+
+
+//$$('#newSettingNote').click(function() {
+$$(document).on('click', '#newSettingNote', function (e) {
+  console.log("newSettingNote clicked root js file");
+  AddNotePopUp();
+});
+
+
 $$(document).on('click', '.popup #addNoteBtn', function (e) {
     console.log("addNote clicked");
     addNote();
@@ -546,85 +402,6 @@ $$(document).on('click', '.panel-left', function (e) {
   myApp.panel.open("left", true);
 });
 
-
-
-//myApp.onPageInit('mySkis', function (page) {
-/*
-myApp.on('pageInit', mySkis => {
-    console.log('mySkis onPageInit fired');
-
-      getMySkis(thisUser.user_name);
-
-    $$('.page #ul_mySkis_list').change(function() {
-      var ski_id=$$("input[name='my-radio']:checked"). val();
-      console.log('change current ski triggered with ski_id ' + ski_id);
-      setCurrentSki(thisUser.user_name, ski_id);
-    });
-
-    $$(document).on('click', '#addSkiBtn', function () {
-      addSki();
-    });
-
-});
-*/
-
-
-//myApp.onPageInit('profile', function (page) {
-/*
-myApp.on('pageInit', profile => {
-    console.log('profile onPageInit fired');
-
-    init_profile();
-
-    $$('#editProfileBtn').click(function() {
-      toggleEditSave();
-    });
-
-
-        $$('#profileMeasureId').click(function() {
-          var measurePopover = '<div class="popover">'+
-                        '<div class="popover-inner">'+
-                          '<div class="content-block">'+
-                            '<p class="bold">Why offer this data?</p>' +
-                            '<p>How you measure your settings will be stored with each setting saved. If you change how you measure, change this profile.</p>'+
-                          '</div>'+
-                        '</div>'+
-                      '</div>';
-          myApp.popover(measurePopover, this,  true);
-        });
-
-
-
-        $$('#profileDemographicId').click(function() {
-          var demographicPopoverHTML = '<div class="popover">'+
-                        '<div class="popover-inner">'+
-                          '<div class="content-block">'+
-                            '<p class="bold">Why offer this data?</p>' +
-                            '<p>As the systems gathers more data, you will be able to view the averages of other users settings for your demographic.</p>'+
-                          '</div>'+
-                        '</div>'+
-                      '</div>';
-          myApp.popover(demographicPopoverHTML, this,  true);
-        });
-
-
-    console.log (page.query + " is page.query");
-    if (page.query == -1) {
-      $$('#editProfileBtn').click(); // make form editable on load
-
-      myApp.dialog.alert(
-        'we have to create your profile for how your measure your settings and get your ability level so you can view settings of others in your ability range as the system gathers more data.',
-        'Before you can begin...',
-        function () {
-          return null;
-        }
-      );
-
-      console.log ("inside of page.query is -1");
-
-    }
-});
-*/
 
 
 // Option 2. Using one LIVE 'pageInit' event handler for ALL pages
@@ -655,39 +432,6 @@ $$(document).on('click','#logoutBtn',function(page) {
   //myApp.panel.close("left", true);
 });
 
-// TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
-
-
-
-
-
-// TESTING TO SEE HOW TO ACCESS DYNAMIC SMART SELECT page
-/*
-$$(document).on('pageInit', '.page[data-select-name="brand"]', function (e) {
-    console.log('*********** brands smart select initialized');
-    $$('.page .smart-select #brand_select_id').change(getModels); // run getModels function
-    $$('.page[data-select-name="brand"]').find(("input[type='radio']:checked")).prop('checked', false);
-});
-
-$$(document).on('pageInit', '.page[data-select-name="model"]', function (e) {
-    console.log('model smart select initialized');
-    $$('.smart-select #model_select_id').change(getLengths);
-    $$('.page[data-select-name="model"]').find(("input[type='radio']:checked")).prop('checked', false);
-});
-
-
-$$(document).on('pageInit', '.page[data-select-name="year"]', function (e) {
-    console.log('year smart select initialized');
-    //$$('.smart-select #year_select_id').change(getStockSettings);
-    $$('.page[data-select-name="year"]').find(("input[type='radio']:checked")).prop('checked', false);
-})
-
-$$(document).on('pageInit', '.page[data-select-name="length"]', function (e) {
-    console.log('length smart select initialized');
-    $$('.smart-select #length_select_id').change(getYears);
-    $$('.page[data-select-name="length"]').find(("input[type='radio']:checked")).prop('checked', false);
-})
-*/
 
 function getBrandByClass (clickedObj) {
   for (i=0; i<Object.keys(measureObj[0]).length; i++) {
@@ -961,10 +705,10 @@ function onSuccess(vers_Obj) {
 
     notify_text="Your version: "+ vers_Obj.user_vers+ ". Latest version: "+vers_Obj.latest_vers;
     if (isIos) {
-      update_link="<a class='external' href='https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
+      update_link="<a class='external' href='"+appLinkiOS+"' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
     }
     if (isAndroid) {
-      update_link="<a class='external' href='https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
+      update_link="<a class='external' href='"+appLinkAndroid+"' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
     }
 
 
@@ -976,34 +720,9 @@ function onSuccess(vers_Obj) {
         titleRightText: 'now',
         subtitle: 'Update available. Version: ' +vers_Obj.latest_vers,
         text: update_link,
+        closeButton: true,
         closeOnClick: true,
       });
       notificationClickToClose.open();
-
-      // NOTE: Below was my old approach before going to notification
-      /*
-      if (isIos) {
-        $$("#update_available").html("<i class='icon f7-icons color-red'>cloud_download_fill</i> <a class='external' href='https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8' target='_system'>Update Available.</a>");
-      }
-      if (isAndroid) {
-        $$("#update_available").html("<i class='icon f7-icons color-red'>cloud_download_fill</i> <a class='external' href='https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB' target='_system'>Update Available.</a>");
-      }
-      */
     }
-
-    /*
-    console.log(" ------ > page after in for mySettings ");
-    if (vers_Obj[0]['vers_update']<0) {
-      console.log('need an update');
-      $$("#versBadge").removeClass('hide');
-      $$("#update_msg").html("New version available.  <a href='#' id='versDetails'>View Details.</a>");
-    } else {
-      $$("#update_msg").html("");
-    }
-
-    $$('#versDetails').click(function() {
-        console.log('versDetails via clicked from router');
-        versionDetails(vers_Obj[0]);
-    });
-    */
 }

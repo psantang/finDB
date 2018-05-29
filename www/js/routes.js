@@ -28,8 +28,6 @@ var routes = [
             loginUser();
           });
 
-
-
         }
     }
   },
@@ -51,14 +49,6 @@ var routes = [
             console.log("editFinBtn clicked");
             init_slider();
           });
-
-          $$('.page #newSettingNote').click(function() {
-            console.log("newSettingNote clicked from router");
-            AddNotePopUp();
-          });
-
-
-
 
         } ,
         pageAfterIn: function () {
@@ -245,14 +235,6 @@ var routes = [
         pageAfterIn: function (e, page) {
 
           console.log("------> pageAfterIn fired for lookup in routes.js file.")
-          //theBrand=myApp.data.lookup.skiBrand;
-          //theModel=myApp.data.lookup.skiModel;
-          //theLength=myApp.data.lookup.skiLength;
-          //theYear=myApp.data.lookup.skiYear;
-          //window.theBrand=theBrand;
-          //window.theModel=theModel;
-          //window.theLength=theLength;
-          //window.theYear=theYear;
 
           //GET STOCK SETTINGS OF THE SELECTED SKI...this only runs when all 4 values are present to retrieve the data
           if (Object.getOwnPropertyNames(myApp.data.lookup).length==4) {
@@ -262,181 +244,6 @@ var routes = [
         }
       }
   },
-
-
-
-
-
-
-
-/*
-  {
-    path: '/lookup/brands.html',
-    async: function (routeTo, routeFrom, resolve, reject) {
-      // Requested route
-      console.log(routeTo);
-      var loggedIn=true;
-      var url=wsURL+'ws_ski_lookup_ret_json.php';
-      // Get external data and return template7 template
-      myApp.request.json('http://some-endpoint/', function (data) {
-        resolve(
-          // How and what to load: template
-          {
-            template: '<div class="page">{{users}}</div>'
-          },
-          // Custom template context
-          {
-            context: {
-              users: data,
-            },
-          }
-        );
-      });
-    }
-  },
-
-  {
-    path: '/lookup/brands/',
-    url: './pages/lookup/brands.html',
-    name: 'brands',
-    on: {
-      pageBeforeIn: function (event, page) {
-        // do something before page gets into the view
-        console.log(" ------ > page before in route.js for brands page");
-      },
-        pageInit: function () {
-          // do something on page init
-          console.log(" ------ > page init in route.js for brands page");
-
-
-
-          var smartSelectBrand = app.smartSelect.create({
-            ...
-            on: {
-              opened: function () {
-                console.log('Smart select brand opened');
-              }
-            }
-          });
-
-
-        }
-    }
-  },
-*/
-
-
-/*
-  {
-    path: '/lookup/brands/',
-    // Component Object
-    component: {
-      template: `
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-inner">
-              <div class="title">{{title}}</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <a @click="openAlert" class="red-link">Open Alert</a>
-            <div class="list simple-list">
-              <ul>
-                {{#each brand}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-        </div>
-      `,
-      style: `
-        .red-link {
-          color: red;
-        }
-      `,
-
-      data: function () { // THIS DOES NOT WORK BECAUSE PAGE RENDERS BEFORE DATA RECEIVED
-          myApp.request({url:'http://finDB.paulsantangelo.com/ws/1_0_4/ws_ski_lookup_ret_json.php',
-          data:{ ski_attr: 'brands',logged_in:'false' },
-          type:'POST',
-          dataType: 'json',
-          success: function (data) {
-          console.log(data);
-            return {
-              title: 'Component Page',
-              brand: ['D3','Radar','Goode'],
-            }
-          },
-          beforeSend: function() {
-            console.log('in before Send router for brands');
-              return {
-                title: 'Component Page',
-                brand: ['D3','Radar','Goode'],
-              }
-          }
-          });
-      },
-
-
-      data: function () {
-        return {
-          title: 'Component Page',
-          brand: ['D3','Radar','Goode'],
-        }
-      },
-
-      methods: {
-        openAlert: function () {
-          var self = this;
-          self.$app.dialog.alert('Hello world!');
-        },
-      },
-      on: {
-        pageInit: function (e, page) {
-          // do something on page init
-        },
-        pageAfterOut: function (e, page) {
-          // page has left the view
-        },
-      }
-    },
-  },
-*/
-
-
-
-
-/*
-  {
-    path: '/lookup/brands/',
-    componentUrl: './pages/lookup/brand_list.html',
-    name: 'brand_list' ,
-  },
-*/
-
-/*
-  {
-    path: '/lookup/brands/',
-    async(routeTo, routeFrom, resolve, reject) {
-      fetch(ajax)
-        .then(response => response.json())
-        .then((data) => {
-          // resolve route with componentUrl and requested context
-          resolve(
-            {
-              componentUrl: '/lookup/brand_list.html'
-            },
-            // pass context
-            {
-              context: response.json()
-            }
-          );
-        });
-    }
-  },
-*/
-
 
 
 
@@ -725,23 +532,6 @@ var routes = [
       if (response!='') {
         console.log('resolved this to year');
 
-      /*  myApp.data.lookup.skiYear=null;
-        if (G_LOOKUP_TYPE=='findSki') {
-          resolve(
-            {
-            url: './pages/lookup/index.html',
-            }
-          );
-        } else {
-          resolve(
-            {
-            url: './pages/mySkis.html',
-            }
-          );
-        }
-      } else {
-      //    routeSkiLookup()
-*/
         resolve(
           {
           componentUrl: './pages/lookup/year_list.html',
@@ -820,16 +610,6 @@ var routes = [
 
 
 
-
-
-
-
-
-
-
-
-
-
   {
     path: '/register/',
     url: './pages/register.html',
@@ -848,21 +628,28 @@ var routes = [
             registerUser();
           });
 
+
           if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
             var pendingUserName=localStorage.getItem('pending_user_name');
             console.log("pendActivation initiated");
             showActivationPrompt(localStorage.getItem('pending_user_name'));
           }
 
-        }
+        },
+        pageAfterIn: function (e, page) {
+          console.log('-------> on.pageAfterIn EVENT called from router for register');
+
+          $$('#t_and_c').on('change', function () {
+            console.log("t_and_c value is " + this.value );
+            if (this.value==0) {
+              this.value=1;
+            } else {
+              this.value=0
+            }
+          });
+
+        },
     }
   },
 
-  // Default route (404 page). MUST BE THE LAST
-  /*
-  {
-    path: '(.*)',
-    url: './pages/404.html',
-  },
-  */
 ];

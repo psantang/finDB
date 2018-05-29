@@ -7,28 +7,22 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
         },
-        "cordova-plugin-network-information": {
+        "cordova-plugin-globalization": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
         },
-        "cordova-plugin-splashscreen": {
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
         },
-        "cordova-plugin-globalization": {
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
         }
     },
