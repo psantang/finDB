@@ -54,7 +54,6 @@ class User {
 
 
 // VALIDATE THE USER
-//$$('.view #loginBtn').click(function() {
 function loginUser() {
     console.log("inside loginUser function");
 				console.log('submit login button clicked');

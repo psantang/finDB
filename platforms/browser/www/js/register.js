@@ -2,21 +2,21 @@ function validateFields(user_name,user_email,user_pwd,user_pwd_confirm,t_and_c) 
   var errMsg="";
   if (user_name.length<4) {
     console.log('invalid user_name');
-    errMsg+="<div>User Name must be atleast 4 characters.</div>";
+    errMsg+="<li>User Name must be atleast 4 characters.</li>";
   }
   if (!validEmail(user_email)) {
     console.log('invalid user_email');
-    errMsg+="<div>Email address is not valid.</div>";
+    errMsg+="<li>Email address is not valid.</li>";
   }
   if (user_pwd.length<6) {
     console.log('invalid pwd='+user_pwd);
-    errMsg+="<div>Password must be atleast 6 characters.</div>";
+    errMsg+="<li>Password must be atleast 6 characters.</li>";
   } else if (user_pwd != user_pwd_confirm) {
-    errMsg+="<div>Password does not match Confirm Password.</div>";
+    errMsg+="<li>Password does not match Confirm Password.</li>";
   }
   if (t_and_c != 1) {
     console.log('invalid t_and_c');
-    errMsg+="<div>Terms and Conditions must be checked.</div>";
+    errMsg+="<li>Terms and Conditions must be checked.</li>";
   }
   return errMsg;
 }
@@ -41,6 +41,7 @@ function registerUser() {
 
     var validationMsg=validateFields(user_name,user_email,user_pwd,user_pwd_confirm,t_and_c);
     if ( validationMsg!="") {
+      validationMsg="<ul class='alignLeft'>"+validationMsg+"</ul>";
       console.log('Fields not validated');
       myApp.dialog.alert(
         validationMsg,

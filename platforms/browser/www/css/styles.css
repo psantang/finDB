@@ -136,6 +136,9 @@
   border-bottom: 1px solid #EEE;
 }
 
+.alignLeft {
+      text-align: left;
+}
 .lightGreenBG {
   background-color: rgba(229,255,229,.8);
 }

@@ -22,15 +22,69 @@ var routes = [
             $$(".page #registerBtn").text('Register to Begin');
           }
 
-          $$('.page #loginBtn').click(function() {
-            console.log('initiating LOGIN from onPageInit');
-            loginEventStr += "\r\nlogin initiated from onPageInit for login page";
-            loginUser();
+
+
+          //$$(document).on('click', '#forgotPwBtn', function () {
+          $$('.page #forgotPwBtn').click(function() {
+              myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
+                  generatePwResetCode(value);
+              });
+              // wait until prompt is generated, then populate with username if available
+              if (typeof localStorage.getItem("user_name") !== "undefined") {
+                $$(".modal .modal-text-input").val(localStorage.getItem("user_name"));
+              }
           });
+
+
+
 
         }
     }
   },
+
+  {
+    path: '/register/',
+    url: './pages/register.html',
+    name: 'register',
+    on: {
+        pageInit: function () {
+          // do something on page init
+          console.log(" ------ > page init in route.js for register page");
+
+          $$('.create-popup').on('click', function () {
+            viewTerms();
+          });
+
+          $$('.page #registerBtn').click(function() {
+            console.log('clicked registerBtn');
+            registerUser();
+          });
+
+
+          if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
+            var pendingUserName=localStorage.getItem('pending_user_name');
+            console.log("pendActivation initiated");
+            showActivationPrompt(localStorage.getItem('pending_user_name'));
+          }
+
+        },
+        pageAfterIn: function (e, page) {
+          console.log('-------> on.pageAfterIn EVENT called from router for register');
+
+          $$('#t_and_c').on('change', function () {
+            console.log("t_and_c value is " + this.value );
+            if (this.value==0) {
+              this.value=1;
+            } else {
+              this.value=0
+            }
+          });
+
+        },
+    }
+  },
+
+
   {
     path: '/mySettings/',
     url: './pages/mySettings.html',
@@ -610,46 +664,6 @@ var routes = [
 
 
 
-  {
-    path: '/register/',
-    url: './pages/register.html',
-    name: 'register',
-    on: {
-        pageInit: function () {
-          // do something on page init
-          console.log(" ------ > page init in route.js for register page");
 
-          $$('.create-popup').on('click', function () {
-            viewTerms();
-          });
-
-          $$('.page #registerBtn').click(function() {
-            console.log('clicked registerBtn');
-            registerUser();
-          });
-
-
-          if (localStorage.getItem('activation_code') ) { // check to see if there is any pending activation of a user account
-            var pendingUserName=localStorage.getItem('pending_user_name');
-            console.log("pendActivation initiated");
-            showActivationPrompt(localStorage.getItem('pending_user_name'));
-          }
-
-        },
-        pageAfterIn: function (e, page) {
-          console.log('-------> on.pageAfterIn EVENT called from router for register');
-
-          $$('#t_and_c').on('change', function () {
-            console.log("t_and_c value is " + this.value );
-            if (this.value==0) {
-              this.value=1;
-            } else {
-              this.value=0
-            }
-          });
-
-        },
-    }
-  },
 
 ];
