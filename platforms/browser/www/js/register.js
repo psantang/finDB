@@ -39,15 +39,6 @@ function registerUser() {
     var user_pwd_confirm=$$(".page #user_pwd_confirm").val().trim();
     var t_and_c=$$('.page #t_and_c').val();
 
-    /*var t_and_c=0;
-    if ( $$('.page .label-switch input[type=checkbox]').prop('checked') ) {
-      console.log('checked');
-      t_and_c=1;
-    } else {
-      console.log('NOT checked');
-      t_and_c=0;
-    }*/
-
     var validationMsg=validateFields(user_name,user_email,user_pwd,user_pwd_confirm,t_and_c);
     if ( validationMsg!="") {
       console.log('Fields not validated');
@@ -59,106 +50,121 @@ function registerUser() {
         }
       );
       return false;
+    } else {
+
+      myApp.dialog.confirm(
+        user_email,
+        'Confirm Email Address',
+        function () {
+          submitNewUser(user_name,user_email,user_pwd,user_pwd_confirm,t_and_c);
+          return null;
+        },
+        function () {
+          return false;
+        }
+      );
     }
+}
 
-    var url=wsURL+'ws_add_register_user_ret_json.php';
-    var returnCode;
-    myApp.request({url:url,data:{ user_name:user_name,user_email:user_email,user_pwd:user_pwd,user_pwd_confirm:user_pwd_confirm,t_and_c:t_and_c},type:'POST',dataType: 'json',success:function(jsonObj) {
+function submitNewUser(user_name,user_email,user_pwd,user_pwd_confirm,t_and_c) {
+      var url=wsURL+'ws_add_register_user_ret_json.php';
+      var returnCode;
+      myApp.request({url:url,data:{ user_name:user_name,user_email:user_email,user_pwd:user_pwd,user_pwd_confirm:user_pwd_confirm,t_and_c:t_and_c},type:'POST',dataType: 'json',success:function(jsonObj) {
 
-      returnCode=jsonObj[0].RETURN_CODE;
-      //if (jsonObj[0].RETURN_CODE==1) {
-      switch (returnCode) {
+        returnCode=jsonObj[0].RETURN_CODE;
+        //if (jsonObj[0].RETURN_CODE==1) {
+        switch (returnCode) {
 
-        case 1:
-        console.log('return code 1...success')
-        localStorage.setItem('activation_code', true);
-        localStorage.setItem('pending_user_name', user_name);
-        showActivationPrompt(user_name);
-        break;
+          case 1:
+          console.log('return code 1...success')
+          localStorage.setItem('activation_code', true);
+          localStorage.setItem('pending_user_name', user_name);
+          showActivationPrompt(user_name);
+          break;
 
-        case -1: //not well formed email address
+          case -1: //not well formed email address
+            myApp.dialog.alert(
+              'The email address is not a valid format.',
+              'Email Address',
+              function () {
+                return null;
+              }
+            );
+          break;
+
+          case -2: //username not long enough
+            myApp.dialog.alert(
+              'The user name must be at least 4 characters in length.',
+              'User Name',
+              function () {
+                return null;
+              }
+            );
+          break;
+
+          case -3: // password mismatch
+            myApp.dialog.alert(
+              'The passwords you provided do not match and/or they must be at least 6 characters in length.',
+              'Password Mismatch',
+              function () {
+                return null;
+              }
+            );
+          break;
+        //} else if (jsonObj[0].RETURN_CODE==1062) { // user already in system
+
+        case -4: // T&C not selected
           myApp.dialog.alert(
-            'The email address is not a valid format.',
-            'Email Address',
+            'You much check the box to approve the terms and conditions.',
+            'T&Cs Not Checked',
             function () {
               return null;
             }
           );
         break;
 
-        case -2: //username not long enough
+        case 1062:
           myApp.dialog.alert(
-            'The user name must be at least 4 characters in length.',
-            'User Name',
-            function () {
-              return null;
-            }
-          );
-        break;
-
-        case -3: // password mismatch
-          myApp.dialog.alert(
-            'The passwords you provided do not match and/or they must be at least 6 characters in length.',
-            'Password Mismatch',
-            function () {
-              return null;
-            }
-          );
-        break;
-      //} else if (jsonObj[0].RETURN_CODE==1062) { // user already in system
-
-      case -4: // T&C not selected
-        myApp.dialog.alert(
-          'You much check the box to approve the terms and conditions.',
-          'T&Cs Not Checked',
-          function () {
-            return null;
-          }
-        );
-      break;
-
-      case 1062:
-        myApp.dialog.alert(
-          'This user name or email is already registered.  Please try another user name and/or email address OR login with this user name.',
-          'Already Registered',
-          function () {
-            return null;
-          }
-        );
-        break;
-      //  } else {
-      default:
-          console.log('return code NOT 1 or 1062...no luck')
-          myApp.dialog.alert(
-            'Please be sure all fields above are populated.  If so, and you are not successful registering, please contact the administrator at paul@paulsantangelo.com',
-            'Unsuccessful Registration',
+            'This user name or email is already registered.  Please try another user name and/or email address OR login with this user name.',
+            'Already Registered',
             function () {
               return null;
             }
           );
           break;
-        }
-    }, timeout: 5000
-      , beforeSend: function() {
-        console.log('beforeSend registerUser');
-
-        myApp.preloader.show();
-
-      }, complete: function() {
-
-          console.log('in complete registerUser');
-          myApp.preloader.hide();
-          // NOW REFRESH INTERFACE, but mySki list and mySettings page.
-
-
-      }, error: function(jsonObj, status, err) {
-          if (status == "timeout") {
-            console.log("Timeout Error. " + jsonObj + status + err);
-          } else {
-            console.log("error: "  + status + err);
+        //  } else {
+        default:
+            console.log('return code NOT 1 or 1062...no luck')
+            myApp.dialog.alert(
+              'Please be sure all fields above are populated.  If so, and you are not successful registering, please contact the administrator at paul@paulsantangelo.com',
+              'Unsuccessful Registration',
+              function () {
+                return null;
+              }
+            );
+            break;
           }
-      }
-    }) // END ajax function for models
+      }, timeout: 5000
+        , beforeSend: function() {
+          console.log('beforeSend registerUser');
+
+          myApp.preloader.show();
+
+        }, complete: function() {
+
+            console.log('in complete registerUser');
+            myApp.preloader.hide();
+            // NOW REFRESH INTERFACE, but mySki list and mySettings page.
+
+
+        }, error: function(jsonObj, status, err) {
+            if (status == "timeout") {
+              console.log("Timeout Error. " + jsonObj + status + err);
+            } else {
+              console.log("error: "  + status + err);
+            }
+        }
+      }) // END ajax function for models
   }
 
 

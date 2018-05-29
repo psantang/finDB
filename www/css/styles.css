@@ -413,6 +413,12 @@ thead {
 #settingsAdjuster .range-bar {
   display:none;
 }
+.androidSliderRangeKnob {
+  width: 22px !important;
+  height: 22px !important;
+  left: -5px !important;
+  top: -5px !important;
+}
 
 .stockText {
   color:#999;
@@ -624,7 +630,7 @@ thead {
 #tc_toggle > .item-input-wrap, #tc_toggle > .item-after  {
   display: inline-block;
   width: initial;
-  padding: .6em .5em 0em 0em;
+  padding: .6em .5em .7em 0em;
 }
 
 .hide {
