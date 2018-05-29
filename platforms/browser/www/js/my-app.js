@@ -250,6 +250,7 @@ $$(document).on('deviceready', function() {
     });
 
 
+/*
     $$(document).on('click', '#forgotPwBtn', function () {
         myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
             generatePwResetCode(value);
@@ -260,7 +261,13 @@ $$(document).on('deviceready', function() {
         }
 
     });
-
+*/
+    //$$('.page #loginBtn').click(function() {
+    $$(document).on('click', '#loginBtn', function () {
+      console.log('initiating LOGIN from onPageInit in router!');
+      //loginEventStr += "\r\nlogin initiated from onPageInit for login page";
+      loginUser();
+    });
 
 
 }); // end DeviceReady
