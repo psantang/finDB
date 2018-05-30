@@ -22,9 +22,13 @@ var routes = [
             $$(".page #registerBtn").text('Register to Begin');
           }
 
+          $$('.page #loginBtn').click(function() {
+            console.log('initiating LOGIN from onPageInit in router!');
+            //loginEventStr += "\r\nlogin initiated from onPageInit for login page";
+            loginUser();
+          });
 
 
-          //$$(document).on('click', '#forgotPwBtn', function () {
           $$('.page #forgotPwBtn').click(function() {
               myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
                   generatePwResetCode(value);
@@ -37,6 +41,9 @@ var routes = [
 
 
 
+
+        },
+        pageAfterIn: function () {
 
         }
     }

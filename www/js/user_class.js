@@ -55,18 +55,21 @@ class User {
 
 // VALIDATE THE USER
 function loginUser() {
-    console.log("inside loginUser function");
-				console.log('submit login button clicked');
-        if (offline) return onOffline();
+    $$(".page #loginError").html("Sign In Clicked");
+//    console.log("------------------------------------inside loginUser function");
+//		console.log('submit login button clicked');
+//        if (offline) return onOffline();
 
-        $$(".page #loginError").html("");
+
         //createNewUser();
         //return;
 //        var rememberMe=jQuery("#rememberMe").val();
         var user_name=$$('.page #user_name').val();
         var pwd=$$('.page #pwd').val();
-        var loginTime=getLocalDateTimeString(null,"ISO");
+//        var loginTime=getLocalDateTimeString(null,"ISO");
+        var loginTime="";
 
+        //$$(".page #loginError").html("");
         if (user_name=='' || pwd =='') {
           $$(".page #loginError").html("Please enter a User Name and Password.");
           return;
