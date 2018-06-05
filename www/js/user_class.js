@@ -55,26 +55,18 @@ class User {
 
 // VALIDATE THE USER
 function loginUser() {
-    $$(".page #loginError").html("Sign In Clicked");
-//    console.log("------------------------------------inside loginUser function");
-//		console.log('submit login button clicked');
-//        if (offline) return onOffline();
+		console.log('submit login button clicked');
+        if (offline) return onOffline();
 
-
-        //createNewUser();
-        //return;
-//        var rememberMe=jQuery("#rememberMe").val();
         var user_name=$$('.page #user_name').val();
         var pwd=$$('.page #pwd').val();
-//        var loginTime=getLocalDateTimeString(null,"ISO");
-        var loginTime="";
+        var loginTime=getLocalDateTimeString(null,"ISO");
 
-        //$$(".page #loginError").html("");
+        $$(".page #loginError").html("");
         if (user_name=='' || pwd =='') {
           $$(".page #loginError").html("Please enter a User Name and Password.");
           return;
         }
-
 
         var url=wsURL+'ws_login_ret_json.php';
         //var url='http://finDB.paulsantangelo.com/ws/ws_login_ret_json.php';
