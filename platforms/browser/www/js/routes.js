@@ -35,7 +35,7 @@ var routes = [
               });
               // wait until prompt is generated, then populate with username if available
               if (typeof localStorage.getItem("user_name") !== "undefined") {
-                $$(".modal .modal-text-input").val(localStorage.getItem("user_name"));
+                $$(".dialog .dialog-inner .dialog-input").val(localStorage.getItem("user_name"));
               }
           });
 
@@ -249,22 +249,6 @@ var routes = [
                                 '</div>'});
                         DemographicIdPopover.open();
                   });
-
-              /*
-              console.log (page.query + " is page.query");
-              if (page.query == -1) {
-                $$('#editProfileBtn').click(); // make form editable on load
-
-                myApp.alert(
-                  'we have to create your profile for how your measure your settings and get your ability level so you can view settings of others in your ability range as the system gathers more data.',
-                  'Before you can begin...',
-                  function () {
-                    return null;
-                  }
-                );
-                console.log ("inside of page.query is -1");
-              }
-              */
 
         }
     }
@@ -668,9 +652,6 @@ var routes = [
 
   }
 },
-
-
-
 
 
 ];

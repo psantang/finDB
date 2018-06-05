@@ -85,8 +85,8 @@ var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
 window.loginEventStr="";
 
 // THIS WILL SUPPRESS ALL console.log output
-//var console = {};
-//console.log = function(){};
+var console = {};
+console.log = function(){};
 
 appLinkiOS="https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8";
 appLinkAndroid="https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB";
@@ -248,20 +248,6 @@ $$(document).on('deviceready', function() {
       measurePopover.open();
     }
     });
-
-
-/*
-    $$(document).on('click', '#forgotPwBtn', function () {
-        myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
-            generatePwResetCode(value);
-        });
-        // wait until prompt is generated, then populate with username if available
-        if (typeof localStorage.getItem("user_name") !== "undefined") {
-          $$(".modal .modal-text-input").val(localStorage.getItem("user_name"));
-        }
-
-    });
-*/
 
 }); // end DeviceReady
 
