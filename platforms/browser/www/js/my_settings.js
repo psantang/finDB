@@ -718,31 +718,31 @@ function toggleEditFin () {
 
 function init_ranges() {
 
-  if (typeof thisSetting === undefined && thisSetting.hasOwnProperty("front_binding") ) {
+  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("front_binding") ) {
     thisBND=thisSetting.front_binding;
   } else {
     thisBND=thisSki.stock_binding_location;
   }
 
-  if (typeof thisSetting === undefined && thisSetting.hasOwnProperty("length") ) {
-    thisLEN=thisSetting.thisSetting.length;
+  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("length") ) {
+    thisLEN=thisSetting.length;
   } else {
     thisLEN=thisSki.stock_fin_length;
   }
 
-  if (typeof thisSetting === undefined && thisSetting.hasOwnProperty("depth") ) {
+  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("depth") ) {
     thisDEP=thisSetting.depth;
   } else {
     thisDEP=thisSki.stock_fin_depth;
   }
 
-  if (typeof thisSetting === undefined && thisSetting.hasOwnProperty("dft") ) {
+  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("dft") ) {
     thisDFT=thisSetting.dft;
   } else {
     thisDFT=thisSki.stock_fin_dft;
   }
 
-  if (typeof thisSetting === undefined && thisSetting.hasOwnProperty("wing_angle") ) {
+  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("wing_angle") ) {
     thisWIN=thisSetting.wing_angle;
   } else {
     thisWIN=thisSki.stock_wing_angle;
@@ -765,6 +765,7 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for binding');
         $$("#myCurrentBinding").text(this.value.toFixed(4));
+        calculateBindingToLE();
       }
     }
   });
@@ -780,6 +781,8 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for length');
         $$("#myCurrentLength").text(this.value.toFixed(3));
+        calculateLE();
+        calculateBindingToLE();
       }
     }
   });
@@ -810,6 +813,8 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for dft');
         $$("#myCurrentDFT").text(this.value.toFixed(3));
+        calculateLE();
+        calculateBindingToLE();
       }
     }
   });
@@ -889,9 +894,10 @@ $$(".page #wingRange").attr("max", wmaxVal );
 
 //$$(document).on('touchend', '.page #bindingRange , .page #lengthRange , .page #depthRange , .page #dftRange , .page #wingRange', function (e) {
 $$(document).on('touchend', '#bindingRange, #lengthRange , #depthRange , #dftRange , #wingRange', function (e) {
-  console.log("------------> touch ended with e=" +this.id);
+  //console.log("------------> touch ended with e=" +this.id);
   //currentValue=$$(this).val();
   currentValue=$$(this).attr('value');
+  console.log("------------> touch ended with e=" +this.id + " with value=" +currentValue);
   //currentValue=this.dataset.value;
   switch (this.id) {
     case 'bindingRange':
@@ -924,23 +930,25 @@ $$(document).on('touchend', '#bindingRange, #lengthRange , #depthRange , #dftRan
 
 // UPDATES RANGE SLIDER AFTER touchend event, so that it can continually be dragged to adjust settings in small/configured increments
 function updateSlider(obj,currentValue,plusMinusRange,increment) {
-  console.log("currentValue is "+currentValue);
-  console.log("oobj.dataset.max value ="+obj.max);
-  console.log("obj="+obj);
+  console.log("updateSlider currentValue is "+currentValue);
+
+  //console.log("obj="+obj);
   minVal=Number(currentValue) - Number(plusMinusRange);
   maxVal=Number(currentValue) + Number(plusMinusRange);
   obj.value=currentValue;
   obj.min=minVal;
   obj.max=maxVal;
   obj.step=increment;
-  console.log('obj.params.min value is ' + obj.min);
+  console.log("obj.currentValue value = "+obj.value);
+  console.log('obj.min value = ' + obj.min);
+  console.log("obj.max value = "+obj.max);
 }
 
 function calculateLE (change) {
   var length =parseFloat($$(".page #myCurrentLength").text());
   var dft =parseFloat($$(".page #myCurrentDFT").text());
   var LE = (length+dft).toFixed(3);
-
+  console.log("LE = " + LE);
   // get leading edge if in settings or from stock ski settings
   if (typeof thisSetting != "undefined") {
     thisLE=Number(thisSetting.leading_edge).toFixed(3);
@@ -949,6 +957,8 @@ function calculateLE (change) {
   }
 
   var LE_diff=(LE-thisLE).toFixed(3);
+  console.log("LE_diff = " + LE_diff);
+
   if (LE_diff==0) {
     LE_diff=" Neutral";
   } else {
@@ -965,6 +975,8 @@ function calculateBindingToLE (change) {
   var length = parseFloat($$(".page #myCurrentLength").text());
   var dft = parseFloat($$(".page #myCurrentDFT").text());
   var BindingToLE = (binding-(length+dft)).toFixed(4);
+
+  console.log("BindingToLE = " + BindingToLE);
 
   // get binding to leading edge if in settings or from stock ski settings
   if (typeof thisSetting != "undefined") {
