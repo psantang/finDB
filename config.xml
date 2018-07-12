@@ -39,7 +39,8 @@
     <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~3.0.0" />
 
 
-    <icon src="www/res/icon/ios/icon-1024x1024.png" width="1024" height="1024" />
+
+
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
@@ -61,8 +62,9 @@
         <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
+
     <platform name="ios">
-        <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
+        <icon platform="ios" src="www/res/icon/ios/icon.png" width="1024" height="1024" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
         <icon height="80" platform="ios" src="www/res/icon/ios/icon-40@2x.png" width="80" />
