@@ -1213,6 +1213,14 @@ function versionDetails(vers_Obj) {
         popupNote+='<div>'+vers_Obj.vers_features+'</div>';
       }
 
+      if (isIos) {
+        update_link="<a class='external' href='"+appLinkiOS+"' target='_system'>Learn More</a>";
+      }
+      if (isAndroid) {
+        update_link="<a class='external' href='"+appLinkAndroid+"' target='_system'>Learn More</a>";
+      }
+      popupNote+='<div>'+update_link+'</div>';
+
 
 
 

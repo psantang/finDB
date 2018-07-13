@@ -364,3 +364,127 @@ function getStockSettings() {
 
   	}
 //);
+
+
+function promptSkiName (year) {
+  //myApp.modal({
+  var skiName=myApp.data.lookup.skiYear + ' ' +myApp.data.lookup.skiBrand+ ' ' +myApp.data.lookup.skiModel+ ' ' +myApp.data.lookup.skiLength;
+  myApp.dialog.create({
+    title: skiName,
+    text: 'will be the name of your ski.  You can change it by entering a new name below.<div class="input-field"><input type="text" name="newSkiName" id="newSkiName" placeholder="Change Ski Name" value="" /></div>',
+    buttons: [
+      {
+        text: 'Save',
+        onClick: function() {
+          newSkiName=$$("#newSkiName").val();
+          if (newSkiName.length>0) {
+            defaultToCurrentSki(year,newSkiName);
+          } else {
+            defaultToCurrentSki(year,skiName);
+          }
+        }
+      }
+    ]
+  }).open();
+}
+
+
+function defaultToCurrentSki(year,skiName) {
+
+  if (typeof thisSki !== "undefined") { // IF THIS IS THE USERS FIRST SKI ENTRY
+  console.log('in defaultToCurrentSki and thisSki IS defined');
+    myApp.dialog.create({
+      title:  'Current Ski?',
+      text: 'Do you want this to be your current ski?',
+      buttons: [
+        {
+          text: 'Yes',
+          onClick: function() {
+            console.log('IS the current ski');
+            insertSki(year,skiName,1);
+          }
+        },
+        {
+          text: 'No',
+          onClick: function() {
+            console.log('is NOT the current ski');
+            insertSki(year,skiName,0);
+          }
+        }
+      ]
+    }).open();
+  } else {
+    console.log('in defaultToCurrentSki and thisSki is not defined');
+    insertSki(year,skiName,1); // insert the ski as the default ski since it's the first one
+  }
+}
+
+
+function insertSki(nullYear,my_ski_name,current) {
+    console.log('running insertSki function');
+    if (offline) return onOffline();
+
+
+
+    if (nullYear == null) {
+      theYear=null;
+    } else {
+      //theYear = $$('.page .smart-select #year_select_id_add')["0"].value;
+      theYear=myApp.data.lookup.skiYear
+    }
+
+    var url=wsURL+'ws_add_ski_ret_json.php';
+
+    myApp.request({url:url,data:{ user_name:thisUser.user_name,my_ski_name:my_ski_name,current:current,brand:myApp.data.lookup.skiBrand,model:myApp.data.lookup.skiModel,length:myApp.data.lookup.skiLength,year:theYear},type:'POST',dataType: 'json',success:function(jsonObj) {
+      if (jsonObj[0].RETURN_CODE==1) {
+        console.log('return code 1...success')
+      } else {
+        console.log('return code NOT 1...no luck')
+      }
+    }, timeout: 5000
+      , beforeSend: function() {
+        console.log('beforeSend insertSki');
+
+        myApp.preloader.show();
+
+      }, complete: function() {
+
+          console.log('in complete insertSki');
+          myApp.preloader.hide();
+          // NOW REFRESH INTERFACE, but mySki list and mySettings page.
+          if (current==1) {
+            console.log('complete and current is 1');
+            getCurrentSki(thisUser.user_name);
+          } else {
+            console.log('complete and current is NOT 1');
+            $$(".page #saved_ski_list").remove();
+            getMySkis(thisUser.user_name);
+            closeAddSkiSelect();
+            //mainView.router.load( { url:'mySkis.html' });
+          }
+          //mainView.router.load( { url:'mySettings.html' });
+
+
+      }, error: function(jsonObj, status, err) {
+          if (status == "timeout") {
+            console.log("Timeout Error. " + jsonObj + status + err);
+          } else {
+            console.log("error: "  + status + err);
+          }
+      }
+    }) // END ajax function for models
+  }
+
+
+  // close smart select list
+  function closeAddSkiSelect () {
+    console.log('closeAddSkiSelect triggered');
+    document.getElementById("add_ski_div").setAttribute("style", "height:220px")
+    console.log('add_ski_div height is ' + document.getElementById('add_ski_div').style.height );
+    $$('.page #add_ski_div').attr('style','opacity:0;height:0px;margin-top:0px').transition(750);
+
+    $$('#add_ski_div').transitionEnd(function(){
+      console.log('add_ski_div TRANSITION ENDED.......');
+      $$('.page #ul_stock_list_add').remove();
+    });
+  }

@@ -21,9 +21,6 @@
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
         }
     },
     "dependent_plugins": {}
