@@ -16,20 +16,7 @@ function init_ski() {
 
 
 
-
-
-
-
 } // end init_ski functions
-
-
-
-
-
-
-
-
-
 
 
 
@@ -847,7 +834,6 @@ function init_slider() {
 
   toggleEditFin();
   init_ranges();
-
 
 bVal=$$(".page #myCurrentBinding").text();
 //num.toFixed(2);
