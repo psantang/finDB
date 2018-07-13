@@ -139,6 +139,7 @@ function loginUser() {
               console.log('user_name='+user_name+ ' pwd='+pwd);
               $$(".page #loginError").html('');
 
+              if (typeof myApp.notification.get() !== 'undefined') { myApp.notification.close(); }
               //myApp.showPreloader('Validating User...');
               myApp.preloader.show('Validating User...');
 						} // END before Send

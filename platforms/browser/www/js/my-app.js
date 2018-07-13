@@ -5,7 +5,8 @@ var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
 var api_vers="2_0_0";
-var user_vers=api_vers.replace(/_/g,".");
+var app_vers="2_0_3";
+var user_vers=app_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
 
@@ -85,8 +86,8 @@ var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
 window.loginEventStr="";
 
 // THIS WILL SUPPRESS ALL console.log output
-var console = {};
-console.log = function(){};
+//var console = {};
+//console.log = function(){};
 
 appLinkiOS="https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8";
 appLinkAndroid="https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB";
@@ -660,7 +661,7 @@ $$(document).once('deviceready', function (page) {
   console.log(" ^^^^^^^^^^^^ pageinit only once ^^^^^^^^^ making call to CallMethod to get data..... ");
   var url=wsURL+'get_user_version_status_ret_json.php';
   //data="user_vers="+thisUser.user_vers;
-  data="user_vers="+api_vers.replace(/_/g,".");
+  data="user_vers="+app_vers.replace(/_/g,".");
   CallMethod(url, data , onSuccess);
 });
 
@@ -701,7 +702,7 @@ function onSuccess(vers_Obj) {
     if (typeof vers_Obj != "undefined" && vers_Obj.vers_update<0) {
       console.log('need an update available');
       var notificationClickToClose = myApp.notification.create({
-        icon: '<img src="/res/icon/ios/icon-40.png" width="24" height="24" />',
+        icon: '<img src="../res/icon/ios/icon-40.png" width="24" height="24" />',
         title: 'finDB version ' + vers_Obj.user_vers,
         titleRightText: 'now',
         subtitle: 'Update available. Version: ' +vers_Obj.latest_vers,
