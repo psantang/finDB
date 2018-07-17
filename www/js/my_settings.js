@@ -705,31 +705,31 @@ function toggleEditFin () {
 
 function init_ranges() {
 
-  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("front_binding") ) {
+  if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("front_binding") ) {
     thisBND=thisSetting.front_binding;
   } else {
     thisBND=thisSki.stock_binding_location;
   }
 
-  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("length") ) {
+  if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("length") ) {
     thisLEN=thisSetting.length;
   } else {
     thisLEN=thisSki.stock_fin_length;
   }
 
-  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("depth") ) {
+  if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("depth") ) {
     thisDEP=thisSetting.depth;
   } else {
     thisDEP=thisSki.stock_fin_depth;
   }
 
-  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("dft") ) {
+  if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("dft") ) {
     thisDFT=thisSetting.dft;
   } else {
     thisDFT=thisSki.stock_fin_dft;
   }
 
-  if (typeof thisSetting !== undefined && thisSetting.hasOwnProperty("wing_angle") ) {
+  if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("wing_angle") ) {
     thisWIN=thisSetting.wing_angle;
   } else {
     thisWIN=thisSki.stock_wing_angle;
