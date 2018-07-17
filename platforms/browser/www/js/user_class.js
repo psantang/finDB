@@ -74,7 +74,7 @@ function loginUser() {
         var returnCode;
 
       	//$$.ajax({url:url,data:{
-        myApp.request({url:url,data:{ user_name:user_name,pwd:pwd,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion,last_login:loginTime }, type:'POST',dataType: 'json'
+        myApp.request({url:url,data:{ user_name:user_name,pwd:pwd,app_vers:app_vers,api_vers:api_vers,device_manufacturer:deviceManufacturer,device_platform:devicePlatform,device_model:deviceModel,device_version:deviceVersion,last_login:loginTime }, type:'POST',dataType: 'json'
 				,success:function(json_Obj) {
 						console.log('ajax success function for loginUser.');
 						if (json_Obj.length>0) { // RETURNED RESULTS

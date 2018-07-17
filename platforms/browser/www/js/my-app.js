@@ -5,7 +5,7 @@ var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
 var api_vers="2_0_0";
-var app_vers="2_0_4";
+var app_vers="2_0_5";
 var user_vers=app_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
@@ -86,8 +86,8 @@ var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
 window.loginEventStr="";
 
 // THIS WILL SUPPRESS ALL console.log output
-var console = {};
-console.log = function(){};
+//var console = {};
+//console.log = function(){};
 
 appLinkiOS="https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8";
 appLinkAndroid="https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB";
