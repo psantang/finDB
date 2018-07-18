@@ -3,9 +3,9 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>finDB V2</name>
+    <name>finDB</name>
     <description>
-        FinDB V2 is a database lookup for most popular water ski stock settings.
+        FinDB is a database lookup for most popular water ski stock settings.
     </description>
     <author email="paul@paulsantangelo.com" href="http://www.paulsantangelo.com">
         Paul Santangelo Software, Inc.
