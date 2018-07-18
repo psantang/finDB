@@ -887,23 +887,23 @@ $$(document).on('touchend', '#bindingRange, #lengthRange , #depthRange , #dftRan
   //currentValue=this.dataset.value;
   switch (this.id) {
     case 'bindingRange':
-      updateSlider(b_range,b_range.value,.750,.0625);
+      updateSlider(b_range,b_range.value.toFixed(4),.750,.0625);
       break;
 
     case 'lengthRange':
-      updateSlider(l_range,l_range.value,.012,.001);
+      updateSlider(l_range,l_range.value.toFixed(3),.012,.001);
       break;
 
     case 'depthRange':
-      updateSlider(d_range,d_range.value,.012,.001);
+      updateSlider(d_range,d_range.value.toFixed(3),.012,.001);
       break;
 
     case 'dftRange':
-      updateSlider(dft_range,dft_range.value,.012,.001);
+      updateSlider(dft_range,dft_range.value.toFixed(3),.012,.001);
       break;
 
     case 'wingRange':
-      updateSlider(w_range,w_range.value,2,.25);
+      updateSlider(w_range,w_range.value.toFixed(2),2,.25);
       break;
     }
     // re-center the slider knob
@@ -921,9 +921,9 @@ function updateSlider(obj,currentValue,plusMinusRange,increment) {
   //console.log("obj="+obj);
   minVal=Number(currentValue) - Number(plusMinusRange);
   maxVal=Number(currentValue) + Number(plusMinusRange);
-  obj.value=currentValue;
-  obj.min=minVal;
-  obj.max=maxVal;
+  obj.value=Number(currentValue).toFixed(4);
+  obj.min=Number(minVal.toFixed(4));
+  obj.max=Number(maxVal.toFixed(4));
   obj.step=increment;
   console.log("obj.currentValue value = "+obj.value);
   console.log('obj.min value = ' + obj.min);
@@ -958,10 +958,12 @@ function calculateLE (change) {
 
 function calculateBindingToLE (change) {
   var binding = parseFloat($$(".page #myCurrentBinding").text());
+  console.log('typeof binding=' + typeof binding);
   var length = parseFloat($$(".page #myCurrentLength").text());
   var dft = parseFloat($$(".page #myCurrentDFT").text());
-  var BindingToLE = (binding-(length+dft)).toFixed(4);
+  var BindingToLE = Number((binding-(length+dft)).toFixed(4));
 
+  console.log('typeof BindingToLE=' + typeof BindingToLE);
   console.log("BindingToLE = " + BindingToLE);
 
   // get binding to leading edge if in settings or from stock ski settings
