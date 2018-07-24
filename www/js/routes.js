@@ -28,8 +28,42 @@ var routes = [
             loginUser();
           });
 
+          $$('.page #forgotBtn').click(function() {
+            var forgetSomething = myApp.dialog.create({
+              title: 'Forget Something?',
+              text: 'Retrieve your user name or reset your password.',
+              buttons: [
+                {
+                  text: 'User Name',
+                  bold: true,
+                  onClick: function () {
+                    retrieveUserName();
+                  }
+                },
+                {
+                  text: 'Password',
+                  bold: true,
+                  onClick: function () {
+                    forgotPassword();
+                  }
+                },
+              ]
+            }).open();
+        });
 
-          $$('.page #forgotPwBtn').click(function() {
+        function retrieveUserName() {
+              myApp.dialog.prompt('Please enter the Email Address associated with finDB.', 'Retrieve User Name', function (value) {
+                if (validEmail(value)) {
+                  requestUserName(value);
+                } else {
+                  console.log("invalid email format");
+                  myApp.dialog.alert("Email address <span class='bold'>" + value + "</span> is not properly formatted.  Please re-enter.","Invalid Email Format",function() {retrieveUserName()});
+                }
+              });
+            }
+
+
+        function forgotPassword() {
               myApp.dialog.prompt('Please enter your User Name or Email Address.', 'Forgot Password', function (value) {
                   generatePwResetCode(value);
               });
@@ -37,12 +71,14 @@ var routes = [
               if (typeof localStorage.getItem("user_name") !== "undefined") {
                 $$(".dialog .dialog-inner .dialog-input").val(localStorage.getItem("user_name"));
               }
-          });
+          }
 
 
 
 
-        },
+
+
+    },  // END PAGEINIT
         pageAfterIn: function () {
 
         }

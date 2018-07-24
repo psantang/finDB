@@ -5,7 +5,7 @@ var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
 var api_vers="2_0_0";
-var app_vers="2_0_5";
+var app_vers="2_0_6";
 var user_vers=app_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
@@ -524,6 +524,37 @@ function generatePwResetCode(userNameOrEmail) {
       }) // END ajax function for models
 }
 
+
+function requestUserName(user_email) {
+  console.log("requesting username with " + user_email);
+  var url=wsURL+'ws_get_username_ret_json.php';
+
+  myApp.request({url:url,data:{ user_email:user_email },type:'POST',dataType: 'json',success:function(jsonObj) {
+    if (jsonObj[0].RETURN_CODE==1) { // Do nothing, since we don't want to give away if email was valid
+      console.log('return code 1...success for requestUserName!');
+    } else {
+      console.log('return code NOT 1...no luck requestUserName');
+    }
+  }, timeout: 5000
+    , beforeSend: function() {
+      console.log('beforeSend requestUserName');
+      //myApp.showIndicator();
+      myApp.preloader.show();
+    }, complete: function(jsonObj) {
+        console.log('in complete requestUserName');
+        //myApp.hideIndicator();
+        myApp.preloader.hide();
+          myApp.dialog.alert("If the email address <span class='bold'>" + user_email + "</span> is associated with your account, you will receive an email with your User Name.","Email Sent");
+    }, error: function(jsonObj, status, err) {
+        if (status == "timeout") {
+          console.log("Timeout Error. " + jsonObj + status + err);
+        } else {
+          console.log("error: "  + status + err);
+        }
+    }
+  }) // END ajax function for models
+
+  }
 
 function validatePwResetCode (userNameOrEmail) {
 
