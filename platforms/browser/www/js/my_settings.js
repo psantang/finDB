@@ -543,7 +543,18 @@ function cancelSave () {
   $$(".page #editFinBtn").text("Edit");
   $$("#mySettingsBinding, #mySettingsLength, #mySettingsDepth, #mySettingsDFT, #myNewLE, #myNewBindToLE, #LE_diff, #B_LE_diff").html('');
   $$(".page #summary_POS").hide();
+  $$(".stockText").css("margin-left","0em");
 }
+
+
+
+
+
+
+
+
+
+
 
 
 function toggleEditFin () {
@@ -553,31 +564,9 @@ function toggleEditFin () {
       //$$(".overFlowHidden").css('width','initial');
     }
     $$(".page .slideAdjust").css('display','inline-block');
-/*
-    b_range = myApp.range.create({
-      el: '#bindingRange',
-      dual:false,
-      value:Number(thisSetting.front_binding),
-      min: Number((Number(thisSetting.front_binding) - Number(.75)).toFixed(4)),
-      max: Number((Number(thisSetting.front_binding) + Number(.75)).toFixed(4)),
-      step:.0625,
-      on: {
-        change: function () {
-          console.log('Range Slider value changed');
-          $$("#myCurrentBinding").text(this.value.toFixed(4));
-        }
-      }
-    });
-*/
-  //  b_range.eventsParents[0].eventsListeners.touchend () {
-  //    console.log("bound event listener to binding");
-  //  }
-
 
     // V2 specific code for range slider move all range sliders to center on init;
     $$(".page .range-knob-wrap").css("left","50%");
-
-
 
     $$(".page #editFinBtn").text("Save");
     $$("#dateCreated").html("<a href='#' id='cancelSaveBtn'>Cancel</a>");
@@ -589,11 +578,39 @@ function toggleEditFin () {
     $$(".page #mySettingsDFT").html(thisUser.measure_dft);
 
     // BLOCKS below address cases where there are NO stock settings in the database...set to base defaults
-    if (parseFloat($$("#myCurrentBinding").text() ) <= 0 ) { $$("#myCurrentBinding").text("29.50"); $$(".page #stockBinding").html("Estimated"); }
-    if (parseFloat($$("#myCurrentLength").text() ) <= 0 ) { $$("#myCurrentLength").text("6.900"); $$(".page #stockLength").html("Estimated"); }
-    if (parseFloat($$("#myCurrentDepth").text() ) <= 0 ) { $$("#myCurrentDepth").text("2.500"); $$(".page #stockDepth").html("Estimated"); }
-    if (parseFloat($$("#myCurrentDFT").text() ) <= 0 ) { $$("#myCurrentDFT").text("0.750"); $$(".page #stockDFT").html("Estimated"); }
-    if (parseFloat($$("#myCurrentWingAngle").text() ) <= 0 ) { $$("#myCurrentWingAngle").text("7.00"); $$(".page #stockWingAngle").html("Estimated"); }
+    if (parseFloat($$("#myCurrentBinding").text() ) <= 0 ) {
+      $$("#myCurrentBinding").text("29.50"); $$(".page #stockBinding").html("Estimated");
+    } else {
+      $$(".page #stockBinding").html("&Delta; 0");
+    }
+
+
+    if (parseFloat($$("#myCurrentLength").text() ) <= 0 ) {
+      $$("#myCurrentLength").text("6.900"); $$(".page #stockLength").html("Estimated");
+    } else {
+      $$(".page #stockLength").html("&Delta; 0");
+    }
+
+    if (parseFloat($$("#myCurrentDepth").text() ) <= 0 ) {
+        $$("#myCurrentDepth").text("2.500"); $$(".page #stockDepth").html("Estimated");
+    } else {
+      $$(".page #stockDepth").html("&Delta; 0");
+    }
+
+    if (parseFloat($$("#myCurrentDFT").text() ) <= 0 ) {
+      $$("#myCurrentDFT").text("0.750"); $$(".page #stockDFT").html("Estimated");}
+    else {
+      $$(".page #stockDFT").html("&Delta; 0");
+    }
+
+    if (parseFloat($$("#myCurrentWingAngle").text() ) <= 0 ) {
+      $$("#myCurrentWingAngle").text("7.00"); $$(".page #stockWingAngle").html("Estimated");
+    } else {
+      $$(".page #stockWingAngle").html("&Delta; 0");
+    }
+
+    $$(".stockText").css("margin-left","-1em");
+
 
   } else { // Changes mode back to disabled and saves the settings
     $$(".page .slideAdjust").css('display','none');
@@ -601,6 +618,7 @@ function toggleEditFin () {
 
     $$(".page #summary_POS").hide();
     $$("#mySettingsBinding, #mySettingsLength, #mySettingsDepth, #mySettingsDFT").html('');
+    $$(".stockText").css("margin-left","0em");
 
     // NOTE, but a check here to see if any settings have been changed before saving
 
@@ -710,30 +728,35 @@ function init_ranges() {
   } else {
     thisBND=thisSki.stock_binding_location;
   }
+  if (typeof b_range !== 'undefined') { myApp.range.destroy(b_range); }
 
   if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("length") ) {
     thisLEN=thisSetting.length;
   } else {
     thisLEN=thisSki.stock_fin_length;
   }
+  if (typeof l_range !== 'undefined') { myApp.range.destroy(l_range); }
 
   if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("depth") ) {
     thisDEP=thisSetting.depth;
   } else {
     thisDEP=thisSki.stock_fin_depth;
   }
+  if (typeof d_range !== 'undefined') { myApp.range.destroy(d_range); }
 
   if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("dft") ) {
     thisDFT=thisSetting.dft;
   } else {
     thisDFT=thisSki.stock_fin_dft;
   }
+  if (typeof dft_range !== 'undefined') { myApp.range.destroy(dft_range); }
 
   if (typeof thisSetting !== 'undefined' && thisSetting.hasOwnProperty("wing_angle") ) {
     thisWIN=thisSetting.wing_angle;
   } else {
     thisWIN=thisSki.stock_wing_angle;
   }
+  if (typeof w_range !== 'undefined') { myApp.range.destroy(w_range); }
 
 
   //if (thisSetting.length) {thisLEN=thisSetting.length;} else {thisLEN=thisSki.stock_fin_length;}
@@ -750,8 +773,12 @@ function init_ranges() {
     step:.0625,
     on: {
       change: function () {
-        console.log('Range Slider value changed for binding');
+        console.log('Range Slider value changed for binding ' +this.value );
+        console.log('typeof value ' + typeof this.value);
         $$("#myCurrentBinding").text(this.value.toFixed(4));
+        bnd_diff=(typeof thisSetting !== 'undefined') ? (this.value - Number(thisSetting.front_binding)).toFixed(4) : (this.value - Number(thisSki.stock_binding_location)).toFixed(4);
+        bnd_diff = (bnd_diff>0) ? "+"+bnd_diff : bnd_diff;
+        $$("#stockBinding").html('&Delta; ' + bnd_diff);
         calculateBindingToLE();
       }
     }
@@ -768,6 +795,9 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for length');
         $$("#myCurrentLength").text(this.value.toFixed(3));
+        len_diff=(typeof thisSetting !== 'undefined') ? (this.value - Number(thisSetting.length)).toFixed(3) : (this.value - Number(thisSki.stock_fin_length)).toFixed(3);
+        len_diff = (len_diff>0) ? "+"+len_diff : len_diff;
+        $$("#stockLength").html('&Delta; ' + len_diff );
         calculateLE();
         calculateBindingToLE();
       }
@@ -785,6 +815,9 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for depth');
         $$("#myCurrentDepth").text(this.value.toFixed(3));
+        dpt_diff=(typeof thisSetting !== 'undefined') ? (this.value - Number(thisSetting.depth)).toFixed(3) : (this.value - Number(thisSki.stock_fin_depth)).toFixed(3);
+        dpt_diff = (dpt_diff>0) ? "+"+dpt_diff : dpt_diff;
+        $$("#stockDepth").html('&Delta; ' + dpt_diff );
       }
     }
   });
@@ -800,6 +833,9 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for dft');
         $$("#myCurrentDFT").text(this.value.toFixed(3));
+        dft_diff=(typeof thisSetting !== 'undefined') ? (this.value - Number(thisSetting.dft)).toFixed(3) : (this.value - Number(thisSki.stock_fin_dft)).toFixed(3);
+        dft_diff = (dft_diff>0) ? "+"+dft_diff : dft_diff;
+        $$("#stockDFT").html('&Delta; ' + dft_diff );
         calculateLE();
         calculateBindingToLE();
       }
@@ -817,6 +853,9 @@ function init_ranges() {
       change: function () {
         console.log('Range Slider value changed for wing angle');
         $$("#myCurrentWingAngle").text(this.value.toFixed(2));
+        wa_diff=(typeof thisSetting !== 'undefined') ? (this.value - Number(thisSetting.wing_angle)).toFixed(2) : (this.value - Number(thisSki.stock_wing_angle)).toFixed(2);
+        wa_diff = (wa_diff>0) ? "+"+wa_diff : wa_diff;
+        $$("#stockWingAngle").html('&Delta; ' + wa_diff );
       }
     }
   });
@@ -831,50 +870,8 @@ function init_ranges() {
 // INITIALIZE slider
 function init_slider() {
   console.log('in init_slider');
-
   toggleEditFin();
   init_ranges();
-
-bVal=$$(".page #myCurrentBinding").text();
-//num.toFixed(2);
-minVal=(Number(bVal) - Number(.500)).toFixed(3);
-maxVal=(Number(bVal) + Number(.500)).toFixed(3);
-$$(".page #bindingRange").attr("value", bVal);
-$$(".page #bindingRange").attr("min", minVal );
-$$(".page #bindingRange").attr("max", maxVal );
-//$("#ps .range-knob-wrap").css("left","50%");
-
-lVal=$$(".page #myCurrentLength").text();
-lminVal=(Number(lVal) - Number(.012)).toFixed(3);
-lmaxVal=(Number(lVal) + Number(.012)).toFixed(3);
-$$(".page #lengthRange").attr("value", lVal);
-$$(".page #lengthRange").attr("min", lminVal );
-$$(".page #lengthRange").attr("max", lmaxVal );
-
-//console.log('l_range is ' + l_range);
-
-dVal=$$(".page #myCurrentDepth").text();
-dminVal=(Number(dVal) - Number(.012)).toFixed(3);
-dmaxVal=(Number(dVal) + Number(.012)).toFixed(3);
-$$(".page #depthRange").attr("value", dVal);
-$$(".page #depthRange").attr("min", dminVal );
-$$(".page #depthRange").attr("max", dmaxVal );
-
-
-dftVal=$$(".page #myCurrentDFT").text();
-dftminVal=(Number(dftVal) - Number(.012)).toFixed(3);
-dftmaxVal=(Number(dftVal) + Number(.012)).toFixed(3);
-$$(".page #dftRange").attr("value", dftVal);
-$$(".page #dftRange").attr("min", dftminVal );
-$$(".page #dftRange").attr("max", dftmaxVal );
-
-
-wVal=$$(".page #myCurrentWingAngle").text();
-wminVal=(Number(wVal) - Number(2)).toFixed(2);
-wmaxVal=(Number(wVal) + Number(2)).toFixed(2);
-$$(".page #wingRange").attr("value", wVal);
-$$(".page #wingRange").attr("min", wminVal );
-$$(".page #wingRange").attr("max", wmaxVal );
 }
 
 
@@ -882,12 +879,13 @@ $$(".page #wingRange").attr("max", wmaxVal );
 $$(document).on('touchend', '#bindingRange, #lengthRange , #depthRange , #dftRange , #wingRange', function (e) {
   //console.log("------------> touch ended with e=" +this.id);
   //currentValue=$$(this).val();
-  currentValue=$$(this).attr('value');
-  console.log("------------> touch ended with e=" +this.id + " with value=" +currentValue);
+  //currentValue=$$(this).attr('value');
+  console.log("------------> touch ended with e=" +this.id );
   //currentValue=this.dataset.value;
   switch (this.id) {
     case 'bindingRange':
       updateSlider(b_range,b_range.value.toFixed(4),.750,.0625);
+      console.log("------------> touch ended with b_range current value = " +Number(b_range.value.toFixed(4))+ " typeof = " + typeof Number(b_range.value.toFixed(4)) );
       break;
 
     case 'lengthRange':
@@ -921,13 +919,14 @@ function updateSlider(obj,currentValue,plusMinusRange,increment) {
   //console.log("obj="+obj);
   minVal=Number(currentValue) - Number(plusMinusRange);
   maxVal=Number(currentValue) + Number(plusMinusRange);
-  obj.value=Number(currentValue).toFixed(4);
+  obj.value=Number(Number(currentValue).toFixed(4));
   obj.min=Number(minVal.toFixed(4));
   obj.max=Number(maxVal.toFixed(4));
   obj.step=increment;
-  console.log("obj.currentValue value = "+obj.value);
-  console.log('obj.min value = ' + obj.min);
-  console.log("obj.max value = "+obj.max);
+  console.log("obj.currentValue value = "+obj.value+ " with typeof " + typeof obj.value);
+  console.log('obj.min value = ' + obj.min+ " with typeof " + typeof obj.value);
+  console.log("obj.max value = "+obj.max+ " with typeof " + typeof obj.value);
+  console.log("obj.step value = "+obj.step+ " with typeof " + typeof obj.step);
 }
 
 function calculateLE (change) {

@@ -139,6 +139,11 @@
 .alignLeft {
       text-align: left;
 }
+
+.alignRight {
+      text-align: right;
+}
+
 .lightGreenBG {
   background-color: rgba(229,255,229,.8);
 }
@@ -151,6 +156,9 @@
   margin:0 0 1em 0;
 }
 
+.margin_1em_top {
+  margin:1em 0 0 0;
+}
 
 .center {
   text-align: center;
@@ -255,7 +263,7 @@ background-color: rgba(33, 150, 243,.1);
  }
 
 #homeDetails .content-block {
-  margin:30px 10px !important;
+  margin:11px 10px !important;
 }
 
  .page .content-block-title {
@@ -449,6 +457,12 @@ thead {
   margin-right: 1.0em;
 }
 
+#settingsAdjuster .item-content .item-inner .floatLeft {
+  float:left;
+  margin-right:.4em;
+  width:4.8em
+}
+
 .floatRight {
   float:right;
   margin-left: 1.0em;
@@ -484,6 +498,14 @@ thead {
 
 .padding_l_r_15px {
   padding: 0 15px;
+}
+
+#mySettings_div #ul_mySki {
+  margin: -37px 0 0 0 !important;
+}
+
+#mySettings_div #settingsAdjuster {
+  margin: -14px 0 0 0 !important;
 }
 
 .list {
