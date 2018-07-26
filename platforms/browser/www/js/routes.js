@@ -128,6 +128,10 @@ var routes = [
   },
 
 
+
+
+
+
   {
     path: '/mySettings/',
     url: './pages/mySettings.html',
@@ -167,6 +171,8 @@ var routes = [
               console.log('versDetails via clicked from router');
               versionDetails(vers_Obj);
           });
+
+          displaySetupNotes();
         }
     }
   },
@@ -331,7 +337,9 @@ var routes = [
 {
   path: '/lookup/brands/',
   async(to, from, resolve, reject) {
-    data={'ski_attr':'brands'};
+    var logged_in=false;
+    if (typeof thisUser !== 'undefined') logged_in=true;
+    data={'ski_attr':'brands','logged_in':logged_in};
     myApp.request( {
     url: wsURL+'ws_ski_lookup_ret_json.php',
     dataType: 'json',
@@ -588,6 +596,7 @@ var routes = [
   async(to, from, resolve, reject) {
     console.log("myApp.data.lookup.skiYear="+myApp.data.lookup.skiYear);
     data={'ski_attr':'years','brand':myApp.data.lookup.skiBrand,'model':myApp.data.lookup.skiModel};
+    var hasYear; // to determine if the ski has a year value to show or not show year page
     myApp.request( {
     url: wsURL+'ws_ski_lookup_ret_json.php',
     dataType: 'json',
@@ -599,19 +608,24 @@ var routes = [
         console.log('page not found');
       }
     },
-    complete: function() {
-    console.log('complete lookup for year request');
-    if (myApp.data.lookup.skiYear=='') {
+    complete: function(xhr, status) {
+    console.log('================> >   > complete lookup for year request with xhr='+xhr+' and status='+status);
+    if (!hasYear) {
       routeSkiLookup();
     }
+    //if (myApp.data.lookup.skiYear=='') {
+    //  routeSkiLookup();
+    //}
     },
     success: function(response) {
       console.log('success with response='+response);
       console.log('success with response[0]='+response[0]);
       console.log('response.length='+response.length);
       console.log('response[0].length='+response[0].length);
+
       if (response!='') {
-        console.log('resolved this to year');
+        console.log('resolved this to year with data=' + response);
+        hasYear=true;
 
         resolve(
           {
@@ -625,6 +639,7 @@ var routes = [
         );
 
     } else {
+      hasYear=false;
       myApp.data.lookup.skiYear='';
       reject();
       }

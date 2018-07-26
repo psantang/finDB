@@ -94,6 +94,14 @@
   padding-top:.5em;
 }
 
+.padding_bottom_5em {
+  padding-bottom:.5em;
+}
+
+.padding_bottom_1_5em {
+  padding-bottom:1.5em;
+}
+
 .padding_left_15px {
   padding-left: 15px;
 }
@@ -110,6 +118,10 @@
 
 .stockListRow {
   padding: .25em 0;
+}
+
+.white_glow_text {
+    text-shadow: 0 0 3px #FFF;
 }
 
 
@@ -192,7 +204,18 @@ background-color: rgba(33, 150, 243,.1);
 }
 
 .override_lb .list {
-    margin:50px 0 15px 0 !important;
+    margin:24px 0 15px 0 !important;
+}
+
+#mySettings_div #settingsList {
+  margin-bottom:0px !important;
+}
+
+#thisSettingNotes {
+background-color: rgba(255,255,255,.6);
+display:none;
+width: 100%;
+overflow: scroll;
 }
 
 .centerList {
@@ -247,6 +270,7 @@ background-color: rgba(33, 150, 243,.1);
 
 .page-content {
   background-color: rgba(255,255,255,.3) !important;
+  padding-bottom:1em;
 }
 
 .popover-inner .content-block {
@@ -498,6 +522,10 @@ thead {
 
 .padding_l_r_15px {
   padding: 0 15px;
+}
+
+.padding_l_r_4em {
+  padding: 0 4em !important;
 }
 
 #mySettings_div #ul_mySki {
