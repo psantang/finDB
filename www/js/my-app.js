@@ -5,7 +5,7 @@ var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
 var api_vers="2_0_0";
-var app_vers="2_0_6";
+var app_vers="2_0_7";
 var user_vers=app_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
@@ -675,12 +675,13 @@ function setNewPw(userNameOrEmail) {
 }
 
 
+// RE-USE of the ski lookup functions IN and OUT of session have to route to different locations.
 function routeSkiLookup() {
   console.log("In routeSkiLookup Function");
 
-  if (G_LOOKUP_TYPE=='findSki') {
+  if (G_LOOKUP_TYPE=='findSki') { // THIS IS FOR OUT OF SESSION
     myApp.router.navigate('/lookup/');
-  } else {
+  } else { // ALL IN SESSIONS ROUTE BACK TO SPECIFIC PAGE
     myApp.router.navigate('/mySkis/');
     promptSkiName(myApp.data.lookup.skiYear);
   }

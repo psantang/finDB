@@ -58,7 +58,7 @@ function populateCurrentSki() {
       checkImageExists("img/skiLogos/"+thisSki.brand+"_logo.png", function(existsImage) {
         if(existsImage == true) {
           console.log("++++++++++true.  Logo available.");
-          $$(".page #ul_mySki .item-content .item-media").append('<img src="img/skiLogos/'+thisSki.brand+'_logo.png" class="logo_36height" />');
+          $$(".page #ul_mySki .item-content .item-media").append('<a href="/mySkis/" id="editSkiBtn"><img src="img/skiLogos/'+thisSki.brand+'_logo.png" class="logo_36height" /></a>');
         }
         else {
           console.log("++++++++++false.  Logo not available.");
@@ -1149,6 +1149,7 @@ function addNote() {
         if (passed) {
           //myApp.closeModal();
           thisPop=myApp.popup.close("div.popup.popup-notes");
+          displaySetupNotes();
           //console.log("thisPop is " + thisPop);
         }
 
@@ -1234,4 +1235,109 @@ function versionDetails(vers_Obj) {
       popupNote+='</div>'; // end class popup
 
   myApp.popup.open(popupNote,true);
+}
+
+
+function displaySetupNotes() {
+  console.log("in displaySetupNotes ");
+  if (offline) return onOffline();
+
+  var noteStr='';
+  var returnCode=-1;
+  var url=wsURL+'ws_get_settings_history_notes_ret_json.php';
+
+  myApp.request({url:url,data:{ user_name:thisUser.user_name, ski_id:thisSki.id, setting_id:thisSetting.id },type:'POST',dataType: 'json'
+  ,success:function(json_Obj) {
+      console.log('ajax success.');
+      if (json_Obj.length>0) { // RETURNED RESULTS
+        console.log('json length is ' + json_Obj.length);
+
+        if (json_Obj[0].RETURN_CODE==1) {
+          returnCode=1;
+          console.log('json_Obj is ' + json_Obj);
+
+          noteStr+="<div id='settingNotesDiv'>";
+          for (a=0;a<json_Obj.length;a++) {
+            //var noteStr='';
+            noteStr+="<div class='historyNotesHdr'>"+getLocalDateTimeString(json_Obj[a].date_time,'pretty');
+            if (json_Obj[a].water_temp>0){
+              noteStr+="<span class='floatRight'>Water: "+json_Obj[a].water_temp+"&deg; "+json_Obj[a].water_temp_scale+"</span>";
+            }
+            noteStr+="</div>";
+            noteStr+="<div class='historyNotes'>"+json_Obj[a].notes+"</div>";
+            //console.log(noteStr);
+            //$$("#thisSettingNotes").append(noteStr);
+          }
+          noteStr+="</div>";
+          console.log(noteStr);
+
+
+
+
+
+        } else {
+          console.log('return code is NOT 1');
+        }
+      }
+    }, complete: function(xhr, status){
+
+      if (returnCode==1){
+        winHeight=$$("#mySettings_div").height();
+        skiCardTop=document.getElementById("ski_card").offsetTop;
+        skiCardHeight=$$("#ski_card").height();
+        spaceLeft=winHeight-skiCardTop-skiCardHeight-32;
+
+
+        $$('#thisSettingNotes').css('display','inline-block');
+        $$('#thisSettingNotes').css('border-top','2px solid #007aff');
+        $$('#thisSettingNotes').css('border-bottom','2px solid #007aff');
+
+        $$('#thisSettingNotes').animate(
+          {
+              'height': spaceLeft,
+              'opacity': 1
+          },
+          {
+              duration: 700,
+              easing: 'swing',
+              begin: function (elements) {
+                  console.log('animation began');
+                  $$('#thisSettingNotes').html(noteStr);
+              },
+              // Animation completed, optional
+              complete: function (elements) {
+                  console.log('animation completed');
+                  notesHeight=$$("#settingNotesDiv").height();
+                  $$('#thisSettingNotes').animate(
+                    {
+                        'height': notesHeight+1,
+                        'opacity': 1
+                    },
+                    {
+                        duration: 350,
+                        easing: 'swing',
+                    }
+                  );
+              },
+              // Animation in progress, optional
+              progress: function (elements, complete, remaining, start) {
+
+              }
+          }
+        ); // END ANIMATION
+      }
+
+    }, // end COMPLETE
+    timeout: 5000,
+    error: function(json_Obj, status, err) {
+      if (status == "timeout") {
+          console.log("Timeout Error. " + json_Obj + status + err);
+      } else {
+          console.log("error: " + json_Obj + status + err);
+      }
+    }, // end error
+      beforeSend: function(){
+        console.log('ajax beforeSend.')
+        } // END before Send
+  });
 }

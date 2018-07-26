@@ -30,7 +30,7 @@ RELEASE 2.0.5
 RELEASE 2.0.X
 - Add 'forgot user name' process
 - Add User Name to forgot password process
-
+- Fix for fin setting sliders
 
 
 
