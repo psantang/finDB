@@ -31,6 +31,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
 
+
     <!-- Your app title -->
     <title>Water Ski Fin DB</title>
 
@@ -42,9 +43,9 @@
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
 -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/framework7-icons.css">
-    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css_my/styles.css">
+    <link rel="stylesheet" type="text/css" href="css_my/framework7-icons.css">
+    <link rel="stylesheet" type="text/css" href="css_my/animate.min.css">
 
 
 </head>
@@ -161,8 +162,7 @@
 <!--    </div>  END VIEWS -->
 
     <script type="text/javascript" src="cordova.js"></script>
-    <!--<script type="text/javascript" src="lib/framework7/js/framework7.js"></script>-->
-    <script type="text/javascript" src="dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
 
 
     <!--
@@ -173,7 +173,7 @@
          (function () {
            if (Framework7.prototype.device.android) {
                  Dom7('head').append(
-                     '<link rel="stylesheet" href="dist/css/framework7.md.min.css">'// +
+                     '<link rel="stylesheet" href="css/framework7.md.min.css">'// +
                      //'<link rel="stylesheet" href="dist/css/framework7.ltr.md.min.css">' +
                      //'<link rel="stylesheet" href="dist/css/framework7.md.css">' // use this as custom over ride for material design classes above
                     // '<link rel="stylesheet" href="/css/framework7.material.min.css">' +
@@ -183,7 +183,7 @@
              }
              else {
                  Dom7('head').append(
-                     '<link rel="stylesheet" href="dist/css/framework7.ios.min.css">'// +
+                     '<link rel="stylesheet" href="css/framework7.ios.min.css">'// +
                      //'<link rel="stylesheet" href="dist/css/framework7.ltr.ios.min.css">' //+
                      //'<link rel="stylesheet" href="lib/framework7/css/my-app.ios.css">'
                      //'<link rel="stylesheet" href="/css/framework7.ios.min.css">' +
@@ -193,17 +193,17 @@
          })();
        </script>
 
-    <script type="text/javascript" src="js/routes.js"></script>
-    <script type="text/javascript" src="js/my-app.js"></script>
-    <script type="text/javascript" src="js/user_class.js"></script>
-    <script type="text/javascript" src="js/ski_class.js"></script>
-    <script type="text/javascript" src="js/settings_class.js"></script>
-    <script type="text/javascript" src="js/profile.js"></script>
-    <script type="text/javascript" src="js/register.js"></script>
-    <script type="text/javascript" src="js/my_settings.js"></script>
-    <script type="text/javascript" src="js/my_skis.js"></script>
-    <script type="text/javascript" src="js/ski_settings_smart_select.js"></script>
-    <script type="text/javascript" src="js/save_stock_settings_local.js"></script>
-    <script type="text/javascript" src="js/first_entry.js"></script>
+    <script type="text/javascript" src="js_my/routes.js"></script>
+    <script type="text/javascript" src="js_my/my-app.js"></script>
+    <script type="text/javascript" src="js_my/user_class.js"></script>
+    <script type="text/javascript" src="js_my/ski_class.js"></script>
+    <script type="text/javascript" src="js_my/settings_class.js"></script>
+    <script type="text/javascript" src="js_my/profile.js"></script>
+    <script type="text/javascript" src="js_my/register.js"></script>
+    <script type="text/javascript" src="js_my/my_settings.js"></script>
+    <script type="text/javascript" src="js_my/my_skis.js"></script>
+    <script type="text/javascript" src="js_my/ski_settings_smart_select.js"></script>
+    <script type="text/javascript" src="js_my/save_stock_settings_local.js"></script>
+    <script type="text/javascript" src="js_my/first_entry.js"></script>
 </body>
 </html>
