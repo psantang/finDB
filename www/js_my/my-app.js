@@ -86,8 +86,8 @@ var deviceManufacturer,devicePlatform,deviceModel,deviceVersion;
 window.loginEventStr="";
 
 // THIS WILL SUPPRESS ALL console.log output
-//var console = {};
-//console.log = function(){};
+var console = {};
+console.log = function(){};
 
 appLinkiOS="https://itunes.apple.com/us/app/fin-db/id1234631397?mt=8";
 appLinkAndroid="https://play.google.com/store/apps/details?id=com.paulsantangelo.finDB";
