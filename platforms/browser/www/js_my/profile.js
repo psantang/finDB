@@ -1,11 +1,17 @@
 function init_profile() {
+  console.log("init_profile executing");
   populateWeight();
   populateDOByears();
   populateProfile();
 
   $$("#editProfileBtn").text('Edit');
-  $$('#profilePage_div .item-input').children().prop("disabled", true);
+  //$$('#profilePage_div .item-input').children().prop("disabled", true);
 
+  // FOR Framework7 V3, it has to be done this way
+  //$$('#profilePage_div .item-input .item-inner .item-input-wrap .input-with-value').prop("disabled",true);
+  $$('#profilePage_div .item-input .item-inner .item-input-wrap').children().prop("disabled",true);
+
+  console.log('disabled=' + $$('#profilePage_div .item-input .item-inner .item-input-wrap').children().prop("disabled",true));
 }
 
 
@@ -69,8 +75,11 @@ function toggleEditSave () {
     $$("#editProfileBtn").text("Save");
 //    $$('#profilePage_div .content-block-title').hide();
     //$$('#profilePage_div .list-block ul').css('background-color','rgba(245,255,245,.5)');
-    $$('#profilePage_div .list ul').addClass('lightOrangeBG');
-    $$('#profilePage_div .item-input').children().prop("disabled", false);
+
+    //$$('#profilePage_div .list ul').addClass('lightOrangeBG');
+    $$('#profilePage_div .item-input .item-inner .item-input-wrap').addClass('lightOrangeBG');
+    //$$('#profilePage_div .item-input').children().prop("disabled", false);
+    $$('#profilePage_div .item-input .item-inner .item-input-wrap').children().prop("disabled",false);
   } else {
 
     if (offline) return onOffline();
@@ -107,8 +116,10 @@ function toggleEditSave () {
     $$("#editProfileBtn").text("Edit");
     $$('#profilePage_div .content-block-title').show();
     //$$('#profilePage_div .list-block ul').css('background-color','rgba(255,255,255,1)');
-    $$('#profilePage_div .list ul').removeClass('lightOrangeBG');
-    $$('#profilePage_div .item-input').children().prop("disabled", true);
+    //$$('#profilePage_div .list ul').removeClass('lightOrangeBG');
+    $$('#profilePage_div .item-input .item-inner .item-input-wrap').removeClass('lightOrangeBG');
+    //$$('#profilePage_div .item-input').children().prop("disabled", true);
+    $$('#profilePage_div .item-input .item-inner .item-input-wrap').children().prop("disabled",true);
 
 
     // ASSIGN SUCCESSFUL VALUES SENT TO SERVER TO OBJECTS

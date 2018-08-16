@@ -1240,6 +1240,14 @@ function addNote() {
           thisPop=myApp.popup.close("div.popup.popup-notes");
           displaySetupNotes();
           //console.log("thisPop is " + thisPop);
+        } else { // no settings saved
+          myApp.dialog.alert(
+            'Please add notes and/or select a water temperature to save a note.  Otherwise, please select the Close button.',
+            'Notes not Saved',
+            function () {
+              return null;
+            }
+          );
         }
 
     }, // end COMPLETE
@@ -1412,7 +1420,7 @@ function displaySetupNotes() {
           $$('#thisSettingNotes').addClass('notesGradientBG');
           $$('#thisSettingNotes').css('display','inline-block');
           $$('#thisSettingNotes').css('border-top','1px solid #444');
-          $$('#thisSettingNotes').css('border-bottom','1px solid #444');
+          $$('#thisSettingNotes').css('border-bottom','2px solid #444');
 
           thisAnim = $$('#thisSettingNotes').animate(
             {
