@@ -179,7 +179,7 @@ var routes = [
           console.log(" ------ > pageBeforeOut in for mySettings page ");
           if (typeof thisSetting=='undefined') {
             console.log(" No settings saved for user in session ");
-            
+
           }
         }
     }
@@ -258,9 +258,9 @@ var routes = [
     url: './pages/profile.html',
     name: 'profile',
     on: {
-        pageInit: function () {
+        pageAfterIn: function () {
           // do something on page init
-          console.log(" ------ > page init in route.js for profile page");
+          console.log(" ------ > pageAfterIn in route.js for profile page");
 
 
               init_profile();

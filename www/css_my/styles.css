@@ -496,9 +496,19 @@ thead {
   overflow: hidden;
 }
 
+/*
 .lightOrangeBG {
   background-color: rgba(255, 132, 0, .2) !important;
   border-bottom:1px solid #555;
+}
+*/
+.lightOrangeBG {
+background: -moz-linear-gradient(top, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2c39d', endColorstr='#fff1e4',GradientType=0 ); /* IE6-9 */
+padding-left: .5em;
+border-radius: 0em;
 }
 
 .floatLeft {

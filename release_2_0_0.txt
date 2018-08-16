@@ -33,6 +33,16 @@ RELEASE 2.0.X
 - Fix for fin setting sliders
 
 
+RELEASE 2.0.8
+<ul>
+  <li>Updated to use version 3.1.1 of Framework7</li>
+  <li>Add ability to view multiple stock settings if offered by manufacturer</li>
+  <li>Notes for current settings will be displayed on 'My Settings' page if space allows</li>
+  <li>Fix for Profile Page edit/save changes</li>
+  <li>Fix for empty notes and water temperature saves</li>
+  <li>Minor UI enhancements</li>
+</ul>
+
 
 - Add Binding Type to setup configuration(Front: Rubber, Firmshell, Hardshell) (Rear: Rubber Toe plate, Highwrap Rubber, Firmshell, Hardshell, Midrise )
 - Add metrics data on users ski???
