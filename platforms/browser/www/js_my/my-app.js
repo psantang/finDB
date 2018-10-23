@@ -4,8 +4,8 @@
 var isAndroid = Framework7.prototype.device.android === true;
 var isIos = Framework7.prototype.device.ios === true;
 
-var api_vers="2_0_1";
-var app_vers="2_0_9";
+var api_vers="2_0_2";
+var app_vers="2_0_10";
 var user_vers=app_vers.replace(/_/g,".");
 var wsURL="http://finDB.paulsantangelo.com/ws/"+api_vers+"/"; // A2 Hosting
 //var wsURL="http://paulsan1.wwwss52.a2hosted.com/finDB/ws/"+api_vers+"/"; // A2 pre prod
@@ -93,9 +93,9 @@ window.loginEventStr="";
 
 
 
-// THIS WILL SUPPRESS ALL console.log output
-var console = {};
-console.log = function(){};
+// UNCOMMENT THE BELOW TO SUPPRESS ALL console.log output
+//var console = {};
+//console.log = function(){};
 
 
 
@@ -705,6 +705,15 @@ function routeSkiLookup() {
 }
 
 
+
+
+
+
+
+
+
+
+// CHECK FOR VERSION AN NOTIFY USER IF UPDATES ARE AVAILABLE
 $$(document).once('deviceready', function (page) {
   console.log(" ^^^^^^^^^^^^ pageinit only once ^^^^^^^^^ making call to CallMethod to get data..... ");
   var url=wsURL+'get_user_version_status_ret_json.php';
@@ -713,24 +722,22 @@ $$(document).once('deviceready', function (page) {
   CallMethod(url, data , onSuccess);
 });
 
-
 function CallMethod(url, parameters, successCallback) {
-                console.log("in CallMethod function");
-                if (offline) return onOffline();
+    console.log("in CallMethod function");
+    if (offline) return onOffline();
 
-                myApp.request({
-                    type: 'POST',
-                    url: url,
-                    data: parameters,
-                    //contentType: 'application/json;',
-                    dataType: 'json',
-                    success: successCallback,
-                    error: function(xhr, textStatus, errorThrown) {
-                        console.log('---------- ------- -------- error from CallMethod');
-                    }
-                });
-            }
-
+    myApp.request({
+        type: 'POST',
+        url: url,
+        data: parameters,
+        //contentType: 'application/json;',
+        dataType: 'json',
+        success: successCallback,
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('---------- ------- -------- error from CallMethod');
+        }
+    });
+}
 
 function onSuccess(vers_Obj) {
     console.log("++++++++++ +++++++++ +++++++++ this is onSuccess function with param="+vers_Obj);
@@ -746,7 +753,6 @@ function onSuccess(vers_Obj) {
       update_link="<a class='external' href='"+appLinkAndroid+"' target='_system'>Learn More <i class='icon f7-icons color-blue'>info_fill</i></a>";
     }
 
-
     if (typeof vers_Obj != "undefined" && vers_Obj.vers_update<0) {
       console.log('need an update available');
       var notificationClickToClose = myApp.notification.create({
@@ -761,3 +767,92 @@ function onSuccess(vers_Obj) {
       notificationClickToClose.open();
     }
 }
+// END CHECK FOR VERSION AN NOTIFY USER IF UPDATES ARE AVAILABLE
+
+
+
+
+
+function sayHi(json) {
+
+  console.log('hi!!!!.  HERE IS DATA:' + json);
+  alert('hi');
+}
+
+
+// NOTE:  THIS IS THE CALLACK METHOD.  NOTICE SUCCESS HANDLER CALLS CALLBACK FUNCTION
+function ajaxPostRequest (url, data, callback) {
+  myApp.request({url:url,data:data,type:'POST',dataType: 'json'
+    ,success:callback /*function(json, status, xhr) {
+      console.log('ajax success from ajaxPostRequest function.');
+      callback;
+      //return data;
+    }*/,
+    complete: function(xhr, status) {
+        myApp.preloader.hide();
+        //callback;
+        //if (callback) callback;
+
+    }, // end COMPLETE
+    timeout: 5000,
+    error: function(xhr, status) {
+      return status;
+    }, // end error
+    beforeSend: function(xhr){
+      myApp.preloader.show();
+    } // END before Send
+  });
+}
+
+$$(document).once('deviceready', function (page) {
+  /*
+let tempURL=wsURL+'ws_ski_lookup_ret_json.php';
+let tempData={'ski_attr':'brands','logged_in':false}
+testCallback=ajaxPostRequest(tempURL, tempData, sayHi);
+*/
+});
+
+
+
+
+
+
+
+
+
+
+
+// NOTE:  THIS IS THE PROMISE METHOD.  NOTICE THE WHOLE REQUEST IS RETURNED
+/*
+function ajaxPostRequestPromise (url, data, callback) {
+  return myApp.request({url:url,data:data,type:'POST',dataType: 'json'
+    ,success: function(json, status, xhr) {
+      console.log('ajax success from ajaxPostRequest function.');
+
+    },
+    complete: function(xhr, status) {
+        myApp.preloader.hide();
+        //callback;
+        //if (callback) callback;
+
+    }, // end COMPLETE
+    timeout: 5000,
+    error: function(xhr, status) {
+      //return status;
+    }, // end error
+    beforeSend: function(xhr){
+      myApp.preloader.show();
+    } // END before Send
+  });
+}
+
+$$(document).once('deviceready', function (page) {
+  let tempURL=wsURL+'ws_ski_lookup_ret_json.php';
+  let tempData={'ski_attr':'brands','logged_in':false,'val':1}
+  testPromise=ajaxPostRequestPromise(tempURL, tempData).then(function(respJson){
+     console.log('respJson='+respJson);
+  }, function(reason){
+   console.log("error in processing your request", reason);
+  });
+});
+*/

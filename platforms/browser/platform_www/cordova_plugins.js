@@ -15,6 +15,14 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/cordova-plugin-firebase/www/firebase-browser.js",
+        "id": "cordova-plugin-firebase.FirebasePlugin",
+        "pluginId": "cordova-plugin-firebase",
+        "clobbers": [
+            "FirebasePlugin"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
         "id": "cordova-plugin-globalization.GlobalizationError",
         "pluginId": "cordova-plugin-globalization",
@@ -95,16 +103,16 @@ module.exports = [
         "runs": true
     }
 ];
-module.exports.metadata =
+module.exports.metadata = 
 // TOP OF METADATA
 {
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-firebase": "2.0.5",
     "cordova-plugin-globalization": "1.11.0",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-console": "1.0.7"
+    "cordova-plugin-whitelist": "1.3.3"
 }
 // BOTTOM OF METADATA
 });
