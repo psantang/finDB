@@ -33,7 +33,7 @@ RELEASE 2.0.X
 - Fix for fin setting sliders
 
 
-RELEASE 2.0.8
+RELEASE 2.0.9
 <ul>
   <li>Updated to use version 3.1.1 of Framework7</li>
   <li>Add ability to view multiple stock settings if offered by manufacturer</li>
