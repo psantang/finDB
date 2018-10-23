@@ -19,11 +19,13 @@
     <preference name="phonegap-version" value="cli-7.1.0" />
 
     <platform name="android">
+        <resource-file src="google-services.json" target="platforms/android/google-services.json" />
         <preference name="android-minSdkVersion" value="14" />
         <allow-intent href="market:*" />
     </platform>
 
     <platform name="ios">
+        <resource-file src="GoogleService-Info_finDB.plist" target="platforms/ios/GoogleService-Info_finDB.plist" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
