@@ -1,0 +1,270 @@
+{{#if @global.ios}}
+<div class="navbar">
+    <div class="navbar-inner">
+      <div class="left"><a href="/mySettings/" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
+        <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+        <div class="center sliding">User Profile</div>
+        <div class="right"><a href="#" class="link" id="editProfileBtn"></a></div>
+    </div>
+</div>
+{{/if}}
+    <!-- Page, "data-page" contains page name -->
+    <div data-page="profile" class="page" id="profilePage_div">
+
+{{#if @global.android}}
+      <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left"><a href="/mySettings/" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
+              <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+              <div class="center sliding">User Profile</div>
+              <div class="right"><a href="#" class="link" id="editProfileBtn"></a></div>
+          </div>
+      </div>
+{{/if}}
+        <!-- Scrollable page content -->
+        <div class="page-content">
+            <div class="block"></div>
+
+                <div class="block-title bold">User<span id="errorUser" class="redText"></span></div>
+                <div class="list">
+                  <ul>
+                    <!-- Text inputs -->
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">person</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">First Name</div>
+                          <div class="item-input-wrap">
+                            <input type="text" name="first_name" id="first_name" placeholder="First name">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">person</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Last Name</div>
+                          <div class="item-input-wrap">
+                            <input type="text" name="last_name" id="last_name" placeholder="Last name">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">email</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">E-mail</div>
+                          <div class="item-input-wrap">
+                            <input type="email"  name="user_email" id="user_email" placeholder="E-mail">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                  </ul>
+                </div>
+
+
+
+                <div class="block-title bold">Demographic <a href="#" id="profileDemographicId"><i class="icon f7-icons">info</i></a></div>
+                <div class="list">
+                  <ul>
+                      <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">info_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Weight</div>
+                          <div class="item-input-wrap" id="weightSelect"></div>
+                          <!--<div class="item-input">
+                            <select name="weight" id="weight">
+                              <option>160</option>
+                              <option>165</option>
+                            </select>
+                          </div>-->
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">info_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Height</div>
+                          <div class="item-input-wrap">
+                            <select name="height" id="height">
+                              <option value=''>Select...</option>
+                              <option value="60">5'-0" -</option>
+                              <option value="61">5'-1"</option>
+                    					<option value="62">5'-2"</option>
+                    					<option value="63">5'-3"</option>
+                    					<option value="64">5'-4"</option>
+                              <option value="65">5'-5"</option>
+                    					<option value="66">5'-6"</option>
+                    					<option value="67">5'-7"</option>
+                    					<option value="68">5'-8"</option>
+                              <option value="69">5'-9"</option>
+                              <option value="70">5'-10"</option>
+                              <option value="71">5'-11"</option>
+                    					<option value="72">6'-0"</option>
+                    					<option value="73">6'-1"</option>
+                    					<option value="74">6'-2"</option>
+                              <option value="75">6'-3"</option>
+                              <option value="76">6'-4"</option>
+          					          <option value="77">6'-5"</option>
+                              <option value="78">6'-6" +</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">info_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Birth Year</div>
+                          <div class="item-input-wrap" id="dobYearSelect"></div>
+                        </div>
+                      </div>
+                    </li>
+
+
+
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">info_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Skier Level</div>
+                          <div class="item-input-wrap">
+                            <select name="capability_level" id="capability_level">
+                              <option value=''>Select...</option>
+                    					<option value="1">Level 1 (novice)</option>
+                    					<option value="2">Level 2</option>
+                    					<option value="3">Level 3</option>
+                    					<option value="4">Level 4</option>
+                              <option value="5">Level 5 (intermediate)</option>
+                    					<option value="6">Level 6</option>
+                    					<option value="7">Level 7</option>
+                    					<option value="8">Level 8</option>
+                              <option value="9">Level 9 (elite/pro)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">info_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Ski Speed</div>
+                          <div class="item-input-wrap">
+                            <select name="ski_speed" id="ski_speed">
+                              <option value=''>Select...</option>
+                              <option value="15.5">15.5 mph / 25 kph</option>
+                              <option value="17.4">17.4 mph / 28 kph</option>
+                    					<option value="19.3">19.3 mph / 31 kph</option>
+                    					<option value="21.1">21.1 mph / 34 kph</option>
+                    					<option value="23.0">23.0 mph / 37 kph</option>
+                    					<option value="24.9">24.9 mph / 40 kph</option>
+                    					<option value="26.7">26.7 mph / 43 kph</option>
+                              <option value="28.6">28.6 mph / 46 kph</option>
+                    					<option value="30.4">30.4 mph / 49 kph</option>
+                    					<option value="32.3">32.3 mph / 52 kph</option>
+                    					<option value="34.2">34.2 mph / 55 kph</option>
+                              <option value="36.0">36.0 mph / 58 kph</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+
+
+                <div class="block-title bold">How I Measure <a href="#" id="profileMeasureId"><i class="icon f7-icons">info</i></a><span id="errorMeasure" class="redText"></span></div>
+                <div class="list">
+                  <ul>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">gear_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Front Binding</div>
+                          <div class="item-input-wrap">
+                            <select name="measure_binding" id="measure_binding">
+                              <option value=''>Select...</option>
+                              <option value="Heel">Heel</option>
+                              <option value="Ankle">Ankle</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">gear_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Fin Length</div>
+                          <div class="item-input-wrap">
+                            <select name="measure_length" id="measure_length">
+                              <option value=''>Select...</option>
+                              <option value="Tips">Tips</option>
+                              <option value="Jaws">Jaws</option>
+                              <option value="Axiom">Axiom Tool</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">gear_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Fin Depth</div>
+                          <div class="item-input-wrap">
+                            <select name="measure_depth" id="measure_depth">
+                              <option value=''>Select...</option>
+                              <option value="Flat">Flat</option>
+                              <option value="Axiom">Axiom Tool</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">gear_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Fin DFT</div>
+                          <div class="item-input-wrap">
+                            <select name="measure_dft" id="measure_dft">
+                              <option value=''>Select...</option>
+                              <option value="Flat">Flat</option>
+                              <option value="Needle">Needle</option>
+                              <option value="Slot">Slot</option>
+                              <option value="Axiom">Axiom Tool</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-media"><i class="icon f7-icons">gear_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-title item-label">Water Temperature</div>
+                          <div class="item-input-wrap">
+                            <select name="measure_water_temp" id="measure_water_temp">
+                              <option value=''>Select...</option>
+                              <option value="C">Celcius</option>
+                              <option value="F">Farenheit</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+          <!-- </div>  END CONTENT BLOCK -->
+        </div> <!-- END PAGE CONTENT -->
