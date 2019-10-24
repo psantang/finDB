@@ -5,7 +5,7 @@
         The only mobile app providing all stock settings for high end water skis with the ability to save your custom ski settings for an unlimited number of skis.
     </description>
     <author email="paul@paulsantangelo.com" href="http://www.paulsantangelo.com">
-        Paul Santangelo Software, Inc.
+        Paul Santangelo Software, Inc. Copyright 2019 
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -15,34 +15,24 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-
     <preference name="phonegap-version" value="cli-7.1.0" />
-
     <platform name="android">
-        <resource-file src="google-services.json" target="platforms/android/google-services.json" />
         <preference name="android-minSdkVersion" value="14" />
         <allow-intent href="market:*" />
     </platform>
-
     <platform name="ios">
-        <resource-file src="GoogleService-Info_finDB.plist" target="platforms/ios/GoogleService-Info_finDB.plist" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
     </platform>
-
     <preference name="DisallowOverscroll" value="true" />
-
     <plugin name="cordova-plugin-whitelist" source="npm" />
-    <plugin name="cordova-plugin-firebase" spec="^2.0.0" />
     <plugin name="cordova-plugin-statusbar" source="npm" />
     <plugin name="cordova-plugin-device" source="npm" />
     <plugin name="cordova-plugin-globalization" source="npm" />
     <plugin name="cordova-plugin-network-information" source="npm" />
     <plugin name="cordova-plugin-inappbrowser" source="npm" />
-
-
-
+    <plugin name="cordova-plugin-firebase" source="npm" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
@@ -63,9 +53,8 @@
         <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
-
     <platform name="ios">
-        <icon platform="ios" src="www/res/icon/ios/icon.png" width="1024" height="1024" />
+        <icon height="1024" platform="ios" src="www/res/icon/ios/icon.png" width="1024" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
         <icon height="80" platform="ios" src="www/res/icon/ios/icon-40@2x.png" width="80" />
@@ -92,8 +81,7 @@
         <splash height="960" platform="ios" src="www/res/screen/ios/Default@2x~iphone.png" width="640" />
         <splash height="480" platform="ios" src="www/res/screen/ios/Default~iphone.png" width="320" />
     </platform>
-
-
-
-
+    <engine name="ios" spec="^4.5.5" />
+    <engine name="browser" spec="^5.0.4" />
+    <engine name="android" spec="^7.1.1" />
 </widget>

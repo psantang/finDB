@@ -19,34 +19,25 @@
     },
     "installed_plugins": {
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
-        },
-        "cordova-plugin-appinfo": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-firebase": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
     "dependent_plugins": {},
@@ -64,6 +55,14 @@
             "id": "cordova-plugin-device.DeviceProxy",
             "pluginId": "cordova-plugin-device",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-firebase/www/firebase-browser.js",
+            "id": "cordova-plugin-firebase.FirebasePlugin",
+            "pluginId": "cordova-plugin-firebase",
+            "clobbers": [
+                "FirebasePlugin"
+            ]
         },
         {
             "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
@@ -144,62 +143,15 @@
             "id": "cordova-plugin-statusbar.StatusBarProxy",
             "pluginId": "cordova-plugin-statusbar",
             "runs": true
-        },
-        {
-            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-            "id": "cordova-plugin-splashscreen.SplashScreen",
-            "pluginId": "cordova-plugin-splashscreen",
-            "clobbers": [
-                "navigator.splashscreen"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js",
-            "id": "cordova-plugin-splashscreen.SplashScreenProxy",
-            "pluginId": "cordova-plugin-splashscreen",
-            "runs": true
-        },
-        {
-            "file": "plugins/cordova-plugin-appinfo/www/appinfo.js",
-            "id": "cordova-plugin-appinfo.AppInfo",
-            "pluginId": "cordova-plugin-appinfo",
-            "merges": [
-                "navigator.appInfo"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-            "id": "cordova-plugin-splashscreen.SplashScreen",
-            "pluginId": "cordova-plugin-splashscreen",
-            "clobbers": [
-                "navigator.splashscreen"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js",
-            "id": "cordova-plugin-splashscreen.SplashScreenProxy",
-            "pluginId": "cordova-plugin-splashscreen",
-            "runs": true
-        },
-        {
-            "file": "plugins/cordova-plugin-firebase/www/firebase-browser.js",
-            "id": "cordova-plugin-firebase.FirebasePlugin",
-            "pluginId": "cordova-plugin-firebase",
-            "clobbers": [
-                "FirebasePlugin"
-            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-device": "2.0.2",
+        "cordova-plugin-firebase": "2.0.5",
         "cordova-plugin-globalization": "1.11.0",
         "cordova-plugin-inappbrowser": "3.0.0",
         "cordova-plugin-network-information": "2.0.1",
         "cordova-plugin-statusbar": "2.4.2",
-        "cordova-plugin-whitelist": "1.3.3",
-        "cordova-plugin-console": "1.0.7",
-        "cordova-plugin-splashscreen": "5.0.2",
-        "cordova-plugin-appinfo": "2.1.2",
-        "cordova-plugin-firebase": "2.0.5"
+        "cordova-plugin-whitelist": "1.3.3"
     }
 }

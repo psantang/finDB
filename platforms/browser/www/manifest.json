@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "finDB",
+  "short_name": "finDB",
+  "version": "com.paulsantangelo.finDB",
+  "description": "The only mobile app providing all stock settings for high end water skis with the ability to save your custom ski settings for an unlimited number of skis.",
+  "author": "Paul Santangelo Software, Inc.",
+  "icons": [],
+  "start_url": "index.html"
+}

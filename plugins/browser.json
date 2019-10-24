@@ -8,25 +8,25 @@
     },
     "installed_plugins": {
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-firebase": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.paulsantangelo.finDB"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
     "dependent_plugins": {}

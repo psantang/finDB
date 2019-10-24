@@ -720,6 +720,7 @@ $$(document).once('deviceready', function (page) {
   //data="user_vers="+thisUser.user_vers;
   data="user_vers="+app_vers.replace(/_/g,".");
   CallMethod(url, data , onSuccess);
+  initNotifications();
 });
 
 function CallMethod(url, parameters, successCallback) {
@@ -768,9 +769,6 @@ function onSuccess(vers_Obj) {
     }
 }
 // END CHECK FOR VERSION AN NOTIFY USER IF UPDATES ARE AVAILABLE
-
-
-
 
 
 function sayHi(json) {

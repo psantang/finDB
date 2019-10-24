@@ -1,0 +1,817 @@
+/*
+   statusbar-overlay sets the background color for the overlay. Black text is the default when the statusbar plugin is not added. When the
+   statusbar plugin is added, it also adds default setting to make the content white via:
+
+       <preference name="StatusBarStyle" value="lightcontent"/>
+
+   Setting the background color to black will allow the default light content (white text/icons) to show on it. The statusbar plugin is included
+   in the config.xml file and will be added by the CLI when you build locally.
+
+   See https://github.com/apache/cordova-plugin-statusbar
+*/
+
+.statusbar-overlay {
+    background: #000000;
+}
+
+
+
+html.with-statusbar.device-android .framework7-root {
+  padding-top:0 !important;
+}
+
+#factory_brand {
+  height:auto;
+}
+
+#factory_brand.list-block {
+  margin:0px 0px;
+}
+
+.inlineBlock {
+  display:inline-block !important;
+}
+
+#skiLookup , .skiLookupHomePageBtn, #registerBtn, .whiteTransBG {
+  background-color: rgba(255, 255, 255, .4) !important;
+}
+
+#stockSkiListing_div.content-block-title {
+  margin-top:11px;
+}
+
+.margin_top_1_5em {
+  margin-top:1.5em;
+}
+
+#skiSelected {
+  border: 1px solid #fff;
+  border-radius: 0em;
+  padding: .2em;
+  background: #FFF;
+  margin: .5em 0 0 0;
+}
+
+.homeLogo {
+  width:20%;
+  height:20%;
+  margin-bottom: -20px;
+}
+
+.home_register_box {
+  background-color: rgba(255,255,255,.4);
+  border-radius: .5em;
+  padding: .5em;
+}
+
+.ftSummaryList {
+  display: inline-block;
+  margin:1em 0 0 0;
+}
+/*
+.navbar {
+    background-color: rgba(255,255,255,.75)!important;
+}
+.navbar:after {
+    height:0px!important;
+}
+*/
+
+.head_setting_table {
+  font-size: 1.0em;
+  font-weight: normal;
+  border-bottom: 1px solid #bbb;
+  color: #000;
+  padding: .3em 0em;
+}
+
+.blackText {
+  color: #000;
+}
+
+.data_setting_table {
+  font-size: 1.0em;
+  padding: .3em 0em;
+}
+
+.sm {
+  font-size: .95em;
+  padding: .25em 0em;
+  color: rgba(0, 122, 255, 0.85);
+}
+
+.padding_top_5em {
+  padding-top:.5em;
+}
+
+.padding_bottom_5em {
+  padding-bottom:.5em;
+}
+
+.padding_bottom_1_5em {
+  padding-bottom:1.5em;
+}
+
+.padding_left_15px {
+  padding-left: 15px;
+}
+
+.padding_left_0px {
+  padding-left: 0px;
+}
+
+.black1_1_heading {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #000;
+}
+
+.stockListRow {
+  padding: .25em 0;
+}
+
+.white_glow_text {
+    text-shadow: 0 0 3px #FFF;
+}
+
+
+#loginError {
+    text-align: center;
+    color: #F00;
+}
+
+.redText {
+    color: #F00 !important;
+}
+
+.darkGrayText1_1em {
+    color: #333 !important;
+    font-size: 1.1em;
+}
+
+#ul_saved_list {
+  background-color: rgba(255,255,255,1);
+}
+
+#ul_saved_list li {
+  padding-left:12px;
+  border-bottom: 1px solid #EEE;
+}
+
+.alignLeft {
+      text-align: left;
+}
+
+.alignRight {
+      text-align: right;
+}
+
+.lightGreenBG {
+  background-color: rgba(229,255,229,.8);
+}
+
+#getLocalSettings_div {
+  display:none; /* don't show unless div has data */
+}
+
+.margin_1em_bottom {
+  margin:0 0 1em 0;
+}
+
+.margin_1em_top {
+  margin:1em 0 0 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.margin-left_1em {
+  margin-left: 1em !important;
+}
+
+.margin-right_1em {
+  margin-right: 1em !important;
+}
+
+.margin-right_qarter_em {
+  margin-right: .25em !important;
+}
+
+.lightBlueBG {
+background-color: rgba(33, 150, 243,.1);
+}
+
+.measure_table {
+  font-size: 1.1em;
+  padding: .2em 0em;
+  border-bottom:1px solid #333;
+  color:#333;
+}
+
+.override_lb .content-block {
+    margin:34px 0 15px 0 !important;
+}
+
+.override_lb .list {
+    margin:24px 0 15px 0 !important;
+}
+
+.marginBottomMinusHalf {
+  margin-bottom: -.5em;
+}
+
+#mySettings_div #settingsList {
+  margin-bottom:0px !important;
+}
+
+.centerList {
+  width:100%;
+  text-align: left;
+    list-style-position: inside;
+    -webkit-margin-before: 0px;
+    -webkit-padding-start: 0px;
+  padding:.3em .5em;
+}
+
+#loginForm .list ul {
+  background-color: rgba(255, 255, 255,.5);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.size-20 { font-size: 20px !important}
+
+.orange {color: rgba(255, 132, 0, .6);}
+
+.top_padding_5 {
+  padding: 0 0 .5em 0;
+}
+
+.picker-modal-inner .content-block {
+  margin-top:17px;
+}
+
+#measure_sheet {
+  background-color: rgb(251, 240, 228);
+  /*background-image: url(../img/water_bg.jpg);*/
+}
+
+#measure_sheet .toolbar {
+  background-color: rgba(255, 200, 143, 1);
+}
+
+.page {
+  background-image: url(../img/water_bg.jpg) !important;
+}
+
+#loginPage {
+  background-image: url(../img/homePageImg1_60_opacity.jpg) !important;
+}
+
+#viewHistoryDiv {
+  margin-top: 1.2em !important;
+}
+
+.page-content {
+  background-color: rgba(255,255,255,.3) !important;
+  padding-bottom:1em;
+}
+
+.popover-inner .content-block {
+  margin: 1px 10px !important;
+}
+.popup .page-content {
+  background-color: rgba(255,255,255,1) !important;
+}
+
+#profilePage_div .item-media i {
+ /*size-20 color-blue*/
+  font-size: 20px;
+  color:#007aff;
+ }
+
+#homeDetails .content-block {
+  margin:11px 10px !important;
+}
+
+ .page .content-block-title {
+   font-weight: bold;
+   font-size: 1.25em;
+   margin-top:15px;
+ }
+
+.page .content-block-title .rightIcon {
+  float: right;
+  padding-bottom: .15em;
+  font-weight: normal;
+}
+
+.page .content-block-title .rightText {
+  float: right;
+  font-weight: normal;
+  font-size: initial;
+}
+
+.vertAlignMiddle {
+  vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+/* DATA TABLES */
+.data-table {
+  overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table thead {
+    font-size: 12px;
+    border-bottom: 1px solid #8e8e93;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+
+.data-table thead td:not(.sortable-active), .data-table thead th:not(.sortable-active) {
+    color: #8e8e93;
+}
+
+#stockSettings .data-table th.numeric-cell {
+  font-weight:normal;
+  font-size: 1em;
+}
+
+.data-table th.numeric-cell {
+    text-align: right;
+    padding-left: 0px !important;
+}
+
+
+.data-table td, .data-table th {
+    padding: 0;
+    position: relative;
+    padding-left: 0px;
+    padding-right: 15px;
+    height: 2.0em;
+}
+
+#ulHistory .data-table td, #ulHistory .data-table th {
+  height: 1.5em;
+}
+
+.data-table td.numeric-cell, .data-table th.numeric-cell {
+    text-align: right;
+    padding-left: 0px !important;
+    color:#444 !important;
+}
+
+#addNoteSettingsTable .data-table td, #addNoteSettingsTable .data-table .numeric-cell {
+  height:.3em !important;
+  padding-left: 0px !important;
+}
+
+#stockSettings {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding:0 0 .25em 0;
+    border-bottom: 1px solid #666;
+}
+#stockSettings .stockName {
+  color: #444;
+  font-weight: bold;
+  font-size: .8em;
+}
+
+#stockSettings .data-table th, #stockSettings .data-table td {
+  height:1em !important;
+  color: #007aff;
+  font-size: .8em;
+}
+
+#stockSettings .data-table table {
+  width:96% !important;
+  margin:0 2%;
+}
+
+#stockSettingsDiv {
+  display:block;
+  /*height:0px;*/
+  height:auto;
+  opacity:0;
+}
+
+#viewStockBtn {
+  font-size:.8em;
+}
+
+.notesPopUpHistory {
+  color: #8e8e93;
+  font-size: 12px;
+  border-bottom: 1px solid #8e8e93;
+  color: #8e8e93;
+  font-weight: bold;
+  margin: .8em 0 0 0;
+}
+
+.bottomGrayBorder {
+  border-bottom:1px solid #ddd;
+}
+.notesPopUpDetails {
+  margin: 0 0 1.2em 0;
+}
+
+.closePopup {
+  float: right;
+  padding: 1em;
+}
+
+.smallText {
+  font-size: .9em;
+  padding-left: 1.2em;
+}
+
+.text_8em {
+  font-size: .8em;
+}
+
+/* ALTER SLIDER ON MY SETTINGS PAGE */
+#settingsAdjuster .range-slider {
+  background-size: 100% 9px !important;
+  background: linear-gradient(to right,rgba(255, 132, 0, .6) 0,rgba(0, 122, 255, .6) 100%)!important;
+  height:34px !important;
+  border-radius: 18px !important;
+}
+
+#settingsAdjuster .overFlowHidden .item-input {
+  width:99% !important;
+  margin-top:0 !important;
+
+}
+
+/* turn off range bar on all sliders */
+#settingsAdjuster .range-bar {
+  display:none;
+}
+.androidSliderRangeKnob {
+  width: 22px !important;
+  height: 22px !important;
+  left: -5px !important;
+  top: -5px !important;
+}
+
+.stockText {
+  color:#999;
+  line-height: .9em;
+  font-size: .85em;
+}
+.slideAdjust {
+  display:none;
+}
+
+.createdDateText {
+  font-weight: normal;
+  color: #888;
+  text-overflow: ellipsis;
+  max-width: 40%;
+  overflow: hidden;
+}
+
+/*
+.lightOrangeBG {
+  background-color: rgba(255, 132, 0, .2) !important;
+  border-bottom:1px solid #555;
+}
+*/
+.lightOrangeBG {
+background: -moz-linear-gradient(top, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255, 132, 0, .1) 0%, rgba(255, 132, 0, .5) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2c39d', endColorstr='#fff1e4',GradientType=0 ); /* IE6-9 */
+padding-left: .5em;
+border-radius: 0em;
+}
+
+.floatLeft {
+  float:left;
+  margin-right: 1.0em;
+}
+
+#settingsAdjuster .item-content .item-inner .floatLeft {
+  float:left;
+  margin-right:.4em;
+  width:4.8em
+}
+
+.floatRight {
+  float:right;
+  margin-left: 1.0em;
+}
+
+.overFlowHidden {
+  overflow: hidden;
+  width: 95%;
+}
+
+.checkedRadio {
+  font-weight: bold;
+}
+
+.measureOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto auto auto .7em;
+  font-size:.9em;
+  color:#007aff;
+  background-color: rgba(255, 255, 255, .5);
+  display:table;
+  border-radius: .7em;
+  padding: 0 .7em 0 .7em;
+  top: 0;
+  margin-left: 1.9em;
+}
+
+.content-block {
+  margin:18px 0 !important;
+}
+
+.padding_l_r_15px {
+  padding: 0 15px;
+}
+
+.padding_l_r_4em {
+  padding: 0 4em !important;
+}
+
+#mySettings_div #ul_mySki {
+  margin: -37px 0 0 0 !important;
+}
+
+.ios #mySettings_div #ul_mySki {
+  border-bottom: 1px solid #555;
+}
+
+
+#mySettings_div #settingsAdjuster {
+  margin: -14px 0 0 0 !important;
+}
+
+.ios #mySettings_div #settingsAdjuster {
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+}
+
+.list {
+  margin:18px 0 !important;
+}
+
+.chevronB {
+  color: #b6b6bb;
+}
+
+.chevronC {
+  color: #d2d2e6;
+}
+
+.panel.panel-left .content-block {
+  padding-left: 1em;
+}
+
+#userNameInPanel {
+  text-transform: capitalize;
+}
+.menu_head {
+  background-color: #007aff;
+  padding: 1em;
+  margin: -1.1em -1.1em;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu_items {
+  margin-top: 2.2em;
+  font-size: 17px;
+  font-weight: 600;
+  color: #007aff;
+}
+
+.flushBottom {
+  bottom: 0;
+  height: 1.5em;
+  position: absolute;
+  width: 100%;
+}
+
+#myLE_POS {
+  position: absolute;
+  top: 65%;
+  left: 6%;
+}
+
+#myBindToLE_POS {
+  position: absolute;
+  top: 65%;
+  left: 23%;
+}
+
+#summary_POS {
+  position: absolute;
+  top: 65%;
+  left: 47%;
+  line-height: 1.2em;
+  color: #007aff;
+  display:none;
+}
+
+.newLeadinEdgeInfo {
+  line-height: .5em;
+  color: #007aff;
+}
+
+.lightBlueText {
+  color: #007aff;
+}
+
+.item-media #editSkiBtn {
+  padding-top:.3em;
+}
+
+#editSkiBtn i {
+  font-size:1.2em;
+  margin-top: -5px;
+  color:inherit;
+  height: 100%;
+}
+
+.view_history i {
+  font-size:1.2em;
+  margin-top: -5px;
+}
+
+.historyNotes {
+  border-bottom: 1px solid #999;
+  padding: .3em .3em .6em .3em;
+  margin: .3em;
+}
+.historyNotes:last-child {
+  border-bottom: none;
+}
+
+.historyNotesHdr {
+    /* background-color: rgba(0,0,0,.07); */
+    /* border-bottom: 1px solid #aaa; */
+    padding: .3em;
+    font-weight: bold;
+    font-size: 1em;
+    color: #333;
+}
+
+.historyNotesHdr_old {
+  background-color: rgba(0,0,0,.07);
+  border-bottom:1px solid #aaa;
+  padding:.3em;
+}
+
+.popup-notes>.page-content>.block {
+  margin-top:1px !important;
+}
+
+#LE_def_POS {
+  position: absolute;
+  top:10%;
+  left:6%;
+}
+
+#BLE_def_POS {
+  position: absolute;
+  top:10%;
+  left:20%;
+}
+
+#skiCount {
+  border-top:1px solid #aaa;
+  margin-right: 1em;
+  color: #aaa;
+}
+
+.txtAreaHeight {
+  height:fit-content !important;
+  padding:.3em 0 !important;
+}
+
+#ski_card {
+  border:1px solid #555;
+  border-radius: 0em;
+  box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+}
+#ski_card .card-content-inner {
+  padding: .5em;
+}
+
+.logo_36height {
+  min-height: 30px;
+  max-height: 40px;
+  max-width: 50px;
+  min-width: 30px;
+}
+
+#ul_mySki .item-content .item-inner {
+  margin-left: 7px;
+}
+
+#ul_mySki .item-content .item-inner a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+#reg_ul li .item-media {
+  padding-bottom:14px;
+}
+
+#tc_toggle > .item-input-wrap, #tc_toggle > .item-after  {
+  display: inline-block;
+  width: initial;
+  padding: .6em .5em .7em 0em;
+}
+
+.hide {
+  display:none !important;
+}
+
+#update_msg {
+  font-size: .8em;
+  border: 1px solid #f54336;
+  padding: .3em;
+  display: none;
+  background-color: #f54336;
+  border-radius: .3em;
+}
+
+.showMySettingNotes {
+
+}
+
+#versDetails {
+  color:#FFF;
+}
+
+#versDetails i {
+  font-size:1.2em
+}
+
+
+#thisSettingNotes {
+background-color: rgba(255,255,255,.6);
+/*display:none;*/
+width: 100%;
+overflow: scroll;
+}
+
+.notesGradientBG {
+background: -moz-linear-gradient(top, rgba(140,159,181,0.5) 0%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 72%, rgba(140,159,181,0.5) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(140,159,181,0.5) 0%,rgba(255,255,255,1) 28%,rgba(255,255,255,1) 72%,rgba(140,159,181,0.5) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(0, 122, 255, 0.3) 0%,rgba(255,255,255,1) 35%,rgba(255,255,255,1) 65%,rgba(0, 122, 255, 0.3) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80007aff', endColorstr='#80007aff',GradientType=0 ); /* IE6-9 */
+}
+
+.heightAuto {
+  height:auto;
+}
+
+.heightZero {
+  height:0px;
+}
+
+.settingNotesView {
+  display:inline-block;
+  height:0px;
+  border-top: 1px solid #007aff;
+  border-bottom: 1px solid #007aff;
+  background: -moz-linear-gradient(top, rgba(140,159,181,0.5) 0%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 72%, rgba(140,159,181,0.5) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(140,159,181,0.5) 0%,rgba(255,255,255,1) 28%,rgba(255,255,255,1) 72%,rgba(140,159,181,0.5) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(140,159,181,0.5) 0%,rgba(255,255,255,1) 28%,rgba(255,255,255,1) 72%,rgba(140,159,181,0.5) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80007aff', endColorstr='#80007aff',GradientType=0 ); /* IE6-9 */
+}

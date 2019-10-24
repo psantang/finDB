@@ -1,0 +1,196 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Lengths</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list links-list">
+        <ul id="lengthList">
+          {{#each skiLength}}
+          <li>
+            <a class="item-link" data-ski-length="{{this}}">
+              {{this}}
+            </a>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+// NOTE: For components, you have to have a script with a return....and it seems nothing else!
+  return {
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+      $$(".page-current").on('click', function() {
+        console.log('clicked here pageCreate');
+      });
+    },
+    created() {
+      console.log('componentCreated', this)
+      $$(".page-current").on('click', function() {
+        console.log('clicked here');
+      });
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+      $$(".page-current").on('click', function() {
+        console.log('clicked here beforeMount');
+      });
+    },
+    mounted() {
+      console.log('componentMounted', this);
+      $$(".page-current").on('click', function() {
+        console.log('clicked here in mounted!');
+      });
+
+      $$(".page-current .page-content .list").on('click', function() {
+        console.log('clicked here');
+      });
+
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+      $$(".page-current").on('click', function() {
+        console.log('clicked here beforeDestroy');
+      });
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
+      $$(".page-current").on('click', function() {
+        console.log('clicked here destroy');
+      });
+    },
+    // Component Data
+    data: function () {
+      // Must return an object
+    //  return users;
+      /*return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tennis', 'Chess', 'Football'],
+      }*/
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Hello World');
+      }
+
+
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+        console.log('-------******------brand context is ' +this.brand);
+        //console.log('-------> from brand_list e is ' + e); thisBe=e;
+        //console.log('-------> from brand_list page is ' + page); thisBpage=page;
+
+        $$(".page-current").on('click', function() {
+          console.log('clicked here');
+        });
+
+        $$(".page-current .page-content .list").on('click', function() {
+          console.log('clicked here');
+        });
+
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+
+        $$(".page-current").on('click', function() {
+          console.log('clicked here');
+        });
+
+        $$(".page-current .page-content .list").on('click', function() {
+          console.log('clicked here');
+        });
+
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+        $$(".page-current").on('click', function() {
+          console.log('clicked here pageBeforeIn');
+        });
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      //  $$(".list ul li a").click();
+
+        $$(".page-current").on('click', function () {
+            console.log("------- currentPage clicked");
+          if ($$(".page-current").data("select-name")=="length") {
+            lengthVal=$$('select[name=length]').val();
+            console.log("lengthVal = "+lengthVal);
+          }
+        });
+
+        $$(".page-current").on('click', function() {
+          console.log('clicked here');
+        });
+
+        $$(".page-current .page-content .list").on('click', function() {
+          console.log('clicked here');
+        });
+
+        $$("#lengthList li a").on("click", function() {
+          console.log("this length is clicked");
+          thisLengthIs = $$(this).data("ski-length");
+          console.log("pageAfterIn this length is " + thisLengthIs);
+          myApp.data.lookup.skiLength=thisLengthIs;
+          myApp.router.navigate('/lookup/year/');
+        });
+
+
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+        $$(".page-current").on('click', function() {
+          console.log('clicked here pageBeforeOut');
+        });
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+        $$(".page-current").on('click', function() {
+          console.log('clicked here pageAfterOut on lenth_list page');
+
+          lengthVal=$$('select[name=length]').val();
+          console.log("lengthVal is "+lengthVal);
+
+
+        });
+
+        $$(".page-current .page-content ul li").on("click", function() {
+          console.log("this value for length is " + this.innerText); thisVal=this;
+        });
+
+
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+        $$(".page-current").on('click', function() {
+          console.log('clicked here pageBeforeRemove');
+        });
+      },
+    }
+  }
+
+
+
+
+
+</script>

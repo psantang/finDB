@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWeb) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!-- THIS META WORKS FOR COMPILED MOBILE APP -->
+
+        <!-- --><meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready file://* *; style-src 'self' 'unsafe-inline'; script-src http://*.paulsantangelo.com 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: ; connect-src http://*.paulsantangelo.com ws: 'self' ">
+
+    <!-- THIS META WORKS FOR BROWSER TESTING -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready file://* *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: ; media-src *" /> -->
+
+
+
+<!-- THIS META WORKS FOR BROWSER/TESTING
+<meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+-->
+
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+
+    <!-- Your app title -->
+    <title>Water Ski Fin DB</title>
+
+    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
+        http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
+     -->
+<!--
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
+-->
+    <link rel="stylesheet" type="text/css" href="css_my/styles.css">
+    <link rel="stylesheet" type="text/css" href="css_my/framework7-icons.css">
+    <link rel="stylesheet" type="text/css" href="css_my/animate.min.css">
+
+
+</head>
+
+<body>
+<div id="app">
+  <div class="panel-overlay"></div>
+  <!-- Left panel with reveal effect-->
+  <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <div class="menu_head">Welcome, <span id="userNameInPanel"></span></div>
+        <div class="menu_items">
+          <div id="update_msg"></div>
+          <p><a href="/mySkis/" class="panel-close">My Ski's</a></p>
+          <p><a href="/profile/" class="panel-close">Profile</a></p>
+          <p><a href="#" class="view_history panel-close">Setup History</a></p>
+          <p></p>
+          <p><a href="#" id="logoutBtn" class="panel-close">Log Out</a></p>
+        </div>
+        <div id="skiCount"></div>
+        <div class="flushBottom">Last Login: <span id="userLastLogin"></span></div>
+      </div>
+  </div>
+
+<!--  <div class="views"> -->
+      <div class="view view-main view-init ios-edges"  data-url="/">
+
+
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left"> </div>
+                <div class="center sliding">finDB</div> <!-- <img src="img/homeLogo.png" class="homeLogo" /> -->
+                <div class="right"> </div>
+            </div>
+
+          </div>
+
+
+  <!--    <div class="pages navbar-through"> -->
+        <!-- Page, "data-page" contains page name -->
+        <div class="page" data-page="login" id="loginPage">
+
+            <!-- Scrollable page content -->
+            <div class="page-content override_lb">
+              <form id="loginForm">
+                <div class="list">
+                  <ul>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Username</div>
+                        <div class="item-input">
+                          <input type="text" name="user_name" id="user_name" placeholder="User Name" value=''>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Password</div>
+                        <div class="item-input">
+                          <input type="password" name="pwd" id="pwd" placeholder="Password" value=''>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                </form>
+
+                          <div id='loginError'></div>
+
+                          <div class="center padding_bottom_1_5em">
+                            <a href="#" class="inlineBlock whiteTransBG padding_l_r_4em button" id="loginBtn">Sign In</a>
+                            <!--<a href="#" class="inlineBlock whiteTransBG margin-left_1em button" id="forgotPwBtn">Forgot Password</a>-->
+                          </div>
+                          <div class="center">
+                            <a href="#" class="inlineBlock bold margin_1em_top white_glow_text" id="forgotBtn">Forget Something?</a>
+                          </div>
+
+                          <div id="homeDetails" class="override_lb">
+                            <div class="content-block">
+
+                            <div id="update_available" class="center"></div>
+
+                            <div class="darkGrayText1_1em home_register_box"><span class="bold center">Features of finDB:</span>
+                              <ul class="centerList">
+                                <li>choose skis to add to your list</li>
+                                <li>view stock settings for each ski</li>
+                                <li>save custom settings for each ski</li>
+                                <li>add notes for each setting</li>
+                                <li>view history of previous settings</li>
+                              </ul>
+
+                              <div class="center"><a href="/register/" class="button close-login-screen" id="registerBtn">Register to Begin</a></div>
+                            </div>
+
+
+                              <div class="darkGrayText1_1em center home_register_box margin_top_1_5em">Or use to simply lookup stock settings.
+                                <div class="center"><a href="/lookup/" class="button skiLookupHomePageBtn">Find Stock Ski Settings</a></div>
+                              </div>
+
+                            </div> <!-- end content block -->
+                          </div>
+                        </div>
+
+
+                      </div> <!-- /page-content -->
+                    <!--</div>-->
+                <!--  </div> END PAGES -->
+              </div>
+
+            <!-- </div> -->
+
+</div>
+<!--         </div> END VIEW -->
+<!--    </div>  END VIEWS -->
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+
+
+    <!--
+       We need the following script to include styles depending on device's OS
+       It is important to keep it as inline script or in separate JS file with this code only!
+       -->
+       <script>
+         (function () {
+           if (Framework7.prototype.device.android) {
+                 Dom7('head').append(
+                     '<link rel="stylesheet" href="css/framework7.md.min.css">'// +
+                     //'<link rel="stylesheet" href="dist/css/framework7.ltr.md.min.css">' +
+                     //'<link rel="stylesheet" href="dist/css/framework7.md.css">' // use this as custom over ride for material design classes above
+                    // '<link rel="stylesheet" href="/css/framework7.material.min.css">' +
+                    // '<link rel="stylesheet" href="/css/framework7.material.colors.min.css">' +
+                    // '<link rel="stylesheet" href="/css/my-app.material.css">'
+                 );
+             }
+             else {
+                 Dom7('head').append(
+                     '<link rel="stylesheet" href="css/framework7.ios.min.css">'// +
+                     //'<link rel="stylesheet" href="dist/css/framework7.ltr.ios.min.css">' //+
+                     //'<link rel="stylesheet" href="lib/framework7/css/my-app.ios.css">'
+                     //'<link rel="stylesheet" href="/css/framework7.ios.min.css">' +
+                     //'<link rel="stylesheet" href="/css/framework7.ios.colors.min.css">' //+
+                 );
+             }
+         })();
+       </script>
+
+    <script type="text/javascript" src="js_my/routes.js"></script>
+    <script type="text/javascript" src="js_my/my-app.js"></script>
+    <script type="text/javascript" src="js_my/user_class.js"></script>
+    <script type="text/javascript" src="js_my/ski_class.js"></script>
+    <script type="text/javascript" src="js_my/settings_class.js"></script>
+    <script type="text/javascript" src="js_my/profile.js"></script>
+    <script type="text/javascript" src="js_my/register.js"></script>
+    <script type="text/javascript" src="js_my/my_settings.js"></script>
+    <script type="text/javascript" src="js_my/my_skis.js"></script>
+    <script type="text/javascript" src="js_my/ski_settings_smart_select.js"></script>
+    <script type="text/javascript" src="js_my/save_stock_settings_local.js"></script>
+    <script type="text/javascript" src="js_my/first_entry.js"></script>
+</body>
+</html>
